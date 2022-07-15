@@ -1,0 +1,9 @@
+       
+<h1>THIS IS HOMEPAGE</h1>
+    
+{% if user.is_authenticated %}   
+<button type="submit"><a href="/logout">LOGOUT</a></button>
+{% else %}
+<button type="submit"><a href="/register">REGISTER</a></button>
+<button type="submit"><a href="/login">LOGIN</a></button>
+{% endif %}

@@ -1,0 +1,50 @@
+{% load static %}
+{% include 'general/navbar-login.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALONTHEGO | REGISTER</title>
+
+    <link rel="stylesheet" href="{% static 'css/general/register.css' %}">
+</head>
+<body>
+
+    <div class="register-form-container">
+        <center><h1>Account Signup</h1></center>
+        <center><p>Welcome! Signup to get Started.</p></center>
+        
+        <div class="input-container">
+                    <form action="/register/" method="post">
+                        {% csrf_token %}
+
+                        <label class="form-label1">First name</label>
+                        <label class="form-label">Last name</label><br>
+                        <input class="form-box" type="text" id="fname" name="fname" placehoder="First name" Required>
+                        <input class="form-box" type="text" id="lname" name="lname" placehoder="Last name" Required><br>
+
+                        <label class="form-label1">Username</label>
+                        <input class="form-box1" type="text" id="username" name="username" placehoder="username" Required>
+
+                        <label class="form-label1">Email address</label>
+                        <input class="form-box1" type="text" id="email" name="email" placehoder="Email Address" Required>
+
+                        <label class="form-label1">Password</label>
+                        <input class="form-box1" type="password" id="password" name="password" placehoder="Password" Required>
+
+                        <label class="form-label1">Confirm password</label>
+                        <input class="form-box1" type="password" id="pass2" name="pass2" placehoder="Confirm Password" Required>
+
+                        <button class="btns" type="submit">Create an account</button>
+                    </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+{% include 'general/footer.html' %}

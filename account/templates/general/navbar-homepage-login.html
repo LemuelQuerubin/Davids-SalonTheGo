@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SalOnTheGo | Home </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <link rel="stylesheet" href="{% static 'css/general/homepage.css' %}">
+
+    <!--FONTS-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Days+One|Assistant|Montserrat">
+
+    <!--BOOTSTRAP CSS-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!--ICONS-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <!-- NAVBAR INTERNAL CSS -->
+    <!-- include footer later-->
+    
+</head>
+
+<body>    
+    <!-----------------------------------  FIRST PART ----------------------------------->
+    <div id="home" class="home">
+        <header>                
+            <!------------------------------- NAVBAR ------------------------------------------->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="/"
+                    class="navbar-logo h1">
+                        <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
+                        <img
+                        class="d-inline-block align-top"
+                        src="/images/logo-3.png"
+                        width="150" />
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            
+               
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto px-4">
+                    <!----------------- HOME BUTTON ----------------->
+                    <li class="nav-item active px-4">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!----------------- PRODUCTS BUTTON ----------------->
+                    <li class="nav-item active px-4">
+                        <a class="nav-link" href="/products">Products <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!----------------- PROMOS BUTTON ----------------->
+                    <li class="nav-item active px-4">
+                        <a class="nav-link" href="/promos">Promos <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!----------------- ABOUT US BUTTON ----------------->
+                    <li class="nav-item active px-4">
+                        <a class="nav-link" href="/aboutus">About Us <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+
+                <!-- CART ICON -->
+                    <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
+                <a href="#" class="cart-invert">
+                    <img
+                    class="d-inline-block align-top px-1"
+                    src="/images/cart.png"
+                    width="50" />
+                </a>
+                <!-- CART TOTAL
+                <p id="cart-total">0</p>
+                -->
+                
+                <!-- SPACE -->
+                <div class="space-search-sign"></div>
+                
+                <!-- LOG IN BUTTON -->
+                    <!--COMMENTS FROM ORIGINAL HOMEPAGE.HTML-->
+                    <!-- Logout Icon -->
+                    <!-- Authentication Links -->
+                <div class="nav_button">
+                        {% if user.is_authenticated %}   
+                        <a href="/logout">LOGOUT</a>
+                        {% else %}
+                        <a href="/login">LOGIN</a>
+                        {% endif %}
+                </div>
+
+
+            </nav>
+        </header>
+            <hr><br><br>
+            <!------------------------------- HEADING ------------------------------------------>
+        <p id="heading" class="heading"><b>SALONTHEGO</b></p>
+        <p id="sub-heading" class="sub-heading"> a one-stop hub for all<br> your salon needs!</p>
+        <br><br>
+
+            <!------------------------------- BUTTON ------------------------------------------->
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> BOOK NOW </a> </button>
+    </div>
+
+    <br> <br> <br>
+    <!---------------------------------  END OF FIRST PART --------------------------------->
+    
+    <!---------------------------------  SECOND PART --------------------------------------->
+    <!-- BESTSELLERS -->
+    <div id="title" class="title">
+        <h2 class="head"><span>FEATURED PRODUCTS</span></h2>
+        <table id="table" class="table">
+            <tr>
+                <td class="items"> <img src="/images/placeholder.png"> </td>
+                <td class="items"> <img src="/images/placeholder.png"> </td>
+                <td class="items"> <img src="/images/placeholder.png"> </td>
+                <td class="items"> <img src="/images/placeholder.png"> </td>
+                <td class="items"> <img src="/images/placeholder.png"> </td> 
+            </tr>
+            <tr>
+                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+            </tr>
+            <tr>
+                <td class="price">P 100.00</td>
+                <td class="price">P 100.00</td>
+                <td class="price">P 100.00</td>
+                <td class="price">P 100.00</td>
+                <td class="price">P 100.00</td>
+            </tr>
+            <tr>
+                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
+                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
+                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
+                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
+                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
+            </tr>
+        </table>
+    </div>
+    <br><br>
+    <!-- END OF BESTSELLERS -->
+
+    <!-- END OF SECOND PART -->
+
+    <!-- THIRD PART-->
+    <!-- SHOP ALL PRODUCTS -->
+    <h5> &emsp; <button type="button" id="all-button" class="all-button">  Shop All Products </button> &emsp; </h5>
+    <br><br><br>
+    <div id="third" class="third">
+        <br><br><br><br><br><br>
+        <p id="thirdhead" class="thirdhead"><b>WHAT INSPIRED US TO <br> MAKE SALONTHEGO?</b></p> <br>
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> Learn About Us Here </a> </button>
+    </div>
+    <!-- END OF THIRD PART -->
+
+    <br><br>
+    <!-- LAST PART -->
+    <!-- REVIEWS -->
+    <div id="review-table" class="review-table">
+        <table id="rev-table" class="rev-table">
+            <tr>
+                <td> <img src="/images/rev1.jpg"></td>
+                <td> <img src="/images/salon1.jpg"></td>
+            </tr>
+            <tr>
+                <td> <img src="/images/rev2.jfif"></td>
+                <td> <img src="/images/rev3.jpg"></td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br>
+    <div id="reviews" >
+        <p id="lasthead" ><b>REVIEWS FROM <br>OUR CUSTOMERS</b></p>
+        <p id="last-text" > feedbacks that help <br> us keep going</p>
+    </div>
+
+    <!-- END OF REVIEWS -->
+    <!-- END OF LAST PART -->
+    <br><br><br><br><br><br><br><br><br>
+    
+    <!-- FOOTER -->
+    {% include 'general/footer.html' %}
+
+      <!-------------------------------BOOSTSTRAP JS------------------------------->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

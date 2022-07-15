@@ -1,0 +1,531 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        /* ROOT AND BODY  */
+        :root {
+            --yellow: #FEE2C5;
+            --purple: #1A1052;
+            --navy:#001D6E;
+            --blue: #7FB5FF;
+            --lightblue: #C4DDFF;
+        }
+
+        body {
+            background-color: hsl(0, 0%, 98%);
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            font-size: 15;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .container {            
+            padding-bottom: 100px;
+        }
+
+        /* CART INVERT */
+        .cart-invert {
+            filter: brightness(100%);
+        }
+
+        /* NAV ITEM */
+        .nav-item a {
+            color: white!important;
+        }
+        
+        /* NAVBAR HOVER */
+        .navbar-nav a:hover {
+            transition: all 0.5s ease 0s!important;
+            font-size: large;
+        }
+
+        /* NAVBAR LOG IN BUTTON */
+        .nav_button {
+            border: 0;
+        }
+
+        .nav_button a {
+            text-decoration: none;
+            color: white;
+            font-size: medium;
+            font-weight: 800;
+            padding: 12px 45px;
+            background: var(--blue);
+            border-radius: 6px;
+        }
+
+        .nav_button a:hover {
+            transition: all .5s;
+            color: var(--blue);
+            background: white;
+            border: 2px solid var(--blue);
+        }
+
+        /* SPACE BETWEEN SEARCH, PROFILE, ETC */
+        .space-search-sign {
+            padding-left: 1%;
+        }
+
+        .space-profile {
+            padding-left: 6%;
+        }
+
+        /* CART TOTAL */
+        #cart-total{
+            display: block;
+            text-align: center;
+            color:#fff;
+            background-color: red;
+            width: 20px;
+            height: 25px;
+            border-radius: 30%;
+            font-size: 14px;
+        }
+
+    /* HOMEPAGE INTERNAL CSS - FIRST PART */
+    /* CHANGE URL HERE */
+ 
+        /* First Part */
+        .home {
+        background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("/images/home5.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;  
+        }
+
+        .heading {
+            margin-left: 5%;
+            font-family: Montserrat;
+            font-size: 70px;
+            font-weight: bolder;
+            color: white;
+            margin-top: 100px;
+
+        }
+
+        .sub-heading {
+            margin-left: 5%;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 28px;
+            letter-spacing: -0.015em;
+            color: white;
+
+        }
+
+        #shopbtn {
+            margin-left: 5%;
+            border-radius: 25px;
+            padding: 15px 40px 15px 40px;
+            background-color: var(--blue);
+            border-color: transparent;
+            margin-bottom: 300px; 
+        }
+
+        #shopbtn a{
+            color: white;
+            font-family: Montserrat;
+            font-size: 15px;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+
+        #shopbtn:hover {
+            box-shadow: 0 5px 15px var(--lightblue);
+            background-color: var(--navy);
+            transition: all .5s;
+        }
+
+        /* End of First Part */
+
+    /* Second Part */
+
+    .head {
+        margin-left: 4%;
+        color: #001D6E;
+        font-family: Montserrat;
+        font-size: 28px;
+        font-weight: bold;
+        position: relative;
+        margin-bottom: 60px;
+    }
+
+
+    h2 {
+        display: flex;
+        align-items: center;
+        width: 91%;
+    }
+    h2 span {
+        margin: 0 15px;
+    }
+
+    h2:after {
+        background: #001D6E;
+        height: 2px;
+        flex: 1;
+        content: '';
+    }
+    h2.left:after {
+        background: none;
+    }
+
+    #table {
+        width: 92%;
+        align-items: center;
+        margin-left: 4%;
+        border-spacing: 15px 10px;
+
+    }
+
+    .items{
+        align-items: center;
+        height: 180px;
+        
+        border-spacing: 10px;    
+        box-sizing: border-box;
+    }
+
+    .items img{
+        height: 180px;
+        width: 100%;
+    }
+
+    .product{
+        font-family: Montserrat;
+        font-size: 14px;
+        font-weight: bolder;
+        color: black;
+    }
+
+    .prodname{
+        text-align: center;
+        
+    }
+
+    .price{
+        font-family: Montserrat;
+        font-size: 12px;
+        text-align: center;
+        
+    }
+
+    .add-btn{
+        padding: 10px;
+        text-align: center;
+
+    }
+
+    #add-button{
+        font-family: Montserrat;
+        font-size: 10px;
+        font-weight: bold;
+        color: #7FB5FF;
+        background-color: transparent;
+        border-color: #7FB5FF;
+        border-style: solid;
+        border-radius: 10px;
+        padding: 7px 15px 7px 15px;
+    }
+
+    #add-button:hover{
+        background-color: #001D6E;
+        color: white;
+        cursor: pointer;
+    }
+
+
+    h5 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        margin-left: 5%;
+    }
+
+    h5:before,
+    h5:after {
+        background: #001D6E;
+        height: 1px;
+        flex: 1;
+        content: '';
+    }
+
+    h5.right:after {
+        background: none;
+    }
+
+    h5.left:after {
+        background: none;
+    }
+
+    /* End of Second Part */
+
+    /* Third Part */
+    #all-button{
+        font-family: Montserrat;
+        font-size: 15px;
+        font-weight: bolder;
+        color: white;
+        background-color: #001D6E;
+        border-color: transparent;
+        border-radius: 15px;
+        padding: 10px 15px 10px 15px;
+    }
+
+    #all-button:hover{
+        border-color: #001D6E;
+        background-color: white;
+        border-style: solid;
+        color: #001D6E;
+        cursor: pointer;
+    }
+
+    .third {
+        background-image: url('/images/home3.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;   
+    }
+
+    #thirdhead{
+        margin-top: 40px;
+        font-family: Montserrat;
+        font-size: 50px;
+        font-weight: bolder;
+        color: #444A4F;
+        margin-left: 5%;
+    }
+
+    /* End of Third Part */
+
+    /* Last Part */
+    #rev-table{
+        padding: 0px;
+        float: left;
+        align-items: center;
+        margin-left: 2%;
+        border-spacing: 35px 35px;
+        width: 55%;
+        margin-top: 50px;
+    }
+
+    #rev-table img{
+        height:100%;
+        width: 100%;
+    }
+
+
+    #rev-table td{
+        margin-top: 40px;
+        box-sizing: border-box;
+        align-items: center;
+        height: 200px;
+    }
+
+    #reviews{
+        margin-top: 50px;
+        text-align:center;
+    }
+
+    #lasthead{
+        font-family: Montserrat;
+        font-size: 45px;
+        font-weight: bolder;
+        color: #444A4F;
+        
+    }
+
+    #last-text{
+        font-family: Montserrat;
+        font-size: 25px;
+        color: black;
+    }
+
+    /* End of Last Part */
+  
+    /*-- SCREEN RESPONSIVENESS */
+    
+    /* Screen Sizes */
+    /* Extra small devices (portrait phones, Less than 576px) */ 
+    @media (max-width: 575.98px) {
+        body {
+        overflow: auto;
+        }
+
+        .heading{
+            font-size: 40px;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+        }
+
+        .head{
+            margin-left: 3%;
+        }
+
+        #table {
+            overflow-x: auto;
+            margin-left: 2%;
+            border-spacing: 25px 10px;
+            
+        }
+
+        #table td{
+            min-width: 180px;
+        }
+
+        #thirdhead{
+            font-size: 40px;
+        }
+
+        #rev-table{
+            margin-left: 5%;
+            align-items: center;
+            width: 90%;
+        }
+        
+        #rev-table td{
+            height: 200px;
+        }
+        
+        #lasthead{
+            text-align: center;
+            font-size: 45px;
+        }
+        
+        #last-text{
+            text-align: center;
+            font-size: 25px;
+        }
+    }
+    /* Small devices (Landscape phones, 576px and up)*/ 
+    @media (min-width: 576px) and (max-width: 767.98px) {
+        body {
+        overflow: auto;
+        }
+
+        .heading{
+            font-size: 50px;
+        }
+
+        .sub-heading {
+            font-size: 20px;
+        }
+
+        #table {
+            overflow-x: auto;   
+        }
+
+        #table td{
+            min-width: 180px;
+        }
+
+        #rev-table{
+            margin-left: 5%;
+            align-items: center;
+            width: 90%;
+        }
+        
+        #rev-table td{
+            height: 200px;
+        }
+        
+        #lasthead{
+            text-align: center;
+            font-size: 45px;
+        }
+        
+        #last-text{
+            text-align: center;
+            font-size: 25px;
+        }
+    }
+    /* Medium devices (tablets, 768px and up) */ 
+    @media (min-width: 768px) and (max-width: 991.98px) { 
+        body {
+        overflow: auto;
+        }
+
+        .heading{
+            font-size: 60px;
+        }
+
+        .sub-heading {
+            font-size: 23px;
+        }
+
+        #table {
+            overflow-x: auto;   
+        }
+
+        #table td{
+            min-width: 180px;
+        }
+
+        #rev-table{
+            margin-left: 5%;
+            align-items: center;
+            width: 90%;
+        }
+        
+        #rev-table td{
+            height: 200px;
+        }
+        
+        #lasthead{
+            text-align: center;
+            font-size: 45px;
+        }
+        
+        #last-text{
+            text-align: center;
+            font-size: 25px;
+        }
+        
+    }
+
+    /* Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+        .heading{
+            font-size: 60px;
+        }
+
+        .sub-heading {
+            font-size: 25px;
+        }
+
+        #table {
+            overflow-x: auto;   
+        }
+
+        #table td{
+            min-width: 180px;
+        }
+
+    }
+
+    /* For screens na 1920x1080 */
+    @media (min-width: 1920px) {
+        body {
+            overflow: auto;
+            }
+        
+            .heading{
+                font-size: 70px;
+            }
+        
+            .sub-heading {
+                font-size: 28px;
+            }
+        
+            #table {
+                overflow-x: auto;   
+            }
+        
+            #table td{
+                min-width: 180px;
+            }
+
+    }
+    
