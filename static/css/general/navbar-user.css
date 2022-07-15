@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-*{
-    padding:0;
-    margin:0;
-}
+
 /* ROOT AND BODY  */
 :root {
     --yellow: #FEE2C5;
@@ -11,7 +8,6 @@
     --blue: #7FB5FF;
     --lightblue: #C4DDFF;
 }
-
 
 body {
     background-color: hsl(0, 0%, 98%);
@@ -79,8 +75,7 @@ body {
 .footer-container{
     max-width: 1170px;
     margin:auto;
-    font-family: Montserrat;  
-     
+    font-family: Montserrat;
 }
 
 .footer-row{

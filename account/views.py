@@ -33,6 +33,15 @@ def promos(request):
 def aboutus(request):
     return render(request, 'general/aboutus.html')
 
+def customerpage(request):
+    return render(request, 'general/customer.html')
+
+def staffpage(request):
+    return render(request, 'general/staff.html')
+
+def adminpage(request):
+    return render(request, 'general/admin.html')
+
 
 #AUTHENTICATION LINKS
 def loginpage(request):
@@ -50,7 +59,7 @@ def loginpage(request):
   
         elif user is not None and user.is_staff and not user.is_admin:
             login(request, user)    
-            return render(request, 'general/staff.html')
+            return redirect('/staff')
 
         elif user is not None and user.is_staff and user.is_admin:
             login(request, user)    
@@ -137,6 +146,14 @@ def registerpage(request):
         email.send()
   
         #TO REDIRECT USER IN TO LOGIN PAGE
+
+
+
+
+
+
+
+
         return redirect('/login')
 
         
