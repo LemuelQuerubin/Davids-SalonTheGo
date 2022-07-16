@@ -208,20 +208,69 @@
 <body>
     <!------------------------------- NAVBAR ------------------------------------------->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="#"
+        {% if user.is_customer %} 
+        <a href="/"
             class="navbar-logo h1">
                 <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                 <img
                 class="d-inline-block align-top"
                 src="/images/logo-3.png"
                 width="150" />
+        {% else %}
+         <a href="#"
+            class="navbar-logo h1">
+                <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
+                <img
+                class="d-inline-block align-top"
+                src="/images/logo-3.png"
+                width="150" />
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         {% if user.is_admin %} 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto px-4">
+              <!----------------- HOME BUTTON ----------------->
+              <li class="nav-item active px-4">
+                <a class="nav-link" href="/"><!--Home--><span class="sr-only">(current)</span></a>
+              </li>
+              <!----------------- PRODUCTS BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/products"><!--Products--><span class="sr-only">(current)</span></a>
+                </li>
+              <!----------------- PROMOS BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/promos"><!--Promos--><span class="sr-only">(current)</span></a>
+                </li>
+              <!----------------- ABOUT US BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/aboutus"><!--About Us--><span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
         
         {% elif user.is_staff %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto px-4">
+              <!----------------- HOME BUTTON ----------------->
+              <li class="nav-item active px-4">
+                <a class="nav-link" href="/"><!--Home--><span class="sr-only">(current)</span></a>
+              </li>
+              <!----------------- PRODUCTS BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/products"><!--Products--><span class="sr-only">(current)</span></a>
+                </li>
+              <!----------------- PROMOS BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/promos"><!--Promos--><span class="sr-only">(current)</span></a>
+                </li>
+              <!----------------- ABOUT US BUTTON ----------------->
+              <li class="nav-item active px-4">
+                  <a class="nav-link" href="/aboutus"><!--About Us--><span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
         
         
         {% else %}
@@ -353,7 +402,6 @@
                 <li><a href="#">Appointments</a></li>
                 <li><a href="#">Reviews</a></li>
                 <br><br><br><br><br>
-                
                 {% endif %}
     
                 </ul>
@@ -370,8 +418,6 @@
     {% block content %}
 
     {% endblock content %}
-   
-   
 
     
       <!-------------------------------BOOSTSTRAP JS------------------------------->
