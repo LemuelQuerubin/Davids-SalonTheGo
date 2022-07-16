@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     #own
     'account',
+    'system',
 ]
 
 MIDDLEWARE = [

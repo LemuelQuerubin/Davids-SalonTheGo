@@ -5,6 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>SalOnTheGo </title>
+    <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel="stylesheet" href="{% static 'css/general/sidenav.css' %}">
@@ -395,7 +396,7 @@
                 <li><a href="/admin">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">All Reports</a></li> <!--X-->
-                <li><a href="#">Appointments</a></li>
+                <li><a href="/appointments">Appointments</a></li>
                 <li><a href="#">Calendar</a></li> 
                 <li><a href="#">Orders</a></li> <!--X-->
                 <li><a href="#">Promos</a></li> <!--X-->
@@ -421,6 +422,7 @@
     
        
     {% block content %}
+   
 
     {% endblock content %}
 
