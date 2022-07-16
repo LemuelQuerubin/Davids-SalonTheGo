@@ -376,10 +376,13 @@
             <div class="sidenav">
                 <ul>
                 
-                <p>NAME</p>
-                <br><br>
+                <p>{{ user.first_name }}</p>
+              
+                <p>{{ admin.customertype }}</p>
+           
                 
                 {% if user.is_customer %}
+                <p>{{ user.customer.customertype }}</p> <br><br>
                 <li><a href="/customer">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Create Appointment</a></li>
@@ -388,6 +391,7 @@
                 <li><a href="#">My Purchases</a></li>
                 <li><a href="#">Shopping Cart</a></li>
                 {% elif user.is_admin %}
+                <p>{{ user.admin.stafftype }}</p> <br><br>
                 <li><a href="/admin">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">All Reports</a></li> <!--X-->
@@ -397,6 +401,7 @@
                 <li><a href="#">Promos</a></li> <!--X-->
                 <li><a href="#">Reviews</a></li>
                 {% else %}
+                <p>{{ user.staff.stafftype }}</p><br><br>
                 <li><a href="/staff">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Appointments</a></li>
