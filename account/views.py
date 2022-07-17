@@ -20,9 +20,9 @@ from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 
 
-#GENERAL LINKS
+#GENERAL PAGES
 def homepage(request):
-    return render(request, 'general/navbar-homepage-login.html')
+    return render(request, 'general/homepage-login.html')
 
 def products(request):
     return render(request, 'general/products.html')
@@ -33,17 +33,19 @@ def promos(request):
 def aboutus(request):
     return render(request, 'general/aboutus.html')
 
+
+#USER PAGES
 def customerpage(request):
-    return render(request, 'general/customer.html')
+    return render(request, 'user/customer.html')
 
 def staffpage(request):
-    return render(request, 'general/staff.html')
+    return render(request, 'user/staff.html')
 
 def adminpage(request):
-    return render(request, 'general/admin.html')
+    return render(request, 'user/admin.html')
 
 
-#AUTHENTICATION LINKS
+#AUTHENTICATION PAGES
 def loginpage(request):
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
@@ -55,7 +57,7 @@ def loginpage(request):
         
         if user is not None and user.is_customer:
             login(request, user)    
-            return render(request, 'general/navbar-homepage-login.html')
+            return render(request, 'general/homepage-login.html')
   
         elif user is not None and user.is_staff and not user.is_admin:
             login(request, user)    
@@ -71,8 +73,8 @@ def loginpage(request):
     
     return render(request, 'authentication/login.html')
 
-def registerpage(request):
 
+def registerpage(request):
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
         username = request.POST['username'] 
@@ -146,18 +148,10 @@ def registerpage(request):
         email.send()
   
         #TO REDIRECT USER IN TO LOGIN PAGE
-
-
-
-
-
-
-
-
         return redirect('/login')
-
-        
+  
     return render(request, 'authentication/register.html')
+
 
 def signout(request):
     logout(request)
