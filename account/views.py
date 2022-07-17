@@ -57,7 +57,7 @@ def loginpage(request):
         
         if user is not None and user.is_customer:
             login(request, user)    
-            return render(request, 'general/homepage-login.html')
+            return redirect('/')
   
         elif user is not None and user.is_staff and not user.is_admin:
             login(request, user)    
@@ -65,7 +65,8 @@ def loginpage(request):
 
         elif user is not None and user.is_staff and user.is_admin:
             login(request, user)    
-            return render(request, 'general/admin.html')
+            return redirect('/admin')
+            
         
         else:
             messages.error(request,"bad credentials")
