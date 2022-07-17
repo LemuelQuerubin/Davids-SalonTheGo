@@ -40,7 +40,7 @@ def customerpage(request):
 
 def staffpage(request):
     return render(request, 'user/staff.html')
-
+   
 def adminpage(request):
     return render(request, 'user/admin.html')
 
