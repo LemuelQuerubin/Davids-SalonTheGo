@@ -17,5 +17,4 @@ urlpatterns = [
     #PANEL LINKS
     path('customer/', views.customerpage, name="customerpage"),
     path('staff/', views.staffpage, name="staffpage"),
-    path('admin/', views.adminpage, name="adminpage"),
 ]

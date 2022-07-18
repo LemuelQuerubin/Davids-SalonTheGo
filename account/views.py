@@ -113,11 +113,18 @@ def registerpage(request):
         myuser = CustomUser.objects.create_user(username, email, password)
         myuser.first_name = fname
         myuser.last_name = lname
-        myuser.is_active = False
-        myuser.is_customer = True
+        myuser.is_active = 0
+        myuser.is_customer = 1
         
         #SAVING
         myuser.save()
+        
+        id1 = myuser.id
+        id2 = CustomUser.objects.get(pk=id1)
+        contact = None
+        gender = None
+        u = Customertype.objects.get(pk=1)
+        Customer.objects.create(user=id2, contact_number=contact, gendertype=gender, customertype=u)
 
         #MESSAGE FOR SUCCESSFUL REGISTER
         messages.success(request, "Your Account has been successfully created")
@@ -167,7 +174,7 @@ def activate(request, uidb64, token):
         myuser: None
     
     if myuser is not None and generate_token.check_token(myuser, token):
-        myuser.is_active = True
+        myuser.is_active = 1
         myuser.save()
         login(request, myuser)
         return redirect('/')

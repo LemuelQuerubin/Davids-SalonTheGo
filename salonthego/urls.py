@@ -23,6 +23,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('adminpanel/', admin.site.urls),
     path('', include('account.urls')),
+    
+    path('admin/', include('adminpanel.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

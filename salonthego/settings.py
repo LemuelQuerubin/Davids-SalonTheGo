@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     #own
     'account',
+    'adminpanel',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 MEDIA_ROOT = 'static/images'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 
 

@@ -11,5 +11,6 @@ admin.site.register(Gendertype)
 admin.site.register(Stafftype)
 admin.site.register(Customertype)
 
+
 #UNREGISTERED MODEL
 admin.site.unregister(Group)
