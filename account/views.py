@@ -20,6 +20,8 @@ from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 
 
+
+
 #GENERAL PAGES
 def homepage(request):
     return render(request, 'general/homepage-login.html')
@@ -124,7 +126,7 @@ def registerpage(request):
         contact = None
         gender = None
         u = Customertype.objects.get(pk=1)
-        Customer.objects.create(user=id2, contact_number=contact, gendertype=gender, customertype=u)
+        Customer.objects.create(customer=id2, contact_number=contact, gendertype=gender, customertype=u)
 
         #MESSAGE FOR SUCCESSFUL REGISTER
         messages.success(request, "Your Account has been successfully created")

@@ -14,9 +14,24 @@ class CustomUser (AbstractUser):
 class Gendertype (models.Model):
     id = models.AutoField(primary_key=True)
     gendertype = models.CharField(max_length=20)
-
+#    MALE = 'Male',
+#    FEMALE = 'Female',
+#    OTHERS = 'Others'
+#    
+#    GENDER_CHOICES = [
+#        (MALE, 'Male'),
+#        (FEMALE, 'Female'),
+#        (OTHERS, 'Others')
+#    ]
+#
+#    gender = models.CharField(
+#        max_length=9,
+#        choices=GENDER_CHOICES,
+#        default=MALE
+#    )
     def __str__(self):
         return self.gendertype
+    
 
 class Stafftype (models.Model):
     id = models.AutoField(primary_key=True)
@@ -34,19 +49,22 @@ class Customertype (models.Model):
 
     
 class Admin (models.Model):
-    user= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    admin= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     stafftype = models.ForeignKey(Stafftype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Customer Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
+    #gendertype = models.CharField(max_length=10, choices=Gendertype.choices, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
+
 
     def __str__(self):
         return self.user.username
 
 
 class Staff (models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    staff = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     stafftype = models.ForeignKey(Stafftype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Staff Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
+    #gendertype = models.CharField(max_length=10, choices=Gendertype.choices, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
 
     def __str__(self):
@@ -54,9 +72,10 @@ class Staff (models.Model):
 
 
 class Customer (models.Model):
-    user= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    customer = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     customertype = models.ForeignKey(Customertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Customer Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
+    #gendertype = models.CharField(max_length=10, choices=Gendertype.choices, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
 
     def __str__(self):

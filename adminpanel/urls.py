@@ -7,4 +7,7 @@ urlpatterns = [
        path('createadmin/', views.createadmin, name="createadmin"),
        path('createstaff/', views.createstaff, name="createstaff"),
        path('accounts/', views.accounts, name="accounts"),
+
+    # EDIT ADMIN PROFILE
+       path('editadminprofile/', views.editadminprofile, name="editadminprofile"),
 ]
