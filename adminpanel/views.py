@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from account.models import *
 from django.contrib import messages
 
+#from account.models import Admin
+from account.forms import UpdateAdminProfileForm
+from account.models import Admin
+
 # Create your views here.
 def adminpage(request):
     return render(request, 'admin/admin.html')
@@ -62,7 +66,8 @@ def createadmin(request):
         contact = None
         gender = None
         u = Stafftype.objects.get(pk=1)
-        Admin.objects.create(admin_id=id2, contact_number=contact, gendertype=gender, stafftype=u)
+
+        Admin.objects.create(admin=id2, contact_number=contact, gendertype=gender, stafftype=u)
 
         return redirect('/admin/createadmin')
     
@@ -118,8 +123,62 @@ def createstaff(request):
         contact = None
         gender = None
         u = Stafftype.objects.get(pk=1)
-        Staff.objects.create(staff_id=id2, contact_number=contact, gendertype=gender, stafftype=u)
+        Staff.objects.create(staff=id2, contact_number=contact, gendertype=gender, stafftype=u)
+
 
         return redirect('/admin/createstaff')
     
     return render(request, 'admin/create-staff.html')
+
+
+'''
+def editadminprofile(request, pk):
+    admin = Admin.objects.get(id=pk)
+    form = UpdateAdminProfileForm(instance=admin)
+
+    if request.method == 'POST':
+        form = UpdateAdminProfileForm(request.POST, instance=admin)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts')
+    else:
+        form = UpdateAdminProfileForm(request.POST, instance=admin)
+
+    context = {'form': form}
+    return render(request, 'user/edit-admin-profile.html', context)
+'''
+
+def editadminprofile(request):
+    gender_rows = Gendertype.objects.all()
+    if request.method == 'POST':
+        id = request.user.id
+        gender = request.POST['gender']
+        contact_number = request.POST['contact_number']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        g = Gendertype.objects.get(pk=gender)
+        admin = Admin.objects.get(pk=id)
+        admin.gendertype = g
+        admin.contact_number = contact_number
+        admin.save()
+        admin1 = CustomUser.objects.get(pk=id)
+        admin1.first_name = first_name
+        admin1.last_name = last_name
+        admin1.save()
+
+    #     form = UpdateAdminProfileForm(request.POST, instance=request.user)
+
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, f'Your account has been updated!')
+    #         return redirect('accounts')
+
+    else:
+        form = UpdateAdminProfileForm(instance=request.user)
+
+
+    context = {
+         'gender_rows':gender_rows
+     }
+
+    return render(request, 'user/edit-admin-profile.html', context)

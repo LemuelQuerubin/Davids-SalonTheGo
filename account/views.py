@@ -20,6 +20,8 @@ from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 
 
+
+
 #GENERAL PAGES
 def homepage(request):
     return render(request, 'general/homepage-login.html')
@@ -54,16 +56,15 @@ def loginpage(request):
 
         #AUTHENTICATE THE USER/CHECK IF THE INOUT MATCH ON THE RECORD IN THE DATABASE
         user = authenticate(username=username, password=password)
-        
-        if user is not None and user.is_customer:
+        if user.is_authenticated and user.is_customer:
             login(request, user)    
             return redirect('/')
   
-        elif user is not None and user.is_staff and not user.is_admin:
-            login(request, user)    
+        elif user.is_authenticated and user.is_staff and not user.is_admin :
+            login(request, user) 
             return redirect('/staff')
 
-        elif user is not None and user.is_staff and user.is_admin:
+        elif user.is_authenticated and user.is_staff and user.is_admin:
             login(request, user)    
             return redirect('/admin')
             
@@ -124,7 +125,8 @@ def registerpage(request):
         contact = None
         gender = None
         u = Customertype.objects.get(pk=1)
-        Customer.objects.create(customer_id=id2, contact_number=contact, gendertype=gender, customertype=u)
+        Customer.objects.create(customer=id2, contact_number=contact, gendertype=gender, customertype=u)
+
 
         #MESSAGE FOR SUCCESSFUL REGISTER
         messages.success(request, "Your Account has been successfully created")

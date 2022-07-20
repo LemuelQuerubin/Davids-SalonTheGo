@@ -4,6 +4,9 @@
 {% block content %}
 <div class="main">
     <p>account</p>
+    <u><a href="{% url 'editadminprofile' %}">Edit Profile</a></u><br>
+    gender: {{ user.gendertype }}<br>
+    contact #: {{ user.contact_number }}<br>
     <br><br>
     <a href="/admin/createstaff">CREATE STAFF</a><br>
     <a href="/admin/createadmin">CREATE ADMIN</a>
