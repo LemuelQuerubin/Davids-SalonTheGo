@@ -7,6 +7,8 @@ def adminpage(request):
     return render(request, 'admin/admin.html')
 
 def accounts(request):
+    
+
     return render(request, 'admin/accounts.html')
 
 def createadmin(request):
@@ -60,7 +62,7 @@ def createadmin(request):
         contact = None
         gender = None
         u = Stafftype.objects.get(pk=1)
-        Admin.objects.create(user=id2, contact_number=contact, gendertype=gender, stafftype=u)
+        Admin.objects.create(admin_id=id2, contact_number=contact, gendertype=gender, stafftype=u)
 
         return redirect('/admin/createadmin')
     
@@ -116,7 +118,7 @@ def createstaff(request):
         contact = None
         gender = None
         u = Stafftype.objects.get(pk=1)
-        Staff.objects.create(user=id2, contact_number=contact, gendertype=gender, stafftype=u)
+        Staff.objects.create(staff_id=id2, contact_number=contact, gendertype=gender, stafftype=u)
 
         return redirect('/admin/createstaff')
     

@@ -34,7 +34,7 @@ class Customertype (models.Model):
 
     
 class Admin (models.Model):
-    user= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    admin_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     stafftype = models.ForeignKey(Stafftype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Customer Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
@@ -44,7 +44,7 @@ class Admin (models.Model):
 
 
 class Staff (models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    staff_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     stafftype = models.ForeignKey(Stafftype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Staff Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
@@ -54,7 +54,7 @@ class Staff (models.Model):
 
 
 class Customer (models.Model):
-    user= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+    customer_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
     customertype = models.ForeignKey(Customertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Customer Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
     contact_number = models.CharField(max_length=20, null=True)
