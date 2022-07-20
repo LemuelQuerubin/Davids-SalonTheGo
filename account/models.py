@@ -50,6 +50,7 @@ class Customertype (models.Model):
     
 class Admin (models.Model):
     admin= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
+
     stafftype = models.ForeignKey(Stafftype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Customer Type")
     gendertype = models.ForeignKey(Gendertype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Gender")
     #gendertype = models.CharField(max_length=10, choices=Gendertype.choices, null=True, blank=True, verbose_name="Gender")

@@ -330,14 +330,14 @@
             </a>
             {% if user.is_customer %}
             <ul class="dropdown-menu">
-                <li><a href="/customer" class="dropdown-item"> Edit Profile </a></li>
+                <li><a href="/customer" class="dropdown-item">Profile </a></li>
                 <li><a href="#" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
             {% elif user.is_admin %}
             <ul class="dropdown-menu">
-                <li><a href="/admin" class="dropdown-item"> Edit Profile </a></li>
+                <li><a href="/admin" class="dropdown-item">Profile </a></li>
                 <li><a href="#" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
@@ -345,7 +345,7 @@
 
             {% else %}
             <ul class="dropdown-menu">
-                <li><a href="/staff" class="dropdown-item"> Edit Profile </a></li>
+                <li><a href="/staff" class="dropdown-item">Profile </a></li>
                 <li><a href="#" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
@@ -375,7 +375,7 @@
                 
                 {% if user.is_customer %}
                 <p>{{ user.customer.customertype }}</p> <br><br>
-                <li><a href="/customer">Edit Profile</a></li>
+                <li><a href="/customer">Customer Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Create Appointment</a></li>
                 <li><a href="#">Dashboard & History</a></li> <!--X-->
@@ -383,7 +383,6 @@
                 <li><a href="#">My Purchases</a></li>
                 <li><a href="#">Shopping Cart</a></li>
                 {% elif user.is_admin %}
-                
                 <li><a href="/admin">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="/admin/accounts">Accounts</a></li>
@@ -395,7 +394,7 @@
                 <li><a href="#">Reviews</a></li>
                 {% else %}
                 <p>{{ user.staff.stafftype }}</p><br><br>
-                <li><a href="/staff">Edit Profile</a></li>
+                <li><a href="/staff">Staff Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Appointments</a></li>
                 <li><a href="#">Reviews</a></li>

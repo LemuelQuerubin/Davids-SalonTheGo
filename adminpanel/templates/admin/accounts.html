@@ -10,8 +10,40 @@
     <br><br>
     <a href="/admin/createstaff">CREATE STAFF</a><br>
     <a href="/admin/createadmin">CREATE ADMIN</a>
+
+    <table>
+        <thead>
+            <tr>
+                <!-- TABLE HEADER -->
+                <th scope="col">Admin ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for admin in admins %}
+            <a>
+                <!-- TABLE BODY -->
+                <!--<td><a href="/products/{{product.id}}" id="prod-link">{% if product.insProd_Image %}<img src="{{product.insProd_Image.url}}" class="prod-img" />{% endif %}</a></td>-->
+                
+                <td data-label="ID">{{admin.admin_id}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+        
+    </table>
   
 </div>
+
+
 
 </div>
 {% endblock content %}

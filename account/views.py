@@ -127,6 +127,7 @@ def registerpage(request):
         u = Customertype.objects.get(pk=1)
         Customer.objects.create(customer=id2, contact_number=contact, gendertype=gender, customertype=u)
 
+
         #MESSAGE FOR SUCCESSFUL REGISTER
         messages.success(request, "Your Account has been successfully created")
 
