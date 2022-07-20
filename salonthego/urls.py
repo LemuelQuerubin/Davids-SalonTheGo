@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('account.urls')),
     
     path('admin/', include('adminpanel.urls')),
+    path('appointments', include('system.urls')),
 
 ]
 
