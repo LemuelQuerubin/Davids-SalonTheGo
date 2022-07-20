@@ -145,20 +145,36 @@ def editadminprofile(request, pk):
 '''
 
 def editadminprofile(request):
+    gender_rows = Gendertype.objects.all()
     if request.method == 'POST':
-        form = UpdateAdminProfileForm(request.POST, instance=request.user)
+        id = request.user.id
+        gender = request.POST['gender']
+        contact_number = request.POST['contact_number']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        g = Gendertype.objects.get(pk=gender)
+        admin = Admin.objects.get(pk=id)
+        admin.gendertype = g
+        admin.contact_number = contact_number
+        admin.save()
+        admin1 = CustomUser.objects.get(pk=id)
+        admin1.first_name = first_name
+        admin1.last_name = last_name
+        admin1.save()
 
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect('accounts')
-    
+    #     form = UpdateAdminProfileForm(request.POST, instance=request.user)
+
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, f'Your account has been updated!')
+    #         return redirect('accounts')
+
     else:
         form = UpdateAdminProfileForm(instance=request.user)
 
 
     context = {
-        'form':form
-    }
+         'gender_rows':gender_rows
+     }
 
     return render(request, 'user/edit-admin-profile.html', context)
