@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     #own
     'account',
     'adminpanel',
+    'system',
 ]
 
 MIDDLEWARE = [
