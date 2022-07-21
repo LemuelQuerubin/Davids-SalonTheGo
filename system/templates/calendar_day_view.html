@@ -1,0 +1,23 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/calendar_day_view.css' %}">
+
+<div class="main">
+Date: <br>
+Appointments:<br>
+
+    {% for appointment in appointments %}
+        {% if appointment.appointmentStatus == 'Approved' %}
+        <!-- if appointment.appointmentStatus == 'Approved' and appointment.apptDate == -->
+            <div class="schedule">
+                    <p>TIME START: {{ appointment.appt_timeStart|time:'h:i A' }} | BOOKED</p>
+                    <p style="color:red">DATE: {{ appointment.apptDate }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+</div>
+{% endblock %}

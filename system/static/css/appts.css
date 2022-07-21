@@ -632,4 +632,13 @@ p{
     padding-right: 2em;
 }
 
+ul{
+    font-size: 12px;
+    color: black;
 
+}
+
+.time-sample{
+    color: red;
+    background-color: blue;
+}

@@ -67,4 +67,13 @@ $("#addRow").click(function () {
 
   // service - price
   // total approximate time
-  
+
+  // DISABLE SAME OPTION FROM BEING PICKED
+  /*
+    $('select[name=services]').on('change', function() {
+      var self = this;
+      $('select[name=services]').find('option').prop('disabled', function() {
+          return this.value == self.value
+      });
+  });
+  */

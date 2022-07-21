@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
   </head>
   <body>
-		
+	
 	<div class="wrapper d-flex align-items-stretch">			
 
 		<div class="container-fluid justify-content-end">
@@ -33,22 +33,29 @@
 					<h5 class="pageHeader"><a onclick="history.back()"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
 				</div>
 				<div class="col-sm-12 col-md-8 col-lg-8"></div>
+
+                <h3>Ongoing Appointments: </h3>
+                <h3>Time & Date:</h3>
 			</div>
 
             <div class="row sub justify-content-between">
                 <div class="col-sm-12 col-md-8 col-lg-8">
-                    <form method="POST">
+                    <form method="POST" action="appointments/calendarDayView">
                         {% csrf_token %}
                             <div class="cardNewProject animate slide delay-1">
                                 {% include 'index.html' %}
                                 {% block content %}
                                 {% endblock content %}
+                                
                             </div>
                     </form>
+                    
+                    
                 </div>
-
+              
+                <!--OTHER COLUMN-->
 				<div class="col-sm-12 col-md-4 col-lg-4 illustration1">
-
+                    
 				</div>
             </div>
 			<br><br><br><br>
@@ -72,5 +79,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script type="module" src="{% static '/js/main.js' %}"></script>
+
+    <!-- Display Current Date and time -->
+    <script>
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+    </script>
 </body>
 </html>

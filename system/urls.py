@@ -12,11 +12,13 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     # CALENDAR -- not yet finished
     path('calendar/', views.calendar, name='calendar'),
+    path('calendarDayView/', views.calendarDayView, name='calendarDayView'),
 
     #ADMIN
     path('appointmentsPending/', views.appointmentsPending, name='appointmentsPending'),
     path('appointmentsApproved/', views.appointmentsApproved, name='appointmentsApproved'),
     path('jobOrderform/', views.jobOrderform, name='jobOrderform'),
+
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \

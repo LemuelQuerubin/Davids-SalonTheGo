@@ -44,9 +44,20 @@ def appointmentsNext(request):
 def index(request):
     return render(request, 'index.html')
 
+# CALENDAR
 def calendar(request):
-    return render(request, 'calendar.html')
 
+    return render(request, 'calendar.html' )
+
+def calendarDayView(request):
+    a = request.POST['date']
+    appointments = Appointment.objects.filter(apptDate = a)
+    context = {
+        'appointments':appointments
+    }
+    return render(request, 'calendar_day_view.html', context)
+
+# APPOINTMENTS
 def appointmentsPending(request):
     appointments = Appointment.objects.all()
     if "appointment" in request.session.keys():
@@ -77,3 +88,5 @@ def appointmentsApproved(request):
 
 def jobOrderform(request):
     return render(request, 'jobOrderform.html')
+
+

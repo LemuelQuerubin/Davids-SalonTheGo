@@ -114,3 +114,8 @@ Calendar Styling */
 .calendar .days li.today .date  {
   text-decoration: underline;
 }
+
+button{
+  border: none;
+  background: none;
+}
