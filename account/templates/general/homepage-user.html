@@ -368,13 +368,13 @@
             <div class="sidenav">
                 <ul>
                 
-                <p>{{ user.first_name }}</p>
-              
-                
-           
-                
+                <div class="sidenav-header">
+                    <img src="/images/logo-3.png"> 
+                    <p>{{ user.first_name }}</p>
+                       
                 {% if user.is_customer %}
-                <p>{{ user.customer.customertype }}</p> <br><br>
+                    <p>{{ user.customer.customertype }}</p> <br><br>
+                </div> 
                 <li><a href="/customer">Customer Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Create Appointment</a></li>
@@ -383,6 +383,8 @@
                 <li><a href="#">My Purchases</a></li>
                 <li><a href="#">Shopping Cart</a></li>
                 {% elif user.is_admin %}
+                    <p>{{ user.admin.stafftype }}</p> <br><br>
+                </div> 
                 <li><a href="/admin">Edit Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="/admin/accounts">Accounts</a></li>
@@ -393,7 +395,8 @@
                 <li><a href="#">Promos</a></li> <!--X-->
                 <li><a href="#">Reviews</a></li>
                 {% else %}
-                <p>{{ user.staff.stafftype }}</p><br><br>
+                   <p>{{ user.staff.stafftype }}</p><br><br>
+                </div> 
                 <li><a href="/staff">Staff Profile</a></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#">Appointments</a></li>

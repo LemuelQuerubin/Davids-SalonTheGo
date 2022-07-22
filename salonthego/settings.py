@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'salonthego.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'salonthego1',
+        'NAME': 'salonthego2',
         'PORT': '3306',
         'HOST': 'localhost',
     }

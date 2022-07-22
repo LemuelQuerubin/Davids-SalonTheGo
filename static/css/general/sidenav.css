@@ -29,6 +29,8 @@
     border-left: 1px solid #ccc;
   }
 
+
+
  
   
   
@@ -47,6 +49,26 @@
   margin-top: 30px;
   margin-bottom: 150px;
 }
+
+.sidenav-header{
+  display: inline-flex;
+  margin-bottom: 70px;
+  border:1px solid red;
+}
+
+.sidenav img{
+  width: 40%;
+  height: 10vh;
+  border:1px solid red;
+}
+
+#role{
+  width:100%;
+  border:1px solid red;
+
+}
+
+
 
 .logout{
   margin-bottom:25px;
