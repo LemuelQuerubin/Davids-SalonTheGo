@@ -2,43 +2,51 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/create-account.css' %}">
+
 <div class="main">
-    <div class="input-container">
-        <h1>CREATE ADMIN</h1>
-        <form action="/admin/createadmin/" method="post">
-            {% csrf_token %}
+    <div class="content-container">
+        <div class="header-container">
+            <p>Add Admin</p>
+         </div>
 
-            <label class="form-label1">First name</label>
-            <input class="form-box" type="text" id="fname" name="fname" placehoder="First name" Required><br>
-            <label class="form-label">Last name</label>
-            <input class="form-box" type="text" id="lname" name="lname" placehoder="Last name" Required><br>
+        <div class="botton-container">
+            <form action="/admin/createadmin/" method="post">
+                {% csrf_token %}
+    
+                <label class="text-label1">First name</label>
+                <input class="form-box" type="text" id="fname" name="fname" placehoder="First name" Required>
+                <label class="text-label2">Last name</label>
+                <input class="form-box" type="text" id="lname" name="lname" placehoder="Last name" Required><br><br>
+    
+                <label class="text-label3">Username</label>
+                <input class="form-box" type="text" id="username" name="username" placehoder="username" Required><br><br>
+    
+                <label class="text-label4" >Staff Role</label>
+                <select class="form-box" name="stafftype">
+                    {% for role in stafftype_rows  %}
+                        <option value="{{role.id}}" > {{role.stafftype}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+    
+                <label class="text-label5">Email address</label>
+                <input class="form-box" type="text" id="email" name="email" placehoder="Email Address" Required><br><br>
+    
+                <label class="text-label6">Password</label>
+                <input class="form-box" type="password" id="password" name="password" placehoder="Password" Required>
+    
+                <label class="text-label7">Confirm password</label>
+                <input class="form-box" type="password" id="pass2" name="pass2" placehoder="Confirm Password" Required><br><br>
+    
+                <button class="button1" type="submit">Create an account</button>
+                <button class="button2">Cancel</button>
+            </form>
 
-            <label class="form-label1">Username</label>
-            <input class="form-box1" type="text" id="username" name="username" placehoder="username" Required><br>
-
-            <label class="form-label1" >Staff Role</label>
-            <select name="stafftype">
-                {% for role in stafftype_rows  %}
-                    <option value="{{role.id}}" > {{role.stafftype}} </option>
-                {% endfor %}
-            </select>
-            <br>
-
-            <label class="form-label1">Email address</label>
-            <input class="form-box1" type="text" id="email" name="email" placehoder="Email Address" Required><br>
-
-            <label class="form-label1">Password</label>
-            <input class="form-box1" type="password" id="password" name="password" placehoder="Password" Required><br>
-
-            <label class="form-label1">Confirm password</label>
-            <input class="form-box1" type="password" id="pass2" name="pass2" placehoder="Confirm Password" Required><br>
-
-            <button class="btns" type="submit">Create an account</button>
-        </form>
+        </div>
+        
 </div>
-</div>
-  
-</div>
+
 {% endblock content %}
         
     
