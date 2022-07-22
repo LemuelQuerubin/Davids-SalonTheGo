@@ -10,4 +10,7 @@ urlpatterns = [
 
     # EDIT ADMIN PROFILE
        path('editadminprofile/', views.editadminprofile, name="editadminprofile"),
+   
+   # VIEW CUSTOMER ACCOUNTS
+      path('customeraccounts/', views.customeraccounts, name="customeraccounts"),
 ]

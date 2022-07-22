@@ -1,0 +1,15 @@
+
+/* ADD BUTTON */
+.addButton {
+    background-color: #7FB5FF;
+    color: black;
+    width: 10%;
+    border: 0;
+    height: 40px;
+    border-radius: 10px;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: auto;
+
+}

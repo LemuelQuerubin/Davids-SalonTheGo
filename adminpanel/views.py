@@ -14,8 +14,18 @@ def adminpage(request):
     return render(request, 'admin/admin.html', {'current_datetime':current_datetime})
 
 def accounts(request):
-    current_datetime = datetime.now() 
-    return render(request, 'admin/accounts.html', {'current_datetime':current_datetime})
+    current_datetime = datetime.now()
+    admins = CustomUser.objects.filter(is_admin=1) 
+    staffs = CustomUser.objects.filter(is_staff=1, is_admin=0)
+    context = {
+        'admins': admins,
+        'staffs':staffs,
+        'current_datetime':current_datetime
+    }
+    return render(request, 'admin/accounts.html', context)
+
+def customeraccounts(request):
+    return render(request, 'admin/customer_accounts.html')
 
 def createadmin(request):
     current_datetime = datetime.now() 
