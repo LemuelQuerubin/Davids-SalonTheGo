@@ -14,7 +14,5 @@ urlpatterns = [
     path('logout/', views.signout, name="signout"),
     path('activate/<uidb64>/<token>', views.activate, name="activate"),
 
-    #PANEL LINKS
-    path('customer/', views.customerpage, name="customerpage"),
-    path('staff/', views.staffpage, name="staffpage"),
+    
 ]
