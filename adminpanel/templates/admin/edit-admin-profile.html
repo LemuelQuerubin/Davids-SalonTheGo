@@ -2,34 +2,56 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/edit-profile.css' %}">
+
 <div class="main">
-    <div class="input-container">
-        <h1>Edit Admin Profile</h1>
-        <form method="POST" enctype="multipart/form-data" action="">
-            {% csrf_token %}
-            
-            <label class="form-label1">First name</label>
-            <input class="form-box" type="text" id="fname" name="fname" value="{{ user.first_name }}" Required><br>
+    <div class="content-container">
+        <div class="header-container">
+            <p>Edit Admin Profile</p>
+         </div>
 
-            <label class="form-label1">Last name</label>
-            <input class="form-box" type="text" id="lname" name="lname" value="{{ user.last_name }}" Required><br>
-            
-            <label class="form-label1" >Gender</label>
-            <select name="gender">
-                {% for row in gender_rows  %}
-                    <option value="{{row.id}}" > {{row.gendertype}} </option>
-                {% endfor %}
-            </select>
-            <br>
-            
-            <label class="form-label1">Contact Number:</label>
-            <input class="form-box" type="text" id="contact_number" name="contact_number" placeholder="09123456789" Required value="{{ user.contact_number }}"><br>
+         <div class="top-container">
+            <div class="image-container">
+                 <!--IMAGE CONTAINER-->
+            </div>
+            <div class="name-container">
+                <label class="text-label">{{ user.first_name }}</label>
+                <label class="text-label">{{ user.last_name }}</label><br>
+                <button class="button3">Upload Photo</button>
+            </div>
+        </div>
 
-            <button class="btns" type="submit" value="Submit">Save Profile</button>
-           
 
-            
-        </form>
+        <div class="botton-container">
+            <label class="text-label1">Admin Role</label>
+            <label class="text-label5">{{ user.admin.stafftype }}</label><br><br>
+
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                
+                <label class="text-label1">First name</label>
+                <input class="form-box" type="text" id="fname" name="fname" value="{{ user.first_name }}" Required>
+
+                <label class="text-label2">Last name</label>
+                <input class="form-box" type="text" id="lname" name="lname" value="{{ user.last_name }}" Required><br><br>
+                
+                <label class="text-label3">Contact Number:</label>
+                <input class="form-box" type="text" id="contact_number" name="contact_number" placeholder="09123456789" Required value="{{ user.contact_number }}"><br><br>
+                
+                <label class="text-label4" >Gender</label>
+                <select class="form-box" name="gender">
+                    {% for row in gender_rows  %}
+                        <option value="{{row.id}}" > {{row.gendertype}} </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                
+
+                <button class="button1" type="submit" value="Submit">Save</button>
+                <button class="button2">Cancel</button>
+                
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
