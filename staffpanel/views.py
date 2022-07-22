@@ -6,11 +6,17 @@ from django.contrib import messages
 from account.forms import UpdateAdminProfileForm
 from account.models import Admin
 
+from datetime import datetime
+
 # Create your views here.
 def staffpage(request):
-    return render(request, 'staff/staff.html')
+    current_datetime = datetime.now() 
+
+    return render(request, 'staff/staff.html', {'current_datetime':current_datetime})
 
 def editstaffprofile(request):
+    current_datetime = datetime.now() 
+
     gender_rows = Gendertype.objects.all()
     if request.method == 'POST':
         id = request.user.id
@@ -33,7 +39,8 @@ def editstaffprofile(request):
 
 
     context = {
-         'gender_rows':gender_rows
+         'gender_rows':gender_rows, 
+         'current_datetime':current_datetime,
      }
 
     return render(request, 'staff/edit-staff-profile.html', context)

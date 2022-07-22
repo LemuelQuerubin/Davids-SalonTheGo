@@ -6,14 +6,20 @@ from django.contrib import messages
 from account.forms import UpdateAdminProfileForm
 from account.models import Admin
 
+from datetime import datetime
+
 # Create your views here.
 def adminpage(request):
-    return render(request, 'admin/admin.html')
+    current_datetime = datetime.now() 
+    return render(request, 'admin/admin.html', {'current_datetime':current_datetime})
 
 def accounts(request):
-    return render(request, 'admin/accounts.html')
+    current_datetime = datetime.now() 
+    return render(request, 'admin/accounts.html', {'current_datetime':current_datetime})
 
 def createadmin(request):
+    current_datetime = datetime.now() 
+
     stafftype_rows = Stafftype.objects.all()
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
@@ -75,13 +81,16 @@ def createadmin(request):
         return redirect('/admin/createadmin')
     
     context = {
-            'stafftype_rows': stafftype_rows
+            'stafftype_rows': stafftype_rows,
+            'current_datetime':current_datetime,
         }
     
-    return render(request, 'admin/create-admin.html', context)
+    return render(request, 'admin/create-admin.html', context,)
 
 
 def createstaff(request):
+    current_datetime = datetime.now() 
+
     stafftype_rows = Stafftype.objects.all()
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
@@ -143,7 +152,9 @@ def createstaff(request):
         return redirect('/admin/createstaff')
         
     context = {
-            'stafftype_rows': stafftype_rows
+            'stafftype_rows': stafftype_rows,
+            'current_datetime':current_datetime,
+            
         }
 
     return render(request, 'admin/create-staff.html', context)
@@ -167,6 +178,8 @@ def editadminprofile(request, pk):
 '''
 
 def editadminprofile(request):
+    current_datetime = datetime.now() 
+
     gender_rows = Gendertype.objects.all()
     if request.method == 'POST':
         id = request.user.id
@@ -196,7 +209,8 @@ def editadminprofile(request):
 
 
     context = {
-         'gender_rows':gender_rows
+         'gender_rows':gender_rows, 
+         'current_datetime':current_datetime,
      }
 
     return render(request, 'admin/edit-admin-profile.html', context)
