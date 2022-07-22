@@ -2,13 +2,18 @@ from django.shortcuts import render
 from account.models import *
 
 from account.forms import UpdateAdminProfileForm
+
+from datetime import datetime
 # Create your views here.
 
 
 def customerpage(request):
-    return render(request, 'customer/customer.html')
+    current_datetime = datetime.now() 
+    return render(request, 'customer/customer.html', {'current_datetime':current_datetime})
 
 def editcustomerprofile(request):
+    current_datetime = datetime.now() 
+
     gender_rows = Gendertype.objects.all()
     if request.method == 'POST':
         id = request.user.id
@@ -38,7 +43,8 @@ def editcustomerprofile(request):
 
 
     context = {
-         'gender_rows':gender_rows
+         'gender_rows':gender_rows,
+         'current_datetime':current_datetime,
      }
 
     return render(request, 'customer/edit-customer-profile.html', context)
