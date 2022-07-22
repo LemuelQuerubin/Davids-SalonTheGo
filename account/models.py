@@ -14,21 +14,7 @@ class CustomUser (AbstractUser):
 class Gendertype (models.Model):
     id = models.AutoField(primary_key=True)
     gendertype = models.CharField(max_length=20)
-#    MALE = 'Male',
-#    FEMALE = 'Female',
-#    OTHERS = 'Others'
-#    
-#    GENDER_CHOICES = [
-#        (MALE, 'Male'),
-#        (FEMALE, 'Female'),
-#        (OTHERS, 'Others')
-#    ]
-#
-#    gender = models.CharField(
-#        max_length=9,
-#        choices=GENDER_CHOICES,
-#        default=MALE
-#    )
+
     def __str__(self):
         return self.gendertype
     

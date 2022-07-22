@@ -11,8 +11,6 @@ def adminpage(request):
     return render(request, 'admin/admin.html')
 
 def accounts(request):
-    
-
     return render(request, 'admin/accounts.html')
 
 def createadmin(request):
@@ -181,4 +179,4 @@ def editadminprofile(request):
          'gender_rows':gender_rows
      }
 
-    return render(request, 'user/edit-admin-profile.html', context)
+    return render(request, 'admin/edit-admin-profile.html', context)
