@@ -11,10 +11,11 @@ def adminpage(request):
     return render(request, 'admin/admin.html')
 
 def accounts(request):
+    
+
     return render(request, 'admin/accounts.html')
 
 def createadmin(request):
-    stafftype_rows = Stafftype.objects.all()
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
         username = request.POST['username'] 
@@ -23,9 +24,6 @@ def createadmin(request):
         email = request.POST['email']
         password = request.POST['password']
         pass2 = request.POST['pass2']
-        stafftype = request.POST['stafftype']
-        
-        s = Stafftype.objects.get(pk=stafftype)
         
         #IF USER IS ALREADY TAKEN
         if CustomUser.objects.filter(username=username):
@@ -59,7 +57,6 @@ def createadmin(request):
         myuser.is_admin = 1
         myuser.is_staff = 1
         myuser.is_superuser = 1
-        stafftype = s
   
         #SAVING
         myuser.save()
@@ -68,21 +65,16 @@ def createadmin(request):
         id2 = CustomUser.objects.get(pk=id1)
         contact = None
         gender = None
-        #u = Stafftype.objects.get(pk=1)
+        u = Stafftype.objects.get(pk=1)
 
-        Admin.objects.create(admin=id2, contact_number=contact, gendertype=gender, stafftype=s)
+        Admin.objects.create(admin=id2, contact_number=contact, gendertype=gender, stafftype=u)
 
         return redirect('/admin/createadmin')
     
-    context = {
-            'stafftype_rows': stafftype_rows
-        }
-    
-    return render(request, 'admin/create-admin.html', context)
+    return render(request, 'admin/create-admin.html')
 
 
 def createstaff(request):
-    stafftype_rows = Stafftype.objects.all()
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
         username = request.POST['username'] 
@@ -91,12 +83,6 @@ def createstaff(request):
         email = request.POST['email']
         password = request.POST['password']
         pass2 = request.POST['pass2']
-        stafftype = request.POST['stafftype']
-        
-        s = Stafftype.objects.get(pk=stafftype)
-        
-        
-
         
         #IF USER IS ALREADY TAKEN
         if CustomUser.objects.filter(username=username):
@@ -128,7 +114,6 @@ def createstaff(request):
         myuser.last_name = lname
         myuser.is_active = 1
         myuser.is_staff = 1
-        stafftype = s
         
         #SAVING
         myuser.save()
@@ -137,16 +122,13 @@ def createstaff(request):
         id2 = CustomUser.objects.get(pk=id1)
         contact = None
         gender = None
-        # u = Stafftype.objects.get(pk=1)
-        Staff.objects.create(staff=id2, contact_number=contact, gendertype=gender, stafftype=s)
+        u = Stafftype.objects.get(pk=1)
+        Staff.objects.create(staff=id2, contact_number=contact, gendertype=gender, stafftype=u)
+
 
         return redirect('/admin/createstaff')
-        
-    context = {
-            'stafftype_rows': stafftype_rows
-        }
-
-    return render(request, 'admin/create-staff.html', context)
+    
+    return render(request, 'admin/create-staff.html')
 
 
 '''
@@ -199,4 +181,4 @@ def editadminprofile(request):
          'gender_rows':gender_rows
      }
 
-    return render(request, 'admin/edit-admin-profile.html', context)
+    return render(request, 'user/edit-admin-profile.html', context)

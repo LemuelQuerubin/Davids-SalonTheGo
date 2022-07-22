@@ -16,14 +16,6 @@
             <label class="form-label1">Username</label>
             <input class="form-box1" type="text" id="username" name="username" placehoder="username" Required><br>
 
-            <label class="form-label1" >Staff Role</label>
-            <select name="stafftype">
-                {% for role in stafftype_rows  %}
-                    <option value="{{role.id}}" > {{role.stafftype}} </option>
-                {% endfor %}
-            </select>
-            <br>
-
             <label class="form-label1">Email address</label>
             <input class="form-box1" type="text" id="email" name="email" placehoder="Email Address" Required><br>
 

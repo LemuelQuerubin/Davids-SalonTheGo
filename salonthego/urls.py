@@ -25,11 +25,7 @@ urlpatterns = [
     path('', include('account.urls')),
     
     path('admin/', include('adminpanel.urls')),
-    # STAFF
-    path('staff/', include('staffpanel.urls')),
-    # CUSTOMER
-    path('customer/', include('customerpanel.urls')),
-    
+    path('appointments/', include('system.urls')),
 
 ]
 

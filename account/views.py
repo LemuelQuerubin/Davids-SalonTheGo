@@ -22,7 +22,7 @@ from django.core.mail import EmailMessage, send_mail
 
 
 
-# GENERAL PAGES
+#GENERAL PAGES
 def homepage(request):
     return render(request, 'general/homepage-login.html')
 
@@ -36,8 +36,18 @@ def aboutus(request):
     return render(request, 'general/aboutus.html')
 
 
+#USER PAGES
+def customerpage(request):
+    return render(request, 'user/customer.html')
 
-# AUTHENTICATION PAGES
+def staffpage(request):
+    return render(request, 'user/staff.html')
+   
+def adminpage(request):
+    return render(request, 'user/admin.html')
+
+
+#AUTHENTICATION PAGES
 def loginpage(request):
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE

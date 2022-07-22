@@ -50,8 +50,7 @@ INSTALLED_APPS = [
     #own
     'account',
     'adminpanel',
-    'customerpanel',
-    'staffpanel',
+    'system',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +93,8 @@ DATABASES = {
         'NAME': 'salonthego1',
         'PORT': '3306',
         'HOST': 'localhost',
+        'USER': 'root',
+        'PASSWORD': ''
     }
 }
 
