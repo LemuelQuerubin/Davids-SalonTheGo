@@ -68,7 +68,23 @@ class Customer (models.Model):
     def __str__(self):
         return self.user.username
 
+# SERVICES / based on DB Design
+class Servicetype (models.Model):
+    id = models.AutoField(primary_key=True)
+    servicetype = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.servicetype
+    
+class Services (models.Model):
+    id = models.AutoField(primary_key=True)
+    services = models.CharField(max_length=100)
+    servicetype = models.ForeignKey(Servicetype, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Service Type")
+    serviceprice = models.DecimalField(max_digits=9, decimal_places=2)
+
+    def __str__(self):
+        return self.services
+    
 
 
     
