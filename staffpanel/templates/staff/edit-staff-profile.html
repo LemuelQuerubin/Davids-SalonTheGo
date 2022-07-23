@@ -36,7 +36,7 @@
                 <input class="form-box" type="text" id="lname" name="lname" value="{{ user.last_name }}" Required><br><br>
                 
                 <label class="text-label3">Contact Number:</label>
-                <input class="form-box" type="text" id="contact_number" name="contact_number" placeholder="09123456789" Required value="{{ user.contact_number }}"><br><br>
+                <input class="form-box" type="text" id="contact_number" name="contact_number" placeholder="09123456789" Required value="{{ user.staff.contact_number }}"><br><br>
                 
                 <label class="text-label4" >Gender</label>
                 <select class="form-box" name="gender">
@@ -48,7 +48,7 @@
                 
 
                 <button class="button1" type="submit" value="Submit">Save</button>
-                <button class="button2">Cancel</button>
+                <a href="/staff/"><button type="button"  name="cancel" class="button2" type="submit">Cancel</button></a>
                 
             </form>
         </div>

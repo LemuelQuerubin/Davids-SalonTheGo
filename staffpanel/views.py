@@ -34,6 +34,8 @@ def editstaffprofile(request):
         staff1.last_name = last_name
         staff1.save()
 
+        return redirect('/staff/')
+
     else:
         form = UpdateAdminProfileForm(instance=request.user)
 

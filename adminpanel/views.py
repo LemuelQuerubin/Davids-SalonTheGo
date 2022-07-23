@@ -25,7 +25,11 @@ def accounts(request):
     return render(request, 'admin/accounts.html', context)
 
 def customeraccounts(request):
-    return render(request, 'admin/customer_accounts.html')
+    customers = CustomUser.objects.filter(is_customer=1) 
+    context = {
+        'customers': customers
+    } 
+    return render(request, 'admin/customer_accounts.html', context)
 
 def createadmin(request):
     current_datetime = datetime.now() 
@@ -33,6 +37,7 @@ def createadmin(request):
     stafftype_rows = Stafftype.objects.all()
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
+
         username = request.POST['username'] 
         fname = request.POST['fname']
         lname = request.POST['lname']
@@ -65,8 +70,7 @@ def createadmin(request):
         if not username.isalnum():
             messages.error(request, "Username must be alpha-numeric")
             return redirect('/login')
-        
-        
+            
         #TRANSFERRING TO THE BACKEND/DATABASE
         myuser = CustomUser.objects.create_user(username, email, password)
         myuser.first_name = fname
@@ -88,7 +92,7 @@ def createadmin(request):
 
         Admin.objects.create(admin=id2, contact_number=contact, gendertype=gender, stafftype=s)
 
-        return redirect('/admin/createadmin')
+        return redirect('/admin/accounts')
     
     context = {
             'stafftype_rows': stafftype_rows,
@@ -159,7 +163,7 @@ def createstaff(request):
         # u = Stafftype.objects.get(pk=1)
         Staff.objects.create(staff=id2, contact_number=contact, gendertype=gender, stafftype=s)
 
-        return redirect('/admin/createstaff')
+        return redirect('/admin/accounts')
         
     context = {
             'stafftype_rows': stafftype_rows,
@@ -206,6 +210,8 @@ def editadminprofile(request):
         admin1.first_name = first_name
         admin1.last_name = last_name
         admin1.save()
+
+        return redirect('/admin/')
 
     #     form = UpdateAdminProfileForm(request.POST, instance=request.user)
 
