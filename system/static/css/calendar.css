@@ -12,13 +12,60 @@
   height: 0;
   clear: both;
   visibility: hidden;
+  
 }
+/* ================
+Time, Date, Ongoing Appointments Styling */
+.calendar-title{
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.time-date-ongoing-container {
+  font-family: Montserrat;
+  border-radius: 20px;
+  text-align: center;
+  width: 85%;
+  height: 120px;
+  vertical-align: middle;
+  margin-bottom: 20px;
+  margin-left: 40px;
+  margin-right: auto;
+  display: flex;
+  box-shadow: rgba(115, 124, 132, 0.2) 0px 8px 24px;
+}
+.child {
+  width: 80%;
+  margin: 0 10px;
+  /* inline-block hack */
+  font-size: medium;
+  text-align: center;
+  margin: auto;
+}
+
+.child p{
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+
+.time-date{
+  font-size: 30px !important;
+  font-weight: 800;
+  color: #001D6E;
+}
+
+
 
 /* ================
 Calendar Styling */
 .calendar {
-  min-width: 375px;
+  min-width: 1000px;
   position: relative;
+  font-family: Montserrat;
+  margin-top: 0px !important;
+  padding-top: 0px !important;
 }
 .calendar a{
   cursor: pointer;
@@ -61,12 +108,19 @@ Calendar Styling */
 }
 
 .calendar .day-names {
+  /* COLOR FOR DAY LABELS */
   border-bottom: 1px solid #eee;
-  color: #444;
+  color: white;
+  background-color: #001D6E;
+  padding: 10px 8px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .calendar .days { 
-  border-bottom: 1px solid #eee;
+  /* DATES */
+  border-bottom: 1px solid #7FB5FF;
+  text-align: center;
 }
 .calendar .days li {
   min-height: 6rem;
@@ -109,13 +163,27 @@ Calendar Styling */
 }
 
 .calendar .days li.outside .date  {
-  color: #ddd;
+  /* COLOR FOR UNAVAILABLE DATE */
+  color: rgb(144, 144, 144);
+  cursor: default;
 }
 .calendar .days li.today .date  {
-  text-decoration: underline;
+ /* COLOR FOR DATE TODAY */
+  background-color: #001D6E;
+  border: 1px solid #001D6E;
+  border-radius: 100px;
+  padding: 0px 10px;
+  color: white;
 }
 
 button{
   border: none;
   background: none;
+}
+
+.next-month{
+  margin-left: 20px;
+}
+.prev-month{
+  margin-right: 20px;
 }

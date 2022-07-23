@@ -1,5 +1,56 @@
+.time-date-ongoing-container {
+    font-family: Montserrat;
+    border-radius: 20px;
+    text-align: center;
+    width: 85%;
+    height: 120px;
+    vertical-align: middle;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: auto;
+    display: flex;
+    box-shadow: rgba(115, 124, 132, 0.2) 0px 8px 24px;
+  }
+  .child {
+    width: 80%;
+    margin: 0 10px;
+    /* inline-block hack */
+    font-size: medium;
+    text-align: center;
+    margin: auto;
+  }
+  
+  .child p{
+    margin-bottom: 0px;
+    font-size: 20px;
+  }
+  
+  .time-date{
+    font-size: 30px !important;
+    font-weight: 800;
+    color: #001D6E;
+  }
+
 .schedule {
-    border: 1px solid red;
+    border-radius: 20px;
+    background-color: #C4DDFF;
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin-top:20px;
+    margin-bottom: 20px;
+    width: 90%;
 }
+
+.schedule:hover {
+    border-radius: 20px;
+    background-color: #accdfb;
+    padding: 1rem;
+    margin-top:20px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.schedule p{
+    margin-bottom: 0px;
+}
+
+

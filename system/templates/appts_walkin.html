@@ -1,12 +1,8 @@
-
-{% extends "general/homepage-user.html" %} 
 {% load static %}
-
-{% block content %}
-<div class ="main">
-
+<!doctype html>
+<html lang="en">
   <head>
-  	<title>Appointments</title>
+  	<title>SalOnTheGo| Walk-in Appointments</title>
     <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,56 +10,74 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
+    <link rel="stylesheet" href="{% static '/css/appts.css' %}">
   </head>
-
   <body>
 		
+	<div class="wrapper d-flex align-items-stretch">			
 
-<div class="content-container">
-    <h5 class="go-back"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
-				
-            <div class="form-container">
-              
+		<div class="container-fluid justify-content-end">
+			<div class="row main justify-content-between">
+				<div class="col-sm-12 col-md-4 col-lg-4">
+					<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+				</div>
+				<div class="col-sm-12 col-md-8 col-lg-8"></div>
+			</div>
+
+            <div class="row sub justify-content-between">
+                <div class="col-sm-12 col-md-8 col-lg-8">
                     <form method="POST">
                         {% csrf_token %}
-                            <div class="">
-                                <div class="">
-                                    <div class="header-container">
-                                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;APPOINTMENT FORM</h5>								
-                                    </div>  
-                                </div>
-                        
-
-                                <div class="name-container">
-                                    <div class="small-name-container">                                
-                                        <h5 class="name-text">First Name</h5>
-                                        <input type="text" class="name-text-box" name="fname" value="{{ user.first_name }}" aria-describedby="companyNameHelp" required>
+                            <div class="cardNewProject animate slide delay-1">
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        
+                                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;WALK-IN APPOINTMENT FORM</h5>								
                                     </div>
-
-                                    <div class="small-name-container">
-                                        <h5 class="name-text">Last Name</h5>
-                                        <input type="text" class="name-text-box" name="lname" value="{{ user.last_name }}" aria-describedby="companyNameHelp" required>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <h5 class="profileHeader">First Name</h5>
+                                        <input type="text" class="form-control" name="fname" value="" aria-describedby="companyNameHelp" required>
+                                    </div>
+                                    
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <h5 class="profileHeader">Last Name</h5>
+                                        <input type="text" class="form-control" name="lname" value="" aria-describedby="companyNameHelp" required>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <h5 class="profileHeader">Email Address</h5>
+                                        <input type="text" class="form-control" name="fname" value="" aria-describedby="companyNameHelp" required>
+                                    </div>
+                                    
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <h5 class="profileHeader">Contact Number</h5>
+                                        <input type="text" class="form-control" name="lname" value="" aria-describedby="companyNameHelp" required>
                                     </div>
                                 </div>
         
-
-                                <div class="add-service">
-                                    <div class="service-container">
+                                <br><br>
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-5 col-lg-5">
                                         <h5 class="formSection1"><i class="fa fa-archive" aria-hidden="true"></i>&nbsp;&nbsp;Service</h5>
+                                    
                                     </div>
-
-                                    <div class="add-row">
-                                        <h6 id="addRow"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add another service</h6>
+                                    <div class="col-sm-12 col-md-2 col-lg-2">
+                                        <h6 id="addRow" class="addRowButton"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add another service</h6>
                                     </div>
+                                    <div class="col-sm-12 col-md-5 col-lg-5"></div>
                                 </div>
-
-                                
-                                <div id="serviceRow" class="service-row">
-                                    <div class="service-input-container">
+                                <div id="serviceRow" class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-5 col-lg-5">
                                         <br>
-                                        <select class="service-input" name="services" aria-label="Default select example" required>
+                                        <select class="form-select" name="services" aria-label="Default select example" required>
                                             <option value="" selected disabled hidden>Select a service</option>
                                             <!--HAIRCUT-->
                                             <option value="Haircut">Haircut (₱350)</option>
@@ -102,15 +116,14 @@
                                             -->
                                         </select>
                                     </div>
-
-                                    <div class="remove-service">
+                                    <div class="col-sm-12 col-md-7 col-lg-7">
+                                        <br>
                                         <i id="removeService" class="fa fa-minus-square" aria-hidden="true"></i>
                                     </div>
-
                                 </div>
 
                                 <div id="newServiceRow"></div>
-                            
+        
                                 <br><br>
                                 <b>NOTE:</b> 
                                     <ul>
@@ -118,17 +131,22 @@
                                         <li>Please be reminded that only selected services will be accommodated on the time of the appointment. </li>
                                     </ul>
                                 <br>
-                              
-                            
-                                    <input class="buttons" type="submit" value="Next">
-                             
-                               
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <input class="btn btn-primary submitButton" type="submit" value="Next">
+                                    </div>
+                                </div>
                             </div>
                     </form>
                 </div>
-	
+
+				<div class="col-sm-12 col-md-4 col-lg-4 illustration1">
+
+				</div>
+            </div>
+			<br><br><br><br>
 		</div>
-    </div>    
+      
 	</div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
@@ -143,16 +161,9 @@
             return this.value == self.value
         });
     });
-    */ 
-    </script>
-  
-       
+    */
+        
     
-
-</div>
-</div>
-
-{% include 'general/footer.html' %}
-
-{% endblock content %}
-
+    </script>
+</body>
+</html>

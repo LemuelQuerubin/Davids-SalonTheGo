@@ -10,6 +10,10 @@ class Appointment(models.Model):
         ('Successful', 'Successful'),
         ('Approved', 'Approved')   
     ]
+    appt_type = [
+        ('Online', 'Online'),
+        ('Walk In', 'Walk In')
+    ]
 
     customer_fname = models.CharField(max_length=50, verbose_name="First Name", null=True)
     customer_lname = models.CharField(max_length=50, verbose_name="Last Name", null=True)
@@ -20,9 +24,10 @@ class Appointment(models.Model):
     appointmentStatus = models.CharField(max_length=20, verbose_name="Appointment Status", choices=appt_stat, default='Pending')
     apptDate = models.DateField(verbose_name="Appointment Date", blank=True, null=True)
     appt_timeStart = models.TimeField(verbose_name="Time Start", blank=True, null=True)
+    apptType = models.CharField(max_length=20, verbose_name="Appointment Type", choices=appt_type, default='Online')
 
     def __str__(self):
-        return '[%s] %s %s' %(self.id, self.customer_fname, self.customer_lname)
+        return '[%s] %s %s' %(self.apptType, self.customer_fname, self.customer_lname)
 
 #class AppointmentApproved(models.Model):
 '''

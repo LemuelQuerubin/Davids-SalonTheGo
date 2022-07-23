@@ -6,15 +6,25 @@
 <link rel="stylesheet" href="{% static 'css/calendar_day_view.css' %}">
 
 <div class="main">
-Date: <br>
-Appointments:<br>
+    <h5 class="go-back"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Calendar</a></h5>
+    
+    <div class="time-date-ongoing-container">
+        <div class="child">
+            <p class="time-date"> MONTH DATE </p>
+            <p>Date</p>
+        </div>
+        <div class = "child">
+            <p class="time-date">0 </p>
+            <p>Booked Appointments</p>
+        </div>
+    </div>
 
     {% for appointment in appointments %}
         {% if appointment.appointmentStatus == 'Approved' %}
         <!-- if appointment.appointmentStatus == 'Approved' and appointment.apptDate == -->
             <div class="schedule">
-                    <p>TIME START: {{ appointment.appt_timeStart|time:'h:i A' }} | BOOKED</p>
-                    <p style="color:red">DATE: {{ appointment.apptDate }}</p>
+                    <p><b>TIME START:</b> {{ appointment.appt_timeStart|time:'h:i A' }} | BOOKED</p>
+                    <p>DATE: {{ appointment.apptDate }}</p>
             </div>
         {% endif %}
     {% endfor %}

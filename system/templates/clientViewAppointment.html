@@ -5,9 +5,7 @@
 
 <div class ="main">
   <head>
-  	<title>Pending Appointments</title>
-    <!--Dito yung iaapprove siya ni Admin after magcreate ni customer ng appt. 
-        Tapos mapupunta sa appts_approved-->
+  	<title>My Appointment</title>
     <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,24 +31,21 @@
   </head>
   <body>
 		
-	<div>	
+	<div class="">	
 
 			<div class="go-back">		
 				<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
 			</div>
-
-            {% for appointment in appointments %}
-                {% if appointment.appointmentStatus == 'Pending' %}
                 <div class="whole-container">
                     <div class="box-container">
                         <div class="month-box">
                             <div class="month-box-container">
-                                <div class="month">
-                                    <h6>{{ appointment.apptDate|date:'F' }}</h6>
-                                </div>
-                                <div class="box">
-                                    <h2>{{ appointment.apptDate|date:'d' }}</h2>
-                                </div>
+                                    <div class="month">
+                                       <h6>{{ appointment.apptDate|date:'F' }}</h6>
+                                    </div>
+                                    <div class="box">
+                                        <h2>{{ appointment.apptDate|date:'d' }}</h2>
+                                    </div>
                             </div>
                         </div>
                                     
@@ -79,44 +74,43 @@
                                     <h4>STYLISTS:</h4>
                                     <p>{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
                             </div>   
+
+                            <div class="info-container">
+                                    <h4>STATUS:</h4>
+                                    <p>{{ appointment.Status }}, {{ appointment.Status }}</p>
+                        </div> 
                         </div>
+
                     </div>
 
                     <div class="button-container">
-                        <div class="button-half">
+                        <div class="">
                             <form method="POST">
                             {% csrf_token %}
-                                <input type="hidden" value="{{ appointment.id }}" name="approve">
-                                <input class="buttons3" type="submit" value="Approve Appointment" name="button" id="approve">
+                                <input type="hidden" value="{{ appointment.id }}" name="cancel">
+                                <input class="buttons3" type="submit" value="Cancel Appointment" name="button" id="cancel">
                             </form>
                         </div>
-                    
-                        <div class="button-half">
-                            <form method="POST">
-                            {% csrf_token %}
-                                <input type="hidden" value="{{ appointment.id }}" name="reject">
-                                <input class="buttons3" type="submit" value="Reject Appointment" name="button" id="reject">
-                            </form>
-                        </div>  
+                 
                     </div>
+
                 </div>
-            {% endif %}
-        {% endfor %}
-		
-            
-            <a data-bs-toggle="modal" data-bs-target="#apptPending" id="click" hidden></a>
-            
-            
-            <div class="modal fade" id="apptPending" tabindex="-1" aria-label="exampleModalLabel" aria-hidden="true">
+        <!--MODAL NA HINDI KO SURE IF GUMAGANA-->
+            <a data-bs-toggle="modal" data-bs-target="#" id="click" hidden></a>
+            <div class="modal fade" id="apptCancel" tabindex="-1" aria-label="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <form>
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Appointment Pending</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Cancellation of Appointment</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Appointment is now pending. Wait for few minutes for the admin's approval.</p>
+                                <p>Are you sure you want to cancel? Cancellation of appointments for three (3) times will result in blocking your account from making an appointment</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Confirm</button>
+                                <button type="button" class="btn btn-primary">Cancel</button>
                             </div>
                         </div>
                     </form>
