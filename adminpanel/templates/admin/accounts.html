@@ -3,65 +3,94 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
 
 <div class="main">
-    <a href="{% url 'customeraccounts'%}">Customer Accounts</a>
-    <!-- ADMIN TABLE -->
-    <a href="/admin/createadmin"><button class="addButton">Add Admin</button></a>
-    <h1>Admin Table</h1>
-    <table width="100%">
-        <thead>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Username</td>
-            <td>Staff Role</td>
-            <td>Gender</td>
-            <td>Contact Number</td>
-            <td>Option</td>
-        </thead>
-        <tbody>
-            {% for row in admins %}
-            <tr>
-                <td>{{row.first_name}} {{row.last_name}}
-                <td>{{row.email}}
-                <td>{{row.username}}
-                <td>{{row.admin.stafftype.stafftype}}
-                <td>{{row.admin.gendertype.gendertype}}
-                <td>{{row.admin.contact_number}}
-                <td><button> Delete </button></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- STAFF TABLE -->
-    <a href="/admin/createstaff"><button class="addButton">Add Staff</button></a><br>
-    <h1>Staff Table</h1>
-    <table width="100%">
-        <thead>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Username</td>
-            <td>Staff Role</td>
-            <td>Gender</td>
-            <td>Contact Number</td>
-            <td>Option</td>
-        </thead>
-        <tbody>
-            {% for row in staffs %}
-            <tr>
-                <td>{{row.first_name}} {{row.last_name}}
-                <td>{{row.email}}
-                <td>{{row.username}}
-                <td>{{row.staff.stafftype.stafftype}}
-                <td>{{row.staff.gendertype.gendertype}}
-                <td>{{row.staff.contact_number}}
-                <td><button> Delete </button></td>
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
+    <div class="tables">
+        <!-- ADMIN TABLE -->
+        <div class="title-button">
+            <p class="tbl-title">Admin Table</p>
+            <a href="/admin/createadmin"><button class="addButton">Add Admin</button></a>
+        </div>
         
-    
+        <div class="admin-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Staff Role</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                </thead>
+                <tbody>
+                    {% for row in admins %}
+                    <tr>
+                        <td>{{row.first_name}}</td> 
+                        <td>{{row.last_name}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.username}}</td>
+                        <td>{{row.admin.stafftype.stafftype}}</td>
+                        <td>{{row.admin.gendertype.gendertype}}</td>
+                        <td>{{row.admin.contact_number}}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- STAFF TABLE -->
+        <div class="title-button">
+            <p class="tbl-title">Staff Table</p>
+            <a href="/admin/createstaff"><button class="addButton">Add Staff</button></a>
+        </div>
+        
+        <div class="staff-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Staff Role</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                </thead>
+                <tbody>
+                    {% for row in staffs %}
+                    <tr>
+                        <div class="td-height">
+                            <td>{{row.first_name}}</td> 
+                            <td>{{row.last_name}}</td> 
+                            <td>{{row.email}}</td> 
+                            <td>{{row.username}}</td> 
+                            <td>{{row.staff.stafftype.stafftype}}</td> 
+                            <td>{{row.staff.gendertype.gendertype}}</td> 
+                            <td>{{row.staff.contact_number}}</td>
+                        </div> 
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+
+            <!-- Start Pagination 
+			<div class='pagination-container' >
+				<nav>
+				  <ul class="pagination">
+                    <li data-page="prev" >
+                        <span> < <span class="sr-only">(current)</span></span>
+                    </li>
+                    <!- Here the JS Function Will Add the Rows 
+                    <li data-page="next" id="prev">
+                        <span> > <span class="sr-only">(current)</span></span>
+                    </li>
+	    		  </ul>
+				</nav>
+			</div>
+            -->
+    </div>
 </div>
 {% endblock content %}

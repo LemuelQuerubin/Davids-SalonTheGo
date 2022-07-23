@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from account.models import *
 
 from account.forms import UpdateAdminProfileForm
@@ -30,6 +30,8 @@ def editcustomerprofile(request):
         customer1.first_name = first_name
         customer1.last_name = last_name
         customer1.save()
+
+        return redirect('/customer/')
 
     #     form = UpdateAdminProfileForm(request.POST, instance=request.user)
 

@@ -1,15 +1,99 @@
+/* ELEMENTS */
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: 590;
+}
+
+thead {
+    background-color: #FEE2C5;
+    height: 50px;
+    text-align: center;
+    border-radius: 20px 40px;
+}
+
+td{
+    height: 80px;
+    border-bottom: 1px solid rgb(187, 187, 187);
+    font-size: 15px;
+    text-align: center;
+}
+
+tr:hover {
+    background-color: rgb(236, 236, 236);
+    transition: 0.3s;
+}
+
+th:hover, thead td {
+    background-color: #FEE2C5 !important;
+}
+/* Table Div */
+.tables{
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Table Title */
+.tbl-title{
+    margin-bottom: 0px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Admin Accounts Table */
+.admin-accounts-tbl{
+    margin-bottom: 60px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Staff Accounts Table */
+.staff-accounts-tbl{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
 /* ADD BUTTON */
 .addButton {
     background-color: #7FB5FF;
-    color: black;
-    width: 10%;
-    border: 0;
-    height: 40px;
+    color: white;
+    width: 150px;
+    border: 2px solid #7FB5FF;
+    height: 35px;
     border-radius: 10px;
     font-family: Montserrat;
     font-size: 15px;
     font-weight: 700;
     margin-left: auto;
+}
 
+/* ADD BUTTON */
+.addButton:hover {
+    background-color: white;
+    color: #7FB5FF;
+    transition: 0.2s;
+}
+
+/* title and button  side by side */
+.title-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* table sort */
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE";
+    color: #917d69;
+    font-size: 20px;
+    margin: 0;
 }

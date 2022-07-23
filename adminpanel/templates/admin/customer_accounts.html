@@ -1,1 +1,58 @@
-Customer Accounts
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+<div class="main">
+    <div class="tables">
+        <!-- CUSTOMER TABLE -->
+        <p class="tbl-title">Customers Table</p>
+        
+        <div class="admin-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                    <th>Last Login</th>
+                </thead>
+                <tbody>
+                    {% for row in customers %}
+                    <tr>
+                        <td>{{row.first_name}}</td> 
+                        <td>{{row.last_name}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.username}}</td>
+                        <td>{{row.customer.gendertype.gendertype}}</td>
+                        <td>{{row.customer.contact_number}}</td>
+                        <td>{{row.last_login|date:"F d, Y"}}</td>   
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+            <!-- Start Pagination 
+			<div class='pagination-container' >
+				<nav>
+				  <ul class="pagination">
+                    <li data-page="prev" >
+                        <span> < <span class="sr-only">(current)</span></span>
+                    </li>
+                    <!- Here the JS Function Will Add the Rows 
+                    <li data-page="next" id="prev">
+                        <span> > <span class="sr-only">(current)</span></span>
+                    </li>
+	    		  </ul>
+				</nav>
+			</div>
+            -->
+    </div>
+</div>
+{% endblock content %}

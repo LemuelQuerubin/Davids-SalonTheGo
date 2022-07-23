@@ -13,6 +13,7 @@
         <div class="botton-container">
             <form action="/admin/createadmin/" method="post">
                 {% csrf_token %}
+                <form action="/admin/createadmin/" method="post">
     
                 <label class="text-label1">First name</label>
                 <input class="form-box" type="text" id="fname" name="fname" placehoder="First name" Required>
@@ -38,11 +39,12 @@
     
                 <label class="text-label7">Confirm password</label>
                 <input class="form-box" type="password" id="pass2" name="pass2" placehoder="Confirm Password" Required><br><br>
-    
-                <button class="button1" type="submit">Create an account</button>
-                <button class="button2">Cancel</button>
+                
+                <button name="submit" class="button1" type="submit">Create an account</button>
+                <a href="/admin/accounts/"><button type="button"  name="cancel" class="button2" type="submit">Cancel</button></a>
             </form>
-
+            
+            
         </div>
         
 </div>
