@@ -1,0 +1,46 @@
+{% load static %}
+{% include 'general/navbar-login.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALONTHEGO | ADD SERVICE</title>
+
+    <link rel="stylesheet" href="{% static 'css/authentication/register.css' %}">
+</head>
+<body>
+
+    <div class="register-form-container">
+        <center><h1>ADD<SERVICE/h1></center>
+
+        <div class="input-container">
+                    <form action="/admin/createservice/" method="post">
+                        {% csrf_token %}
+
+
+                        <label class="text-label4" >Service Type</label>
+                        <select class="form-box" name="service_type">
+                            {% for type in servicetypes_rows  %}
+                                <option value="{{type.id}}" > {{type.servicetype}} </option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <label class="form-label1">Service Name</label>
+                        <input class="form-box" type="text" id="service_name" name="service_name" placehoder="Service Name" Required>
+                        <br>
+                        <label class="form-label">Service Price</label><br>
+                        <input class="form-box" type="text" id="service_price" name="service_price" placehoder="Service Price" Required><br>
+
+                        <button class="btns" type="submit">Submit</button>
+                    </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+{% include 'general/footer.html' %}

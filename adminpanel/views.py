@@ -4,7 +4,7 @@ from django.contrib import messages
 
 #from account.models import Admin
 from account.forms import UpdateAdminProfileForm
-from account.models import Admin
+# from account.models import Admin
 
 from datetime import datetime
 
@@ -99,13 +99,13 @@ def createadmin(request):
             'current_datetime':current_datetime,
         }
     
-    return render(request, 'admin/create-admin.html', context,)
+    return render(request, 'admin/create-admin.html', context)
 
 
 def createstaff(request):
     current_datetime = datetime.now() 
 
-    stafftype_rows = Stafftype.objects.all()
+    stafftype_rows = Stafftype.objects.all() # to retrieve data from staff types
     if request.method == "POST":
         #STORING THE INPUT IN VARIABLE
         username = request.POST['username'] 
@@ -167,8 +167,7 @@ def createstaff(request):
         
     context = {
             'stafftype_rows': stafftype_rows,
-            'current_datetime':current_datetime,
-            
+            'current_datetime':current_datetime,        
         }
 
     return render(request, 'admin/create-staff.html', context)
@@ -202,6 +201,7 @@ def editadminprofile(request):
         first_name = request.POST['fname']
         last_name = request.POST['lname']
         g = Gendertype.objects.get(pk=gender)
+        
         admin = Admin.objects.get(pk=id)
         admin.gendertype = g
         admin.contact_number = contact_number
@@ -230,3 +230,54 @@ def editadminprofile(request):
      }
 
     return render(request, 'admin/edit-admin-profile.html', context)
+
+# SERVICES 
+def createservicetype(request):
+    current_datetime = datetime.now()
+    if request.method == "POST":
+        service_type = request.POST['service_type']
+
+        newservicetype = Servicetype()
+        newservicetype.servicetype = service_type
+        newservicetype.save()        
+
+        #return redirect('/admin/viewservicetypes/')
+    context = {
+            'current_datetime':current_datetime,        
+        }
+    return render(request, 'admin/create-service-type.html', context)
+
+    #Servicetype.objects.create(servicetype_name=servicetype) 
+
+    
+def createservice(request):
+    current_datetime = datetime.now()
+    servicetypes_rows = Servicetype.objects.all()
+    if request.method == "POST":
+        service_type = request.POST['service_type'] 
+        service_name = request.POST['service_name']
+        service_price = request.POST['service_price']
+
+        st = Servicetype.objects.get(pk=service_type)
+        newservice = Services()
+        newservice.servicetype = st
+        newservice.services = service_name
+        newservice.serviceprice = service_price
+        newservice.save() 
+
+    context = {
+            'current_datetime':current_datetime,
+            'servicetypes_rows': servicetypes_rows,       
+        }
+
+    return render(request, 'admin/create-service.html', context)
+
+def viewservices(request):
+    return render(request, 'admin/create-service.html')
+    
+
+
+     #servicetype_name
+def viewservicetypes(request):
+    return render(request, 'admin/create-service.html')
+

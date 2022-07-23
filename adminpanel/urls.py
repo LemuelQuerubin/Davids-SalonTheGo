@@ -12,5 +12,11 @@ urlpatterns = [
        path('editadminprofile/', views.editadminprofile, name="editadminprofile"),
    
    # VIEW CUSTOMER ACCOUNTS
-      path('customeraccounts/', views.customeraccounts, name="customeraccounts"),
+       path('customeraccounts/', views.customeraccounts, name="customeraccounts"),
+
+   # SERVICES
+       path('createservice/', views.createservice, name="createservice"),
+       path('createservicetype/', views.createservicetype, name="createservicetype"),
+       path('viewservices/', views.viewservices, name="viewservices"),
+       path('viewservicetypes/', views.viewservicetypes, name="viewservicetypes"),
 ]
