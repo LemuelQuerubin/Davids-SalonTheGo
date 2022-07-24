@@ -87,11 +87,11 @@ nav {
 
 .footer ul{
     list-style-type: none;
-    background-color: var(--purple);
+    background-color: #1A1052;
 }
 
 .footer{
-    background-color: var(--purple);
+    background-color: #1A1052;
     padding: 30px 0;
 }
 
@@ -102,7 +102,7 @@ padding: 0 15px;
 
 .footer-col h4{
     font-size: 18px;
-    color: var(--yellow);
+    color: #FEE2C5;
     text-transform: capitalize;
     margin-bottom: 35px;
     font-weight: 800;

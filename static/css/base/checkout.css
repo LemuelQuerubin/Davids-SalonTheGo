@@ -81,7 +81,7 @@
 }
 
 /* CUSTOMER INFO TABLE */
-table.customer-info-table {
+.customer-info-table {
     border: 1px solid #C8C8C8;
     border-radius: 20px;
     border-spacing: 0;
@@ -112,6 +112,7 @@ table.customer-info-table {
     border: 1px solid #C8C8C8;
     border-radius: 20px;
     padding: 5px 10px;
+    display: inline-flex;
 }
 
 /* PLACE ORDER BUTTON */

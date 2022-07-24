@@ -28,6 +28,7 @@
 
     <!-- NAVBAR INTERNAL CSS -->
     <!-- include footer later-->
+
     
 </head>
 
@@ -42,7 +43,7 @@
                         <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                         <img
                         class="d-inline-block align-top"
-                        src="/images/logo-3.png"
+                        src="images/logo-3.png"
                         width="150" />
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,7 +59,7 @@
                     </li>
                     <!----------------- PRODUCTS BUTTON ----------------->
                     <li class="nav-item active px-4">
-                        <a class="nav-link" href="/products">Products <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{% url 'shop' %}">Products <span class="sr-only">(current)</span></a>
                     </li>
                     <!----------------- PROMOS BUTTON ----------------->
                     <li class="nav-item active px-4">
@@ -114,7 +115,7 @@
         <br><br>
 
             <!------------------------------- BUTTON ------------------------------------------->
-        <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> BOOK NOW </a> </button>
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="{% url 'registerpage' %}"> BOOK NOW </a> </button>
     </div>
 
     <br> <br> <br>
@@ -126,14 +127,14 @@
         <h2 class="head"><span>FEATURED PRODUCTS</span></h2>
         <table id="table" class="table">
             <tr>
-                <td class="items"> <img src="/images/placeholder.png"> </td>
-                <td class="items"> <img src="/images/placeholder.png"> </td>
-                <td class="items"> <img src="/images/placeholder.png"> </td>
-                <td class="items"> <img src="/images/placeholder.png"> </td>
-                <td class="items"> <img src="/images/placeholder.png"> </td> 
+                <td class="items"> <img src="/images/product_images/product1.png"> </td> 
+                <td class="items"> <img src="/images/product_images/product2.png"> </td> 
+                <td class="items"> <img src="/images/product_images/product3.png"> </td> 
+                <td class="items"> <img src="/images/product_images/product4.png"> </td> 
+                <td class="items"> <img src="/images/product_images/product5.png"> </td> 
             </tr>
             <tr>
-                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Kerastase </a> </td>
                 <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
                 <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
                 <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>

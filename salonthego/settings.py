@@ -53,10 +53,12 @@ INSTALLED_APPS = [
     'customerpanel',
     'staffpanel',
 
+    #appointments
+    'system',
+    
     #shop and product inv
     'base',
 
-    # for pictures
 
 
 ]

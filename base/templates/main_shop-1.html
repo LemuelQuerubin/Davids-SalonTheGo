@@ -37,40 +37,12 @@
 </head>
 <body>
 
-  <nav>
-    <!-------------------------------------------- TOP NAVBAR MENU -------------------------------------------->
-    <ul class="nav_menu">
-        <!-- Logo-->
-
-        <!-- Home, Products, Vouchers, About Us -->
-        <li class="nav_item"><a href="#">  </a></li>
-        <li class="nav_item"><a href="#"> Home </a></li>
-        <li class="nav_item"><a href="{% url 'shop' %}"> Products </a></li>
-        <li class="nav_item"><a href="#"> Promos </a></li>
-        <li class="nav_item"><a href="#"> About </a></li>
-        <li class="nav_item"><a href="#"> Contact </a></li>
-        <li class="nav_item"><a href="#">  </a></li>
-        
-        <!-- Space -->                
-        <li class="nav_item"><a href="#"> </a></li>
-        <li class="nav_item"><a href="#"> </a></li>
-
-        <!-- Shopping Cart Icon -->
-        <li class="nav_item"><a href="{% url 'cart' %}"><img src="{% static 'images/cart.png'%}" width="25" height="25" alt="cart-icon"></a></li>
-        <!--<li class="nav_item"><a id="cart-total">{{cartItems}}</a></li>-->
-                    
-        <!-- Account Icon -->
-        <!--<li class="nav_item"><a href="#"><img src = "account.png" width="38" height="38" alt="acc-icon"></a> </li>-->
-
-    
-        <!-- Hamburger Menu -->
-        <li class="nav_toggle"><span class="nav_bars"></span></li>
-    </ul>
-</nav>
-
+{% include 'general/navbar-user.html' %}
     {% block content %}
 
     {% endblock content %}
+<!------------------------------- FOOTER ------------------------------------------->
+    
     
     <!-------------------------------BOOSTSTRAP JS----------------------------------->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

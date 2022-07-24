@@ -46,15 +46,15 @@ def loginpage(request):
 
         #AUTHENTICATE THE USER/CHECK IF THE INOUT MATCH ON THE RECORD IN THE DATABASE
         user = authenticate(username=username, password=password)
-        if user.is_authenticated and user.is_customer:
+        if user is not None and user.is_customer:
             login(request, user)    
             return redirect('/')
   
-        elif user.is_authenticated and user.is_staff and not user.is_admin :
+        elif user is not None and user.is_staff and not user.is_admin :
             login(request, user) 
             return redirect('/staff')
 
-        elif user.is_authenticated and user.is_staff and user.is_admin:
+        elif user is not None and user.is_staff and user.is_admin:
             login(request, user)    
             return redirect('/admin')
             

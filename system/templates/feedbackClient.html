@@ -1,0 +1,126 @@
+
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<div class ="main">
+
+  <head>
+  	<title>Rate and Review Service</title>
+    <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
+    
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
+    
+  </head>
+
+  <body>
+    <div class="content-container">
+		<h5 class="go-back"><a href="{% url 'walkIn' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Appointments</h5>
+       
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                    <div class="header-container">
+                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM- SERVICES</h5>								
+                    </div>
+    
+
+            <div class="date-time-container">
+                <div class="date-container1">
+                    <h6>DATE: {{ appointment.apptDate|date:'F' }} {{ appointment.apptDate|date:'d' }}</h6>
+                </div>
+                <div class="time-container1">   
+                    <h6>TIME: {{ appointment.appt_timeStart|time:'h:i A' }} </h6> 
+                </div>    
+            </div>
+
+            <div class="job-order-container">
+                <div class="job-order-label">
+                    <h6>JOB ORDER FORM NO.: </h6>
+                </div>
+                <div class="job-order-label-text">  
+                    <h6 >PLACEHOLDER</h6>
+                </div> 
+            </div>
+
+            <div class="name-container3">       
+                <div class="name-container3-label">
+                    <h6>NAME:</h6>
+                </div>
+                <div class="name-container3-text"> 
+                    <h6>{{ appointment.customer_fname }} {{ appointment.customer_lname }}</h6>
+                </div>
+            </div> 
+
+
+            <div class="service-price-containers1">  <!--TEMPOPARY CLASS-->
+                <div class="service-containers1">
+                    <h6> SERVICE/S:</h6>
+                        {% for key in appointment.services %}
+                        <ul>
+                            <li>{{ key }}</li>       
+                        </ul>
+                        {% if not forloop.last %} 
+                        {% endif %}
+                        {% endfor %}              
+                </div>
+
+                <div class="price-containers1"> <!--TEMPOPARY CLASS-->
+                    <h6>STYLIST:  </h6>
+                </div>
+
+            </div>
+
+            <div class="rating-container">
+                <div class="rating-label">
+                    <h6> RATING </h6>
+                </div>
+
+                <div class="rating-button-container">
+                    <script src="https://use.fontawesome.com/fe459689b4.js"></script>
+                        <button class="btn1" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+                        <button class="btn1" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+                </div>
+            </div>
+
+
+
+            <div class="review-container">
+                <div class="review-label">
+                    <h6> REVIEW</h6>
+                </div>
+           
+                <div class="review-form">
+                    <textarea id="textarea" name="comment" id="usercomment" rows="4" cols="50">Review..</textarea>
+                </div>
+            </div>
+
+            <div>
+                <form method="POST">
+                {% csrf_token %}
+                    <input class="buttons7" type="submit" name="button" id="usercomment"></form>
+            </div>
+            </form>
+    
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+	<script src="{% static '/js/appts.js' %}"></script>
+</body>
+
+</div>
+</div>
+</div>
+</div>
+
+{% include 'general/footer.html' %}
+
+{% endblock content %}
+

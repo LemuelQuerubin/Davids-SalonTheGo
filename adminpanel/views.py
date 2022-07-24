@@ -119,8 +119,6 @@ def createstaff(request):
         s = Stafftype.objects.get(pk=stafftype)
         
         
-
-        
         #IF USER IS ALREADY TAKEN
         if CustomUser.objects.filter(username=username):
             messages.error(request, "Username already exist")

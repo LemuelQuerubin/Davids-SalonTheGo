@@ -44,8 +44,7 @@ class Admin (models.Model):
 
 
     def __str__(self):
-        return self.user.username
-
+        return '%s' %(self.admin)
 
 class Staff (models.Model):
     staff = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
@@ -55,7 +54,7 @@ class Staff (models.Model):
     contact_number = models.CharField(max_length=20, null=True)
 
     def __str__(self):
-        return self.user.username
+        return '%s' %(self.staff)
 
 
 class Customer (models.Model):
@@ -66,7 +65,7 @@ class Customer (models.Model):
     contact_number = models.CharField(max_length=20, null=True)
 
     def __str__(self):
-        return self.user.username
+        return '%s' %(self.customer)
 
 # SERVICES / based on DB Design
 class Servicetype (models.Model):

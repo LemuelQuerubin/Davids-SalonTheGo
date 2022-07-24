@@ -1,0 +1,180 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<div class ="main">
+  <head>
+  	<title>SalOnTheGo | Walk-in Appointments</title>
+    <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" rel="stylesheet"> -->
+
+    <!-- DONT REMOVE| CSS FOR TIMEPICKER-->
+    <link rel="stylesheet" href="{% static '/css/jquery.timepicker.min.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
+
+  </head>
+  <body>
+
+
+    <div>
+        <div class="go-back">
+            <h5><a href="{% url 'walkIn' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back</h5>
+        </div>
+
+            <div class="form-container">
+                <div>
+                    <form method="POST">
+                        {% csrf_token %}
+                            <div>
+                                <div class="header-container">
+                                    
+                                    <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;WALK-IN APPOINTMENT FORM</h5>								
+                                </div>
+                              
+                                <div class="two-cols">
+									<div class="stylist-container">
+										<br>
+										<label for="stylist1" class="name-text1">Primary Stylist</label>
+										<select class="form-select1" name="stylist1" aria-label="Default select example" required>
+                                            <option selected disabled hidden>Select Stylist</option>
+                                            {% for stylist in stylists %}
+                                                {% if stylist.gendertype.id == 1 %}
+											        <option value="{{ stylist.staff.first_name }}" >Mr. {{ stylist.staff.first_name }}</option>
+                                                {% elif stylist.gendertype.id == 2 %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Ms. {{ stylist.staff.first_name }}</option>
+                                                {% else %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Mx. {{ stylist.staff.first_name }}</option>   
+                                                {% endif %}
+                                            {% endfor %}
+                                            <option value="Any">Any</option>
+										</select>
+									</div>
+
+									<div class="stylist-container">
+										<br>
+										<label for="stylist2" class="name-text1">Secondary Stylist</label>
+										<select class="form-select1" name="stylist2" aria-label="Default select example" required>
+											<option selected disabled hidden>Select Stylist</option>
+                                            {% for stylist in stylists %}
+                                                {% if stylist.gendertype.id == 1 %}
+											        <option value="{{ stylist.staff.first_name }}" >Mr. {{ stylist.staff.first_name }}</option>
+                                                {% elif stylist.gendertype.id == 2 %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Ms. {{ stylist.staff.first_name }}</option>
+                                                {% else %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Mx. {{ stylist.staff.first_name }}</option>   
+                                                {% endif %}
+                                            {% endfor %}
+                                            <option value="Any">Any</option>
+										  </select>
+									</div>
+
+								</div>
+                                <br><br>
+
+
+                                 
+                                <div class="date-container">
+                                    <h5>Date</h5>
+                                    <!--input type="text" class="form-control" id="typeText" name="apptDate" aria-describedby="companyNameHelp" required-->
+                                    <input type="date" class="date-form" id="typeDate" name="apptDate" aria-describedby="companyNameHelp" required>
+                                </div>
+
+                                <br><br>
+                                <div class="time-container">            
+                                    <h5>Time</h5>
+                                    <!--input type="time" class="form-control" name="appt_timeStart" min="10:00" max="21:00" aria-describedby="companyNameHelp" required-->
+                                    <input type="text" class="time-form" id="timepicker" name="appt_timeStart" aria-describedby="companyNameHelp" required readonly style="background-color: white!important;">
+                                </div>
+        
+                                <br><br>
+                                <p><b>NOTE:</b> Stylist 2 will be the one who will do the service in case Stylist 1 is unavailable.</p>
+                                <br>
+                          
+                                <input class="buttons2" type="submit" value="Book Appointment">
+                               
+                            </div>
+                    </form>
+                </div>
+
+            </div>
+            
+		</div>
+      
+
+    <!--date and time picker javascript-->
+    <script>
+        /*$(function() {
+ 
+            $("#typeText").datepicker({ dateFormat: 'mm/dd/yy', minDate: 'new Date()', maxDate: 'new Date("+1m")' }).datepicker("setDate", 'new Date()');
+ 
+        });*/
+
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mmMin = String(today.getMonth() + 1).padStart(2, '0');
+        let mmMax = String(today.getMonth() + 2).padStart(2, '0');
+        let yyyy = today.getFullYear();
+
+        min = yyyy + '-' + mmMin + '-' + dd;
+        max = yyyy + '-' + mmMax + '-' + dd;
+        $('#typeDate').attr('value',min).attr('min',min).attr('max',max);
+
+        const start = '10';
+
+        $('#timepicker').timepicker({ timeFormat: 'hh:mm p', minTime: start, maxTime: '21:00', defaultTime: start,
+                                    startTime: start, interval: 15, dropdown: true, scrollbar: true, dynamic: false });
+        
+        // DISABLE SAME OPTION FROM BEING PICKED
+        $('select[name=stylist2]').on('change', function() {
+            let self = this;
+            $('select[name=stylist1]').find('option').prop('disabled', function() {
+                return this.value == self.value
+            });
+        });
+            
+        $('select[name=stylist1]').on('change', function() {
+            let self = this;
+            $('select[name=stylist2]').find('option').prop('disabled', function() {
+                return this.value == self.value
+            });
+        });
+
+        /*$('select[name=stylist1]').on('change', function() {
+            let self = this;
+            $('select[name=appt_timeStart]').find('option').prop('disabled'), function() {
+                for (i=0;i<={{count1}};i++){
+                    if self.value == {{group1.i}}{
+                        for (j=0;j<={{count2}};i++){
+                            let end = parseInt(this.value) + group3.j
+                            return this.value < {{group2.j}} && this.value > end
+                        }
+                    }
+                }
+            
+            }
+        })*/
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    
+
+</body>
+</div>
+</div>
+
+{% endblock content %}

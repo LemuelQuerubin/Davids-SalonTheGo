@@ -17,106 +17,105 @@
   </head>
   <body>
 		
-	<div class="wrapper d-flex align-items-stretch">			
+	<div>			
+        <div class="go-back">
+            <h5><a href="{% url 'appointmentsApproved' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Appointments</h5>
+        </div>
 
-		<div class="container-fluid justify-content-end">
-			<div class="row main justify-content-between">
-				<div class="col-sm-12 col-md-4 col-lg-4">
-					<h5 class="pageHeader"><a onclick="history.back()"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Appointments</h5>
-				</div>
-				<div class="col-sm-12 col-md-8 col-lg-8"></div>
-			</div>
-
-            <div class="row sub justify-content-between">
-                <div class="col-sm-12 col-md-8 col-lg-8">
+            <div class="form-container">
+                <div>
                     <form method="POST">
                         {% csrf_token %}
-                            <div class="cardNewProject animate slide delay-1">
-                                <div class="row justify-content-between">
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        
-                                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM- SERVICES</h5>								
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        
-                                    </div>
+                            <div>
+                                <div class="header-container">
+                                    <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM- SERVICES</h5>								
                                 </div>
-                                <br><br>
-                            <div class="row justify-content-between">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="Details">DATE: {{ date }}</h6>
+                                    
+                         
+                                <div class="date-time-container">
+                                    <div class="date-container1">
+                                        <h6>DATE:</h6> <p>{{ date }}</p>
+                                    </div>
+                                    <div class="time-container1">   
+                                        <h6>TIME:</h6> <p>{{ time }}</p>
+                                    </div> 
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">   
-                                    <h6 class="Details">TIME: {{ time }} </h6> 
-                                </div> <br><br><br>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="Details">NAME: {{name}} </h6></div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
+     
+                                <div class="job-name-container">
+                                    <div class="name-container1">
+                                        <h6>NAME:</h6><p>{{name}}</p>
+                                    </div>
+                                </div> 
+                       
+                                <div class="service-price-containers1">
+                                    <div class="service-containers1">
+                                        <h6> SERVICE/S:<h6>
+                                        <h1>   
+                                            {% for key in services %}
+                                            <ul>
+                                                <li>{{ key }}</li>       
+                                            </ul>
+                                            {% if not forloop.last %} 
+                                            {% endif %}
+                                            {% endfor %}       
+                                        </h1>
+                                    </div>
+
+                                    <div class="price-containers1">
+                                        <h6> PRICES: </h6>
+                                    </div>
 
                                 </div>
-                            </div> <br><br>
-                            <div class="row justify-content-between">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="Details"> SERVICE/S:
-                                        {% for key in services %}
-                                        {{ key }}{% if not forloop.last %} 
-                                        {% endif %}
-                                        {% endfor %}       
-                                    </h6>
+
+
+                                <div class="product-used-container">
+                                    <div class="product-used-label">
+                                        <h6>PRODUCTS USED: </h6>
+                                    </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="Details" > PRICES: </h6>
+
+
+                                <div class="primary-list-container">
+                                    <div class="primary-list-label">
+                                        <h6>PRIMARY STYLIST:</h6>
+                                    </div>
+
+                                    <div class="primary-list-input">
+                                        <select class="primary-list-input-form" name="stylist2" aria-label="Default select example" required>
+                                            <option selected disabled hidden>Select Stylist</option>
+                                            <option value="Oscar">Mr. Oscar</option>
+                                            <option value="Steph">Ms. Steph</option>
+                                            <option value="Mike">Mr. Mike</option>
+                                        </select>
+                                    </div>                                     
                                 </div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="Details">PRODUCTS USED: </h6></div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                </div>
-                            </div>
-                                <div class="row justify-content-between">
-                                        <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <h6 class="Details">PRIMARY STYLIST:</h6>
-                                        </div>
-                                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <select class="form-select" name="stylist2" aria-label="Default select example" required>
-                                                <option selected disabled hidden>Select Stylist</option>
-                                                <option value="Oscar">Mr. Oscar</option>
-                                                <option value="Steph">Ms. Steph</option>
-                                                <option value="Mike">Mr. Mike</option>
-                                            </select>
-                                            </div> <br><br><br>
-                                        
-                                        </div>
-                                        <div class="row justify-content-between">
-                                            <div class="col-sm-12 col-md-5 col-lg-5">
-                                                <h6 class="Details"><b>PRIVILEGE CARD:</b></h6>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                                <input type="text" name="privCard" id="">
-                                            </div>
-                                            
-                                        
-                                        </div> <br><br><br>
-                                            <h6 class="Details"><b>TOTAL PRICE: </b></h6>
-                                            <div class="row sub justify-content-between">
-                                                <div class="col-sm-12 col-md-6 col-lg-6"><br><br>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                                </div>
-                                            </div>
                                     
-                                        <div class="row justify-content-between">
-                                                <div class="col-sm-12 col-md-8 col-lg-8"></div>
-                                                <div class="col-sm-12 col-md-2 col-lg-2">
-                                                    <form method="POST">
-                                                    {% csrf_token %}
-                                                        <input type="hidden" value="{{ appointment.id }}" name="approve">
-                                                        <input class="btn btn-primary submitButton" type="submit" confirm="Confirm" name="button" id="confirm">
-                                                </div>
+                                    <!--<div class="privilege-card-container">
+                                        <div class="privilege-card-label">
+                                            <h6>PRIVILEGE CARD:</h6>
                                         </div>
+
+                                        <div class="privilege-card-input">
+                                            <input type="text" name="privCard" id="" class="privilege-card-input-form">
+                                        </div>                                  
+                                    </div> -->
+
+                                    <div class="total-price-container">
+                                        <div class="total-price-label">
+                                            <h6 >TOTAL PRICE: </h6>
+                                        </div>   
+                                        <div class="total-price-text">
+                                            <h6 >PLACEHOLDER</h6>
+                                        </div>                              
+                                    </div> 
+                                              
+                                    <div class="job-button-container">
+                                        <form method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ appointment.id }}" name="approve">
+                                            <input class="job-button-container-submit" type="submit" confirm="Confirm" name="button" id="confirm">
+                                    </div>
+                               
                     </form>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
@@ -125,7 +124,5 @@
 </div>
 </div>
 
-
-{% include 'general/footer.html' %}
 
 {% endblock content %}

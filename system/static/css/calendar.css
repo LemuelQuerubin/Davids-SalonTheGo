@@ -1,0 +1,189 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.clearfix::after,
+.calendar ol::after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  
+}
+/* ================
+Time, Date, Ongoing Appointments Styling */
+.calendar-title{
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.time-date-ongoing-container {
+  font-family: Montserrat;
+  border-radius: 20px;
+  text-align: center;
+  width: 85%;
+  height: 120px;
+  vertical-align: middle;
+  margin-bottom: 20px;
+  margin-left: 40px;
+  margin-right: auto;
+  display: flex;
+  box-shadow: rgba(115, 124, 132, 0.2) 0px 8px 24px;
+}
+.child {
+  width: 80%;
+  margin: 0 10px;
+  /* inline-block hack */
+  font-size: medium;
+  text-align: center;
+  margin: auto;
+}
+
+.child p{
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+
+.time-date{
+  font-size: 30px !important;
+  font-weight: 800;
+  color: #001D6E;
+}
+
+
+
+/* ================
+Calendar Styling */
+.calendar {
+  min-width: 1000px;
+  position: relative;
+  font-family: Montserrat;
+  margin-top: 0px !important;
+  padding-top: 0px !important;
+}
+.calendar a{
+  cursor: pointer;
+}
+.calendar.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+    supported by Chrome, Edge, Opera and Firefox */
+}
+.month-year-btn {
+  color: #444;
+}
+.month-year {
+  width: 11rem;
+}
+.month, .year {
+  font-size: 1.5rem;
+}
+
+.initials {
+}
+@media (max-width: 550px) {
+  .initials {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    letter-spacing: 1ch; 
+    width: 1.9ch;
+  }
+}
+
+.calendar ol li {
+  float: left;
+  width: 14.28571%;
+}
+
+.calendar .day-names {
+  /* COLOR FOR DAY LABELS */
+  border-bottom: 1px solid #eee;
+  color: white;
+  background-color: #001D6E;
+  padding: 10px 8px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.calendar .days { 
+  /* DATES */
+  border-bottom: 1px solid #7FB5FF;
+  text-align: center;
+}
+.calendar .days li {
+  min-height: 6rem;
+  cursor: pointer;
+}
+
+.calendar .days li .date {
+  margin-bottom: 0.5rem;
+}
+
+.calendar .days li .event {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem 0.4rem  0.8rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4rem;
+  margin: 0 1px 1px 0;
+}
+
+.calendar .days li .event.span-2 {
+  width: 200%;
+}
+
+.calendar .days li .event.begin {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.calendar .days li .event.end {
+  border-radius: 0 1rem 1rem 0;
+}
+
+.calendar .days li .event.clear {
+  background: none;
+}
+
+.calendar .days li:nth-child(n+29) {
+  border-bottom: none;
+}
+
+.calendar .days li.outside .date  {
+  /* COLOR FOR UNAVAILABLE DATE */
+  color: rgb(144, 144, 144);
+  cursor: default;
+}
+.calendar .days li.today .date  {
+ /* COLOR FOR DATE TODAY */
+  background-color: #001D6E;
+  border: 1px solid #001D6E;
+  border-radius: 100px;
+  padding: 0px 10px;
+  color: white;
+}
+
+button{
+  border: none;
+  background: none;
+}
+
+.next-month{
+  margin-left: 20px;
+}
+.prev-month{
+  margin-right: 20px;
+}

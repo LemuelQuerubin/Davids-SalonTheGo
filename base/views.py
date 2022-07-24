@@ -281,7 +281,6 @@ def processOrder(request):
 
 #ADMIN VIEW: PENDING ORDERS
 def pending_orders(request):
-    orders = OrderPickUp.objects.filter(order__complete=True, order__pickup_status='Pending')
     items = OrderItem.objects.all()
 
     if request.method == 'POST':
@@ -291,14 +290,20 @@ def pending_orders(request):
         elif request.POST['button'] == 'Approve':
             approve_pickup = request.POST.get('approve')
             Order.objects.filter(pk=approve_pickup).update(pickup_status='Approved')
-
-    #SEARCH
+    
+    #SEARCH -- MIGHT CHANGE LATER
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-    search = OrderPickUp.objects.filter(
-        Q(order__transaction_id__icontains=q)
+    orders = OrderPickUp.objects.filter(
+        Q(order__transaction_id__icontains=q) |
+        Q(pickup__icontains=q) 
     )
 
-    context = {'orders': orders, 'items': items, 'search': search}
+    #PAGE NAVIGATION
+    paginator = Paginator(orders, 5)
+    page_number = request.GET.get('page')
+    page_prod = paginator.get_page(page_number)
+
+    context = {'orders': orders, 'items': items, 'page_prod': page_prod}
     return render(request, 'base/otc-products/admin/pending-reservations.html', context)
 
 #ADMIN VIEW: ORDER ITEMS OF INDIVIDUAL CUSTOMERS
@@ -311,8 +316,8 @@ def order_items(request, pk):
 
 #ADMIN VIEW: APPROVAL OF ORDERS
 def approved_orders(request):
-    orders = OrderPickUp.objects.filter(order__complete=True, order__pickup_status='Approved')
     items = OrderItem.objects.all()
+
 
     if request.method == 'POST':
         if request.POST['button'] == 'Cancel':
@@ -323,7 +328,21 @@ def approved_orders(request):
             Order.objects.filter(pk=transac_successful).update(pickup_status='Transaction Successful')
             return redirect('sales-invoice')
 
-    context = {'orders': orders, 'items': items}
+    #SEARCH -- MIGHT CHANGE LATER
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    orders = OrderPickUp.objects.filter(
+        Q(order__transaction_id__icontains=q) |
+        Q(pickup__icontains=q) 
+    )
+
+    #Q(order__customer__name_icontains=q) |
+
+    #PAGE NAVIGATION
+    paginator = Paginator(orders, 5)
+    page_number = request.GET.get('page')
+    page_prod = paginator.get_page(page_number)
+
+    context = {'orders': orders, 'items': items, 'page_prod': page_prod}
     return render(request, 'base/otc-products/admin/approved-reservations.html', context)
 
 #SALES INVOICE RENDER VIEW

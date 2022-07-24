@@ -40,6 +40,8 @@
 
                 <tbody class="products-tbody">
                     {% for orderpickup in orders %}
+                        {% if orderpickup.order.complete == True %}
+                        {% if orderpickup.order.pickup_status == 'Approved' %}
                         <tr>
                             <!-- TABLE BODY -->
                             <td data-label="Customer"><a href="{% url 'order-details' orderpickup.order.id %}" id="customer-name-link">{{orderpickup.order.customer}}</a></td>
@@ -67,12 +69,36 @@
                                 <input type="submit" value="Cancel" name="button" id="cancel" onclick="return confirm('Cancel Reservation?');">
                             </form>
                         </td>
-                        
-                        <!-- <td colspan="8">No results found.</td> -->
+                    {% endif %}
+                    {% endif %}
+
+                        {% empty %}
+                        <td colspan="7">No results found.</td>
                     </tr>
+                    
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <!-- PAGE NAVIGATION -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_prod.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                {% endif %}
+                
+                <!-- PAGE INDICATOR -->
+                <span class="current">
+                    Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                </span>
+        
+                {% if page_prod.has_next %}
+                    <a href="?page={{ page_prod.next_page_number }}">next</a>
+                    <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
         </div>
     </div>
 </div>

@@ -210,20 +210,20 @@
     <!------------------------------- NAVBAR ------------------------------------------->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         {% if user.is_customer %} 
-        <a href="/"
+        <a href="{% url 'homepage'%}
             class="navbar-logo h1">
                 <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                 <img
                 class="d-inline-block align-top"
-                src="/images/logo-3.png"
+                src="static/images/logo-3.png"
                 width="150" />
         {% else %}
-         <a href="#"
+         <a href="{% url 'homepage'%}"
             class="navbar-logo h1">
                 <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                 <img
                 class="d-inline-block align-top"
-                src="/images/logo-3.png"
+                src="static/images/logo-3.png"
                 width="150" />
         {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,7 +239,7 @@
               </li>
               <!----------------- PRODUCTS BUTTON ----------------->
               <li class="nav-item active px-4">
-                  <a class="nav-link" href="/products"><!--Products--><span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'shop' %}s"><!--Products--><span class="sr-only">(current)</span></a>
                 </li>
               <!----------------- PROMOS BUTTON ----------------->
               <li class="nav-item active px-4">
@@ -261,7 +261,7 @@
               </li>
               <!----------------- PRODUCTS BUTTON ----------------->
               <li class="nav-item active px-4">
-                  <a class="nav-link" href="/products"><!--Products--><span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'shop' %}"><!--Products--><span class="sr-only">(current)</span></a>
                 </li>
               <!----------------- PROMOS BUTTON ----------------->
               <li class="nav-item active px-4">
@@ -284,7 +284,7 @@
             </li>
             <!----------------- PRODUCTS BUTTON ----------------->
             <li class="nav-item active px-4">
-                <a class="nav-link" href="/products">Products <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'shop' %}">Products <span class="sr-only">(current)</span></a>
               </li>
             <!----------------- PROMOS BUTTON ----------------->
             <li class="nav-item active px-4">
@@ -307,7 +307,7 @@
             </a>
             <p id="cart-total">0</p>
         {% elif user.is_customer %}  
-            <a href="#">
+            <a href="{% url 'cart' %}">
                 <img
                 class="d-inline-block align-top px-1"
                 src="/images/cart.png"
@@ -331,14 +331,14 @@
             {% if user.is_customer %}
             <ul class="dropdown-menu">
                 <li><a href="/customer" class="dropdown-item">Profile </a></li>
-                <li><a href="#" class="dropdown-item"> Appointments </a></li>
+                <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
             {% elif user.is_admin %}
             <ul class="dropdown-menu">
                 <li><a href="/admin" class="dropdown-item">Profile </a></li>
-                <li><a href="#" class="dropdown-item"> Appointments </a></li>
+                <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
@@ -346,7 +346,7 @@
             {% else %}
             <ul class="dropdown-menu">
                 <li><a href="/staff" class="dropdown-item">Profile </a></li>
-                <li><a href="#" class="dropdown-item"> Appointments </a></li>
+                <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
@@ -368,36 +368,38 @@
             <div class="sidenav">
                 <ul>
                 
-                <center><p>{{current_datetime}}</p></center><br>
-                
                 <p>{{ user.first_name }}</p>
-              
-                
-                
+                 
                 {% if user.is_customer %}
                 <p>{{ user.customer.customertype }}</p> <br><br>
                 <li><a href="/customer">Customer Profile</a></li>
-                <li><a href="#">Change Password</a></li>
-                <li><a href="#">Create Appointment</a></li>
+                <!--<li><a href="#">Change Password</a></li>-->
+                <li><a href="/appointments">Create Appointment</a></li>
+                <li><a href="{% url 'calendar' %}">Calendar</a></li>
+
                 <li><a href="#">Dashboard & History</a></li> <!--X-->
                 <li><a href="#">Ratings & Reviews</a></li> <!--X-->
                 <li><a href="#">My Purchases</a></li>
                 <li><a href="#">Shopping Cart</a></li>
                 {% elif user.is_admin %}
-                <p>{{ user.admin.stafftype }}</p> <br><br>
-                <li><a href="/admin">Profile</a></li>
-                <li><a href="#">Change Password</a></li>
-                <li><a href="/admin/accounts">Accounts</a></li>
-                <li><a href="#">All Reports</a></li> <!--X-->
-                <li><a href="/appointments">Appointments</a></li>
-                <li><a href="#">Calendar</a></li> 
+                <li><a href="/admin">Edit Profile</a></li>
+                <!--<li><a href="#">Change Password</a></li>-->
+                <li><a href="/admin/accounts">Staff Accounts</a></li>
+                <li><a href="/admin/customeraccounts/">Customer Accounts</a></li>
+                <!--<li><a href="#">All Reports</a></li> X-->
+                <li><a href="/shop/ins/products">In-Salon Products</a></li>
+                <li><a href="/shop/otc/products">Over-the-Counter Products</a></li>
+                <li><a href="/appointments/walkIn">Appointments</a></li>
+                <li><a href="/appointments/appointmentsPending">Pending Appointments</a></li>
+                <li><a href="/appointments/appointmentsApproved">Approved Appointments</a></li>
+                <li><a href="{% url 'calendar' %}">Calendar</a></li> 
                 <li><a href="#">Orders</a></li> <!--X-->
                 <li><a href="#">Promos</a></li> <!--X-->
                 <li><a href="#">Reviews</a></li>
                 {% else %}
                 <p>{{ user.staff.stafftype }}</p><br><br>
-                <li><a href="/staff">Profile</a></li>
-                <li><a href="#">Change Password</a></li>
+                <li><a href="/staff">Staff Profile</a></li>
+                <!--<li><a href="#">Change Password</a></li>-->
                 <li><a href="#">Appointments</a></li>
                 <li><a href="#">Reviews</a></li>
                 <br><br><br><br><br>

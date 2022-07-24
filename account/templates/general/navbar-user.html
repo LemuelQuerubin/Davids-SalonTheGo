@@ -25,20 +25,20 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       {% if user.is_customer %} 
-      <a href="/"
+      <a href="{% url 'homepage'%}"
           class="navbar-logo h1">
               <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
               <img
               class="d-inline-block align-top"
-              src="/images/logo-3.png"
+              src="static/images/logo-3.png"
               width="150" />
       {% else %}
-       <a href="#"
+       <a href="{% url 'homepage'%}"
           class="navbar-logo h1">
               <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
               <img
               class="d-inline-block align-top"
-              src="/images/logo-3.png"
+              src="static/images/logo-3.png"
               width="150" />
       {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
             </li>
             <!----------------- PRODUCTS BUTTON ----------------->
             <li class="nav-item active px-4">
-                <a class="nav-link" href="/products">Products <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'shop' %}">Products <span class="sr-only">(current)</span></a>
               </li>
             <!----------------- PROMOS BUTTON ----------------->
             <li class="nav-item active px-4">
@@ -74,7 +74,7 @@
         
         <!-- CART ICON -->
             <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
-            <a href="#">
+            <a href="{% url 'cart' %}">
                 <img
                 class="d-inline-block align-top px-1"
                 src="/images/cart.png"
@@ -92,7 +92,7 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false" style="text-decoration: none;">
-                <img src="/images/account.png" width="40" height="40">
+                <img src="{% static 'images/accoun.png'%}" width="40" height="40">
             </a>
             <ul class="dropdown-menu">
                 <li><a href="/customer" class="dropdown-item"> Edit Profile </a></li>
@@ -117,12 +117,11 @@
       </nav>
 
     <!------------------------------- INSERT CONTENT HERE ------------------------------->
-    <div class="container">
-        <br>
+    
         {% block content %}
 
         {% endblock content %}
-    </div>
+  
 
       <!-------------------------------BOOSTSTRAP JS------------------------------->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -1,5 +1,18 @@
 
-        
+
+        /*Import Montserrat font family*/
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        /*----------------------------------------------------ROOT AND BODY----------------------------------------------------*/
+        :root {
+            --blue: #7FB5FF;
+            --lightblue: #C4DDFF;
+            --lighterblue: #F6F7FF;
+            --navy: #001D6E;
+            --yellow: #FEE2C5;
+            --purple: #1A1052;
+            --lgray: #C4C4C4;
+        }
         /* NAVBAR LOG IN BUTTON */
         .nav_button {
             border: 0;
@@ -31,20 +44,6 @@
             height: 25px;
             border-radius: 50%;
             font-size: 14px;
-        }
-
-        /*Import Montserrat font family*/
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-
-        /*----------------------------------------------------ROOT AND BODY----------------------------------------------------*/
-        :root {
-            --blue: #7FB5FF;
-            --lightblue: #C4DDFF;
-            --lighterblue: #F6F7FF;
-            --navy: #001D6E;
-            --yellow: #FEE2C5;
-            --purple: #1A1052;
-            --lgray: #C4C4C4;
         }
 
         /*Navbar (Top)*/

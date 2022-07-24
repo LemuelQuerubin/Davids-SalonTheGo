@@ -1,0 +1,150 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<div class ="main">
+  <head>
+  	<title>Pending Appointments</title>
+    <!--Dito yung iaapprove siya ni Admin after magcreate ni customer ng appt. 
+        Tapos mapupunta sa appts_approved-->
+    <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--FONTS-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Days+One|Assistant|Montserrat">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
+	
+    <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
+    
+	<script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
+    <style>
+        br {
+            display: block;
+            content: "";
+            margin-top: 15px;
+        }
+    </style>
+  </head>
+  <body>
+		
+	<div>	
+
+			<div class="go-back">		
+				<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+			</div>
+
+            {% for appointment in appointments %}
+                {% if appointment.appointmentStatus == 'Pending' %}
+                <div class="whole-container">
+                    <div class="box-container">
+                        <div class="month-box">
+                            <div class="month-box-container">
+                                <div class="month">
+                                    <h6>{{ appointment.apptDate|date:'F' }}</h6>
+                                </div>
+                                <div class="box">
+                                    <h2>{{ appointment.apptDate|date:'d' }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                                    
+                        
+                        <div class="information-container">
+                            <div class="info-container">
+                                    <h1>TIME:</h1>
+                                    <p>{{ appointment.appt_timeStart|time:'h:i A' }}</p>
+                            </div>
+                            
+                            <div class="info-container">
+                                    <h2>NAME:</h2>
+                                    <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }}</p>
+                            </div>         
+                            
+                            <div class="info-container">
+                                    <h3>SERVICE/S:</h3>
+                                    <p>
+                                        {% for key in appointment.services %}
+                                            {{ key }}{% if not forloop.last %},{% endif %}
+                                        {% endfor %}
+                                    </p>
+                            </div>       
+                            
+                            <div class="info-container">
+                                    <h4>STYLISTS:</h4>
+                                    <p>{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
+                            </div>   
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <div class="button-half">
+                            <form method="POST">
+                            {% csrf_token %}
+                                <input type="hidden" value="{{ appointment.id }}" name="approve">
+                                <input class="buttons3" type="submit" value="Approve Appointment" name="button" id="approve">
+                            </form>
+                        </div>
+                    
+                        <div class="button-half">
+                            <form method="POST">
+                            {% csrf_token %}
+                                <input type="hidden" value="{{ appointment.id }}" name="reject">
+                                <input class="buttons4" type="submit" value="Reject Appointment" name="button" id="reject">
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+		
+            
+            <a data-bs-toggle="modal" data-bs-target="#apptPending" id="click" hidden></a>
+            
+            
+            <div class="modal fade" id="apptPending" tabindex="-1" aria-label="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Appointment Pending</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Appointment is now pending. Wait for few minutes for the admin's approval.</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+		
+      
+	</div>
+
+
+
+
+
+
+
+
+    <script>
+        if ("{{ next }}" == "submitted") {
+            $(document).ready(function(){
+                $('#click')[0].click(function(){
+                });
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+</body>
+</div>
+</div>
+
+{% endblock content %}

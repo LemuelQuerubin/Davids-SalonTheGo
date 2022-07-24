@@ -30,6 +30,8 @@ urlpatterns = [
     # CUSTOMER
     path('customer/', include('customerpanel.urls')),
 
+    # APPOINTMENTS
+    path('appointments/', include('system.urls')),
     # SHOP and PRODUCTS
     path('shop/', include('base.urls')),
     
