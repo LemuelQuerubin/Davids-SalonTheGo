@@ -1,0 +1,285 @@
+
+        
+        /* NAVBAR LOG IN BUTTON */
+        .nav_button {
+            border: 0;
+        }
+        
+        .nav_button a {
+            text-decoration: none;
+            color: white;
+            font-size: medium;
+            font-weight: 800;
+            padding: 12px 45px;
+            background: var(--blue);
+            border-radius: 6px;
+        }
+        
+        .nav_button a:hover {
+            transition: all .25s;
+            color: var(--blue);
+            background: white;
+            border: 2px solid var(--blue);
+        }
+
+        /* CART TOTAL */
+        #cart-total{
+            text-align: center;
+            color:#fff;
+            background-color: red;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+
+        /*Import Montserrat font family*/
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        /*----------------------------------------------------ROOT AND BODY----------------------------------------------------*/
+        :root {
+            --blue: #7FB5FF;
+            --lightblue: #C4DDFF;
+            --lighterblue: #F6F7FF;
+            --navy: #001D6E;
+            --yellow: #FEE2C5;
+            --purple: #1A1052;
+            --lgray: #C4C4C4;
+        }
+
+        /*Navbar (Top)*/
+        nav {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            font-size: 15;
+            color: #000;
+            text-decoration: none;
+            background-color: white;
+            padding: 5px 20px;
+        }
+
+        /*Hides bullets for lists*/
+        .nav_menu ul {
+            list-style-type: none;
+        }
+
+        /*For Home, Products, Vouchers, and About Us*/
+        .nav_menu a {
+            color: black;
+            text-decoration: none;
+            transition: all 0.3s ease 0s;
+        }
+
+        /*Hover for Home, Products, Vouchers, and About Us*/
+        .nav_menu a:hover {
+            color: var(--blue);
+            font-weight: 800;
+        }
+
+        /*Menu*/
+        .nav_menu li {
+            font-size: 16px;
+            padding: 15px 5px;
+        }
+
+        /*Display a block*/
+        .nav_menu li a {
+            display: block;
+        }
+
+        /*Line border under the Sign Up button*/
+        .nav_button {
+            border-bottom: 1px black solid;
+        }
+        
+        /*Searchbar and Search Icon*/
+        nav .search-icon {
+            height: 40px;
+            width: 730px;
+            display: flex;
+            background: #E5E5E5;
+            border-radius: 8px;
+            margin: auto;
+        }
+        
+        nav .search-icon input {
+            height: 100%;
+            width: 680px;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            color: #000;
+            background: #E5E5E5;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        nav .search-icon .icon {
+            height: 100%;
+            width: 50px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        nav .icon:hover{
+            background: #ececec;
+        }
+
+        nav .icon span{
+            color: #222222;
+            font-size: 18px;
+        }
+
+        /*--------------------------------------------  MOBILE MENU VIEW    --------------------------------------------*/
+        .nav_menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /*Order of appearance*/
+        .nav_toggle {
+            order: 1;
+        }
+
+        .nav_item.button {
+            order: 2;
+        }
+
+        .nav_item {
+            width: 100%;
+            text-align: center;
+            order: 3;
+            display: none;
+        }
+
+        @media screen and (min-width: 200px) {
+            nav .search-icon {
+                height: 40px;
+                width: 400px;
+                display: flex;
+                background: #E5E5E5;
+                border-radius: 8px;
+                margin: auto;
+            }
+              
+            nav .search-icon input {
+                height: 100%;
+                width: 350px;
+                border: none;
+                outline: none;
+                padding: 0 10px;
+                color: #000;
+                background: #E5E5E5;
+                font-size: 16px;
+                border-radius: 8px;
+            }
+            
+            nav .search-icon .icon {
+                height: 100%;
+                width: 50px;
+                line-height: 40px;
+                text-align: center;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+            
+            nav .icon:hover{
+                background: #ececec;
+            }
+            
+            nav .icon span{
+                color: #222222;
+                font-size: 18px;
+            }
+          }
+
+        /*For JavaScript
+        Adding active class dynamically to all items 
+        once hamburger menu is clicked; to make it appear*/
+        .nav_item.active {
+            display: block;
+        }
+
+        /*When you hover the cursor, it becomes a pointer*/
+        .nav_toggle {
+            cursor: pointer;
+        }
+
+        /*Hamburger Menu bars - middle*/
+        .nav_bars {
+            background-color: black;
+            display: inline-block;
+            height: 2px;
+            position: relative;
+            width: 18px;
+        }
+
+        /*Hamburger Menu bars - top and bottom*/
+        .nav_bars::before, .nav_bars::after {
+            background-color: black;
+            content: "";
+            display: inline-block;
+            height: 2px;
+            position: absolute;
+            width: 18px;
+        }
+
+        .nav_bars::before {
+            top: 5px;
+        }
+
+        .nav_bars::after {
+            top: -5px;
+        }
+
+        /*--------------------------------------------  TABLE MENU VIEW    --------------------------------------------*/
+        @media all and (min-width: 468px) {
+            .nav_menu {
+                justify-content: center;
+            }
+            .nav_logo {
+                flex: 0;
+            }
+            .nav_item.button {
+                width: auto;
+                order: 1;
+                display: block;
+            }
+
+            .nav_toggle {
+                order: 2;
+            }
+
+            .nav_button {
+                border: 0;
+            }
+        
+        }
+
+
+        /*--------------------------------------------  DESKTOP MENU VIEW    --------------------------------------------*/
+        @media all and (min-width: 768px) {
+            .nav_item {
+                display: block;
+                width: auto;
+            }
+            .nav_toggle{
+                display: none;
+            }
+
+            .nav_item {
+                order: 1;
+            }
+
+            .nav_button {
+                order: 2;
+            }
+
+            .nav_menu li {
+                padding: 15px 30px;
+            }
+        }

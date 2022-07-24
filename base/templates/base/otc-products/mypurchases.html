@@ -1,0 +1,101 @@
+{% extends 'base/otc-products/main-navbar-fake.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main-2.css' %}">
+
+<!-- CONTINUE SHOPPING -->
+<a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+<br><br>
+
+<!---------------------------------------------- MY PURCHASES ---------------------------------------------->
+
+<h2><strong>My Purchases</strong></h2>
+
+<!-------------------------------------------- PURCHASED PRODUCTS ROWS -------------------------------------------->
+<h4 style="padding-top: 3%;"><strong>Purchased Products</strong></h4>
+		<div class="box-element">
+            <div class="cart-row-1">
+                <div style="flex:1; margin-left:10%;"><strong>Date</strong></div>
+                <div style="flex:1"><strong>Products Availed</strong></div>
+                <div style="flex:1"><strong>Quantity</strong></div>
+                <div style="flex:1"><strong>Unit Price</strong></div>
+                <div style="flex:1"><strong>Total Price</strong></div>
+                <div style="flex:1"><strong>Amount Total</strong></div>
+            </div>
+            
+            <div class="box-element-3">
+                <!-- START OF FOR LOOP -->
+                {% for item in items %}
+                <div class="cart-row-4">
+                    <!-- PICKUP DATE -->
+                    <div style="flex:1; margin-left:10%;">
+                        <p>DATE</p>
+                    </div>
+                    <!-- PRODUCT ITEM -->
+                    <div style="flex:1">
+                        <p>{{item.product.Prod_Name}}</p>
+                    </div>
+                    <!-- ITEM QUANTITY -->
+                    <div style="flex:1; margin-left:4%;">
+                        <p class="quantity" style="margin-bottom:5%;">{{item.quantity}}</p>
+                    </div>
+                    <!-- UNIT PRICE PER ITEM -->
+                    <div style="flex:1">
+                        <p>&#x20B1;{{item.product.Prod_Price|floatformat:2}}</p>
+                    </div>
+                    <!-- TOTAL PRICE PER ITEM -->
+                    <div style="flex:1"><p style="color: #001D6E; font-weight:800;">
+                        &#x20B1;{{item.get_total|floatformat:2}}
+                    </p></div>
+                    <!-- AMOUNT TOTAL FOR ORDER -->
+                    <div style="flex:1"><p style="color: #001D6E; font-weight:800;">
+                        &#x20B1;{{order.get_cart_total|floatformat:2}}
+                    </p></div>
+                </div>
+                {% endfor %}
+            </div>
+	</div>
+
+        
+    <!-------------------------------------------- AVAILED SERVICES ROWS --------------------------------------------
+    <!-- NOTE: REPLACE FOR LOOP AND INSERT VALUES IN DOUBLE CURLY BRACE IF NECESSARY --
+<h4 style="padding-top: 3%;"><strong>Availed Services</strong></h4>
+    <div class="box-element">
+        <div class="cart-row-1">
+            <div style="flex:1; margin-left:10%;"><strong>Date and Time</strong></div>
+            <div style="flex:1"><strong>Services Availed</strong></div>
+            <div style="flex:1"><strong>Stylist/s</strong></div>
+            <div style="flex:1"><strong>Unit Price</strong></div>
+            <div style="flex:1"><strong>Total Price</strong></div>
+        </div>
+        
+        <div class="box-element-3">
+            <!-- START OF FOR LOOP --
+            {% for item in items %}
+            <div class="cart-row-4">
+                <!-- APPOINTMENT DATE --
+                <div style="flex:1; margin-left:10%;">
+                    <p>INSERT DATE</p>
+                </div>
+                <!-- AVAILED SERVICES --
+                <div style="flex:1">
+                    <p>INSERT SERVICES</p>
+                </div>
+                <!-- STYLIST --
+                <div style="flex:1">
+                    <p>STYLIST</p>
+                </div>
+                <!-- UNIT PRICE PER SERVICE --
+                <div style="flex:1;">
+                    <p>&#x20B1;INSERT UNIT PRICE</p>
+                </div>
+                <!-- TOTAL PRICE --
+                <div style="flex:1"><p style="color: #001D6E; font-weight:800;">
+                    &#x20B1;INSERT TOTAL PRICE
+                </p></div>
+            </div>-->
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

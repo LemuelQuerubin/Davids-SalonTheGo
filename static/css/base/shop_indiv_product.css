@@ -1,0 +1,288 @@
+/***** BREADCRUMB LINKS *****/
+    /* CONTAINER */
+    .shop-links-container {
+        margin-bottom: 40px;
+    }
+    /* LINKS */
+    .shop-links {
+        font-size: 13px;
+        display: inline-block;
+        position: relative;
+        color: black;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+        .shop-links:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #001D6E;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        .shop-links:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        .shop-links:hover {
+            cursor: pointer;
+            color: #525252;
+        }
+    /* CURRENT LINK */
+    #current-link {
+        font-size: 13px;
+        color: #525252;
+        background-color: #c4DDFF;
+        padding: 4px 8px;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+        #current-link:hover {
+            cursor: pointer;
+            color: white;
+        }
+
+    /* GO BACK LINK */
+    .go-back {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    .go-back a{
+        text-decoration: none;
+        color: #7FB5FF;
+    }
+        .go-back a:hover{
+            color: #c4DDFF;
+        }
+
+    /***** IMG AND DETAILS CONTAINER *****/
+    .shop-indiv-prod-container {
+        height: 400px;
+        margin-bottom: 90px;
+    }
+
+    .shop-img-container {
+        width: 50%;
+        float: left;
+    }
+    .shop-indiv-prod-img {
+        height: 400px;
+        width: 400px;
+        object-fit: cover;
+    }
+
+    .shop-indiv-prod-details {
+        width: 50%;
+        float: left;
+    }
+
+    /* PRODUCT NAME */
+    .details-prodname h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+    /* PRICE */
+    .details-price {
+        margin-bottom: 15px;
+    }
+        .details-price {
+            color: #001D6E;
+            font-size: 26px;
+            font-weight: 500;
+        }
+        #price::before {
+            content: '₱';
+        }
+    /* DESCRIPTION */    
+    .details-desc {
+        height: 140px;
+    }
+    /* STOCK */
+    .details-stock {
+        font-size: 13px;
+        color: #525252;
+        margin-bottom: 10px;
+    }
+        /* STOCK QUANTITY BUTTONS AND FIELD */
+        input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        margin-bottom: 20px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        }
+
+        .number-input {
+        border: 0;
+        display: inline-flex;
+        }
+
+        .number-input,
+        .number-input * {
+        box-sizing: border-box;
+        }
+
+        .number-input button {
+        outline:none;
+        -webkit-appearance: none;
+        background-color: #f8f8f8;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        box-shadow: 0px 0px 1px #d4d4d4;
+            border-radius: none;
+        }
+        .number-input button:hover {
+            background-color: #f5f5f5;
+        }
+        .number-input button:before,
+        .number-input button:after {
+        display: inline-block;
+        position: absolute;
+        content: '';
+        width: 1rem;
+        height: 2px;
+        background-color: #212121;
+        transform: translate(-50%, -50%);
+        }
+        .number-input button.plus:after {
+        transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        .number-input input[type=number] {
+        max-width: 3rem;
+        padding: .5rem;
+        border: none;
+        border-width: 0 2px;
+        font-size: 18px;
+        height: 2rem;
+        text-align: center;
+        color:#000000;
+        background-color: #fdfdfd;
+        }
+    
+    /* ADD TO CART BUTTON*/
+    .details-add-to-cart button {
+        font-family: 'Montserrat', sans-serif!important;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 10px 50px;
+        border: 2px solid #001D6E;
+        border-radius: 8px;
+        color: white;
+        background-color: #001D6E;
+        cursor: pointer;
+    }
+    .details-add-to-cart button:hover {
+        color: #7FB5FF;
+        border: 2px solid #7FB5FF;
+        background-color: transparent;
+    }
+
+    
+    /***** BROWSE OTHER PRODUCTS *****/
+    /* BROWSE LABEL */
+    .browse-other-prod {
+        margin-bottom: 40px;
+        text-align: center;
+        font-size: 16px;
+        color: #7FB5FF;
+    }
+        .browse-other-prod {
+            display: block;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap; 
+        }
+
+        .browse-other-prod > span {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .browse-other-prod > span:before,
+        .browse-other-prod > span:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 9999px;
+            height: 1px;
+            background: #7FB5FF;
+        }
+
+        .browse-other-prod > span:before {
+            right: 100%;
+            margin-right: 15px;
+        }
+
+        .browse-other-prod > span:after {
+            left: 100%;
+            margin-left: 15px;
+        }
+    /* GRID CONTAINER FOR PRODUCTS */
+    .browse-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 290px;
+        grid-gap: 1.5rem;
+        grid-auto-flow: row;
+    }
+
+    /* CONTAINER */
+    .indiv-browse-grid{
+        background: white;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        transition: all .1s ease-in-out; 
+        border: solid 1px white;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    .indiv-browse-grid:hover {
+        transform: scale(1.1);
+        border: solid 1px rgb(243, 243, 243);
+
+    }
+    /* IMAGE */
+    .indiv-shop-images img{
+        margin-top: 20px;
+        margin-bottom: 5px;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+    /* PRODUCT NAME */
+    .indiv-shop-prodname {
+        height: 40px;
+        width: 170px;
+        margin: 0 auto;
+    }
+    .indiv-shop-prodname a {
+        font-size: 15px;
+        color: black;
+        text-decoration: none;
+    }
+        .indiv-shop-prodname a:hover {
+            color: rgb(145, 145, 145);
+        }
+    /* PRICE */
+    .indiv-shop-price {
+        font-size: 15px;
+    }
+        #price::before {
+            content: '₱';
+        }

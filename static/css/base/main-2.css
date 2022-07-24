@@ -1,0 +1,329 @@
+/*Import Montserrat font family*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap');
+
+/*----------------------------------------------------ROOT AND BODY----------------------------------------------------*/
+:root {
+	--blue: #7FB5FF;
+	--lightblue: #C4DDFF;
+	--lighterblue: #F6F7FF;
+	--navy: #001D6E;
+	--yellow: #FEE2C5;
+	--purple: #1A1052;
+	--lgray: #C4C4C4;
+}
+
+body{
+	background-color: FFF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    color: #000;
+    /* text-decoration: none; */
+}
+
+/*----------------------------------------------------HEADING 2----------------------------------------------------*/
+h2 {
+	color: var(--navy)!important;
+}
+
+/*----------------------------------------------------BOX ELEMENT----------------------------------------------------*/
+/* BOX ELEMENT - 
+		CONTAINS THE CART ROWS
+		BOX-ELEMENT-1 IS FOR THE CHECKOUT AT THE TOP */
+
+/* CART BOX ELEMENT */
+.box-element-1{
+	/* PADDING */
+	padding: 9px;
+	padding-bottom: 2%;
+	padding-top: 3%;
+	/* BORDER */
+	background-color: #fff;
+	border-radius: 16px;
+	border-style: solid;
+	border-color: var(--lgray);
+	border-width: thin;
+}
+
+.box-element{
+	background-color: #fff;
+	border-radius: 15px;
+	padding: 10px;
+	padding-bottom: 2%;
+}
+
+/* CHECKOUT BOX ELEMENT */
+.box-element-2{
+	background-color: var(--lighterblue);
+	border-radius: 30px;
+	padding: 10px;
+	padding-bottom: 2%;
+	margin-bottom: 10%;
+}
+
+/* MY PURCHASES BOX ELEMENT */
+.box-element-3{
+	/* PADDING */
+	padding: 9px;
+	padding-bottom: 2%;
+	padding-top: 2%;
+	/* BORDER */
+	background-color: #fff;
+	border-radius: 15px;
+	border-style: solid;
+	border-color: var(--lgray);
+	border-width: thin;
+}
+
+/* CHECKBOX BUT NO FUNCTION YET */
+.checkbox {
+	/* MARGIN */
+	margin-left: 10%;
+	margin-right: 10%;
+	/* BORDER */
+	border-radius: 15px!important;
+	border-style: solid!important;
+	border-color: var(--lgray)!important;
+	border-width: thin!important;
+	cursor: pointer;
+}
+
+/* THUMBNAIL PICTURE */
+.thumbnail{
+	width: 100%;
+	height: 200px;
+	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}
+
+/* PRODUCT */
+.product{
+	border-radius: 0 0 4px 4px;
+}
+
+/* CART ICON */
+#cart-icon{
+	width:25px;
+	display: inline-block;
+	margin-left: 15px;
+}
+
+/* CART TOTAL */
+#cart-total{
+	display: block;
+	text-align: center;
+	padding-top: 2%;
+	color:#fff;
+	background-color: red;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	font-size: 14px;
+}
+
+/* COLUMNS UNDER DIV CLASS="ROW" */
+.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
+	margin-top: 10px;
+}
+
+/*-----------------------------------------------CHECKOUT PAGE - PLACE ORDER--------------------------------------------*/
+
+.place-order {
+	background-color: var(--purple);
+	font-size: large;
+	color: white;
+	text-align: center;
+	border: none;
+	padding: .8em;
+	border-radius: 15px;
+	cursor: pointer;
+	width: 100%;
+}
+
+
+.place-order:hover {
+	background-color: #2b1c83;
+	text-decoration: none;
+	color: white;
+}
+
+/*----------------------------------------------------CART PAGE----------------------------------------------------*/
+/* CHECKOUT BUTTON */
+.checkout {
+	background-color: var(--purple);
+	font-size: large;
+	color: white;
+	text-align: center;
+	border: none;
+	padding: .8em;
+	border-radius: 15px;
+	cursor: pointer;
+	width: 135px;
+}
+
+
+.checkout:hover {
+	background-color: #2b1c83;
+	text-decoration: none;
+	color: white;
+}
+
+/* CART TOTAL TEXT */
+.cart-total-text {
+	font-size:xx-large;
+}
+
+.btn{
+	border-radius: 0;
+}
+
+.row-image{
+	width: 100px;
+}
+
+.form-field{
+	width:250px;
+	display: inline-block;
+	padding: 1px;
+}
+
+/*------------------------------------------------CART PAGE - CART ROWS--------------------------------------------------*/
+
+.cart-row{
+	/* FONT */
+	font-size: medium;
+	/* FLEX */
+    align-items: flex-stretch;
+	display: flex;
+	/* BORDER */
+	border-style: solid;
+	border-color: var(--lgray);
+	border-width: thin;
+	border-radius: 15px;
+	/* PADDING AND MARGINS*/
+	padding-top: 1.5%;
+	padding-right: 2px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+	width: 100%;
+	background-color: white;
+}
+
+/* FOR COLUMN HEADER */
+.cart-row-1{
+	/* FLEX */
+	display: flex;
+    align-items: flex-stretch;
+	/* MARGIN AND PADDING */
+	padding-top: 1%;
+	padding-right: 2px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+	width: 100%;
+	/* BORDER AND BACKGROUND COLOR */
+	border-style: none;
+	border-radius: 15px;
+	background-color: var(--lightblue);
+}
+
+/* FOR CHECKOUT TOTAL */
+.cart-row-2{
+	/* FLEX */
+	display: flex;
+    align-items: flex-stretch;
+	/* MARGIN AND PADDING */
+	padding-top: 5%;
+	padding-left: 5%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--lgray);
+	width: 100%;
+	/* BORDER AND BACKGROUND COLOR */
+	border-radius: 10px;
+	background-color: var(--lightblue);
+}
+
+/* CART ROW FOR CHECKOUT ITEMS*/
+.cart-row-3{
+	/* FONT */
+	font-size: medium;
+	/* FLEX */
+    align-items: flex-stretch;
+	display: flex;
+	/* BORDER */
+	border-style: none;
+	border-radius: 15px;
+	/* PADDING AND MARGINS*/
+	padding-top: 1.5%;
+	padding-right: 2px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+	width: 100%;
+}
+
+/* MY PURCHASES ROWS --- FOR PURCHASED PRODUCTS */
+.cart-row-4{
+	/* FONT */
+	font-size: medium;
+	/* FLEX */
+    align-items: flex-stretch;
+	display: flex;
+	/* PADDING AND MARGINS*/
+	padding-right: 2px;
+	width: 100%;
+	background-color: white;
+}
+
+.cart-row-5{
+	/* FONT */
+	font-size: medium;
+	/* FLEX */
+    align-items: flex-stretch;
+	display: flex;
+	/* BORDER */
+	border-style: solid;
+	border-color: var(--lgray);
+	border-width: thin;
+	border-radius: 15px;
+	/* PADDING AND MARGINS*/
+	padding-top: 1.5%;
+	padding-right: 2px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+	width: 100%;
+	background-color: white;
+}
+
+
+/*----------------------------------------------------QUANTITIES----------------------------------------------------*/
+.quantity{
+	display: inline-block;
+	padding-right:10px;
+}
+
+.chg-quantity{
+	width: 8px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+}
+
+.chg-quantity:hover{
+	opacity: .6;
+}
+
+/* REMOVE ITEM TEXT */
+.remove-item-text {
+	color: #000!important;
+	text-decoration: none;
+}
+
+.hidden{
+	display: none!important;
+}

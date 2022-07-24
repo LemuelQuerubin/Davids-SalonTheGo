@@ -1,0 +1,243 @@
+/* FORM CONTAINER STYLE */
+.form-style{
+    font-family: 'Montserrat', sans-serif;
+    width: 370px;
+    margin: 0 auto 20px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 40px 40px;
+}
+
+/* GO BACK BUTTON */
+.go-back {
+    width: 430px;
+    margin: 0 auto 20px;
+}
+.go-back a{
+    font-size: 18px;
+    text-decoration: none;
+    color: #001D6E;
+}
+    .go-back a:hover{
+        text-decoration: underline;
+        color: #002281;
+    }
+    .fa-circle-arrow-left {
+        margin-right: 8px;
+    }
+    /* GO BACK LINK FOR TABLES */
+    .go-back-table {
+        width: 770px;
+    }
+    .go-back-table a {
+        font-size: 18px;
+        text-decoration: none;
+        color: #001D6E;
+    }
+        .go-back-table a:hover{
+            text-decoration: underline;
+            color: #002281;
+        }
+        .fa-circle-arrow-left {
+            margin-right: 8px;
+        }
+
+/* FONT LABEL AND TEXT */
+.form-style input[type=submit],
+.form-style input[type=button],
+.form-style input[type=text],
+.form-style input[type=number],
+.form-style select,
+.form-style textarea
+{
+    font-size: 16px;
+    color: black;
+}
+.form-style label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-style input[type=text], 
+.form-style input[type=number],
+.form-style select {
+    background: transparent;
+    border: 1px solid #83A4C5;
+    width: 350px;
+    outline: none;
+    padding: 5px 5px;
+}
+
+#id_expiry_date {
+    font-family: 'Montserrat', sans-serif;
+    padding: 6px 10px;
+    width: 194px;
+    border: 1px solid #83A4C5;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+/* MARGIN BOTTOM */
+.form-style input[type=text], 
+.form-style input[type=number],
+.form-style input[type=file],
+.form-style select,
+.form-style textarea {
+    padding: 6px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+select#id_ProdType_Name {
+    width: 363px;
+}
+select#id_Cat_Name {
+    width: 363px;
+}
+
+/* DESCRIPTION TEXT AREA */
+.form-style textarea {
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+    border: 1px solid #83A4C5;
+    width: 350px;
+    outline: none; 
+    overflow: hidden;
+    resize: none;
+    height: 100px;
+    padding: 5px 5px;
+}
+/* DESCRIPTION SCROLL */
+textarea#id_Prod_Desc {
+    overflow-y: scroll;
+    height: 80px;
+    resize: none;
+}
+/* scrollbar width */
+textarea#id_Prod_Desc::-webkit-scrollbar {
+    width: 12px;
+}
+/* scrollbar track */
+textarea#id_Prod_Desc::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+/* scrollbar color */
+textarea#id_Prod_Desc::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #a6c7ff;
+}
+
+/* TEXT BOX FOCUS EFFECT */
+.form-style textarea:focus, 
+.form-style input[type=text]:focus,
+.form-style input[type=number]:focus,
+.form-style select:focus,
+#id_expiry_date:focus {
+    box-shadow: 0 0 5px hwb(207 71% 0%);
+    border: 1px solid #7FB5FF;
+}
+
+/* FILE UPLOAD BUTTON */
+::-webkit-file-upload-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #7FB5FF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-transform: uppercase;
+    transition: 100ms ease-out;
+    cursor: pointer;
+}
+::-webkit-file-upload-button:hover {
+    background: #bbbbbb;
+}
+
+/* STATUS TOGGLE BUTTON */
+input[type="checkbox"]{
+appearance:none;
+width:40px;
+height:16px;
+border:1px solid #aaa;
+border-radius:2px;
+background:#ebebeb;
+position:relative;
+display:inline-block;
+overflow:hidden;
+vertical-align:middle;
+transition: background 0.3s;
+box-sizing:border-box;
+cursor: pointer;
+}
+input[type="checkbox"]:after{
+content:'';
+position:absolute;
+top:-1px;
+left:-1px;
+width:14px;
+height:14px;
+background:white;
+border:1px solid #aaa;
+border-radius:2px;
+transition: left 0.1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+input[type="checkbox"]:checked{
+background:#a6c7ff;
+border-color:#8daee5;
+}
+input[type="checkbox"]:checked:after{
+left:23px;
+border-color:#8daee5;
+}
+
+input[type="checkbox"]:hover:not(:checked):not(:disabled):after,
+input[type="checkbox"]:focus:not(:checked):not(:disabled):after{
+left:0px;
+}
+
+input[type="checkbox"]:hover:checked:not(:disabled):after,
+input[type="checkbox"]:focus:checked:not(:disabled):after{
+left:22px;
+}
+
+input[type="checkbox"]:disabled{
+opacity:0.5;
+}
+
+.form-style input[type="submit"] {
+    margin: 0 auto;
+}
+
+/* WHEN CHECKBOX IS CHECKED */
+.text {
+    vertical-align: middle;
+    display: none
+}
+input[type="checkbox"]:checked + .text {
+    display: inline-block
+}
+
+/* SUBMIT BUTTON */
+.form-style input[type=submit],
+.form-style input[type=button] {
+    width: 100px;
+    cursor: pointer;
+    background: #001D6E;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    margin: 20px 0 auto 260px;
+}
+.form-style input[type=submit]:hover,
+.form-style input[type=button]:hover{
+    background: #002281;
+}

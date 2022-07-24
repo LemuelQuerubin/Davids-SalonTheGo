@@ -1,0 +1,99 @@
+{% extends 'main_shop-1.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="cart-main-wrapper">
+    <div class="container">
+
+        <!-- CONTINUE SHOPPING LINK -->
+        <div class="cont-shopping-link">
+            <a href="{% url 'shop' %}"><i class="fa-solid fa-circle-arrow-left"></i>Continue Shopping</a>
+        </div>
+
+        <!-- CART CONTAINER -->
+        <div class="cart-container">
+            <!-- TITLE -->
+            <div class="cart-title">
+                <h2>Shopping Cart</h2>
+            </div>
+            
+            <table class="cart-table">
+                <thead class="cart-thead">
+                    <tr>
+                        <!-- TABLE HEADER -->
+                        <th scope="col"></th>
+                        <th scope="col" colspan="2">Product</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+
+                <tbody class="cart-tbody">
+                    {% for item in items %}
+                    <tr>
+                        <!-- TABLE BODY -->
+                        <td><input class="checkbox" type="checkbox"></td>
+                        <td><img class="cart-img" src="{{item.product.Prod_Image.url}}"></td>
+                        <td data-label="Product" id="cart-name">{{item.product.Prod_Name}}</td>
+                        <td data-label="Unit Price" id="price">{{item.product.Prod_Price|floatformat:2}}</td>
+                        <td data-label="Quantity"><label class="quantity" style="margin-bottom:5%;">{{item.quantity}}</label>
+                            <div class="quantity">
+                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+                            
+                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+                            </div>
+                        </td>
+                        <td data-label="Total Price" id="price">{{item.get_total|floatformat:2}}</td>
+                        <td><a class="remove-item-text" href="#"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- CHECK OUT AND TOTAL CONTAINER -->
+    <div class="cart-checkout-container">
+        <ul> 
+            <div class="cart-checkout">
+                <li class="cart-checkout-labels"><label id="cart-total-items"><b>Total</b> ({{order.get_cart_items}} items):</label></li>
+                <li class="cart-checkout-labels cart-total-price" id="price">{{order.get_cart_total|floatformat:2}}</li>
+                <li class="cart-checkout-labels"><a class="checkout" href="{% url 'checkout' %}">Check Out</a></li>
+            </div>
+        </ul>
+    </div>
+</div>
+
+
+<!-- BACK TO TOP BUTTON -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<!-- BACK TO TOP SCRIPT -->
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+{% endblock content %}
+
+
+

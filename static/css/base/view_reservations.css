@@ -1,0 +1,51 @@
+    /* ACCEPT-REJECT AND RECEIVE-CANCEL BUTTONS*/
+    #approve, #transaction-successful {
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--blue); 
+        color: white;
+        margin-top: 5%;
+        text-align: center;
+        border: none;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid;
+        cursor: pointer;
+        width: 135px;
+        text-decoration: none;
+        transition: 400ms;
+    }
+
+    #reject, #cancel {
+        font-family: "Montserrat", sans-serif;
+        background-color: white; 
+        color: var(--blue);
+        margin-top: 5%;
+        text-align: center;
+        border: 1px solid;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid;
+        cursor: pointer;
+        width: 135px;
+        text-decoration: none;
+        transition: 400ms;
+    }
+    
+    
+    #approve:hover, #transaction-successful:hover {
+        background-color: #3c7dd8;
+        border-color: white;
+        border: 1px solid;
+        text-decoration: none;
+        color: white;
+    }
+    
+    #reject:hover, #cancel:hover {
+        font-weight: 700px;
+        border-color: var(--blue);
+        border-radius: 30px;
+        border: 1px solid;
+        text-decoration: none;
+        color: #3c7dd8;
+    }

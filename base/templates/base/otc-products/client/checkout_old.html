@@ -1,0 +1,230 @@
+{% extends 'base/otc-products/main-navbar-fake.html' %}
+{% load static %}
+{% block content %}
+<!-- CSS LINK -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/main-2.css' %}">
+
+<!-- BACK TO CART -->
+<a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+<br><br>
+
+<!------------------------------------------------ CHECKOUT ------------------------------------------------>
+<h2><strong>SalOnTheGo | Checkout</strong></h2>
+
+<!---------------------------------------------- CHECK OUT DIV ---------------------------------------------->
+<div class="row">
+    <!------------------------------------------ CUSTOMER INFO ---------------------------------------------->
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form">
+                <!-- USER INFO -->
+                <div class="box-element-1" style="margin-bottom: 10%;">
+                    <p style="font-size: large; color: #001D6E!important;"> &#x1F6C8; <b> &nbsp; CUSTOMER INFORMATION </b></p>
+                    <table width="100%">
+                        <tr width="100%">
+                            <!-- NOTE: Once connected with CUSTOMER TABLE, link with LOGGED-IN CUSTOMER-->
+                            <td width="40%"><p style="color: #001D6E!important; margin-left: 15%;"> FIRST NAME</p></td>
+                            <td width="60%"><p style="color: #001D6E!important; margin-left: 10%;"> CONTACT INFORMATION</p></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!--EMAIL AND NAME-->
+                <div id="user-info">
+                    <div class="form-field">
+                        <input required class="form-control" type="text" name="name" placeholder="Name">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="email" placeholder="Email">
+                    </div>
+                </div>
+                
+                <!-- DATE OF PICKUP -->
+                <div class="cart-row-1">
+                    <div style="flex:2; margin-left: 3%; margin-top: 1%;"><b> &#11044; &nbsp;&nbsp; DATE OF PICKUP</b></div>
+                </div>
+                    <!-- DATE -->
+                    <div class="form-field" style="padding-top: 5%; margin-bottom: 10%;">
+                        <table>
+                            <tr>                            
+                                <th style="padding-left: 5%; margin-top: 5%;"><b>DATE:</b> </th>
+                                <th style="padding-left: 10%; width: 5000px;"><input required class="form-control" type="date" id="datePickerId" name="pickupdate" placeholder="Date"></th>
+                            </tr>
+                        </table>
+                    </div>
+            <!-- END OF FORMS -->      
+                <input id="make-payment" class="place-order" type="submit" value="Place Order">
+            </form>
+        </div>
+    </div>
+
+    <!------------------------------------------ ORDER SUMMARY ---------------------------------------------->
+    <div class="col-lg-4">
+        <div class="box-element-2">
+            <h4 style="margin-top: 5%;">Your Order Summary</h4>
+            <hr>
+            {% for item in items %}
+            <div class="cart-row-3">
+                <!--PRODUCT IMAGE-->
+                <div style="flex:2"><img class="row-image" src="{{item.product.Prod_Image.url}}"></div>
+                <!-- PRODUCT NAME -->
+                <div style="flex:2">
+                    <p style="font-size: medium;">
+                        {{item.product.Prod_Name}}
+                    </p>
+                    <!-- ITEM QUANTITY -->
+                    <p style="font-size: large; color: gray;"> x{{item.quantity}} </p>
+                    <!-- PRICE -->
+                    <h5><b> &#x20B1;{{item.product.Prod_Price|floatformat:2}} </b></h5>
+                </div>
+                <hr>
+            </div>
+            {% endfor %}
+
+            <!----------------------------- ORDER TOTAL AND TOTAL ITEMS -------------------------------------->
+            <!-- di siya naliligaw ha, wag niyo ipasok sa cart-row-2 or what, maboboang to -->
+            <h5 style="font-size: large; margin-left:5%; margin-top:5%;">Total Items: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{order.get_cart_items}}</h5>
+            <br>
+            <div class="cart-row-2">
+                <table>
+                    <tr>
+                        <th><h5>Total Amount: &nbsp;&nbsp;</h5></th>
+                        <!-- INLINE CSS FOR ORDER TOTAL -->
+                        <th>
+                            <h5 style="font-size: x-large; float:right; padding-top:2%; margin-left:5%; border-radius: 30px!important;">
+                                <b>&#x20B1;{{order.get_cart_total|floatformat:2}}</b>
+                            </h5>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- PLACE ORDER BUTTON -->
+            <!-- <form id="form">
+                <input id="make-payment" class="place-order" type="submit" value="Place Order"> 
+            </form> -->
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=YOUR-CLIENT-ID&currency=USD&disable-funding=credit"></script> -->
+<!-- <script>
+    var total = '{{order.get_cart_total}}'
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        style: {
+            color:  'blue',
+            shape:  'rect',
+        },
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value:parseFloat(total).toFixed(2)
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Show a success message to the buyer
+                submitFormData()
+            });
+        }
+
+    }).render('#paypal-button-container');
+</script> -->
+
+<script type="text/javascript">
+    var pickup = '{{order.pickup}}'
+    var total ='{{order.get_cart_total}}'
+
+    if (pickup == 'False'){
+         document.getElementById('datePickerId').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser'){
+         document.getElementById('user-info').innerHTML = ''
+     }
+
+    if (pickup == 'False' && user != 'AnonymousUser'){
+        //Hide entire form if user is logged in and shipping is false
+            document.getElementById('form-wrapper').classList.add("hidden");
+            //Show payment if logged in user wants to buy an item that does not require shipping
+            document.getElementById('payment-info').classList.remove("hidden");
+    }
+
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        console.log('Form Submitted...')
+        // //hiding form-button
+        // document.getElementById('form-button').classList.add("hidden");
+        // //show payment-info
+        // document.getElementById('payment-info').classList.remove("hidden");
+    })
+
+    //Button Function to Submit Form
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('Place order button clicked')
+
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'total':total,
+        }
+
+        var pickupInfo = {
+            'pickupdate':null,
+        }
+
+        if(pickup != 'False'){
+            pickupInfo.pickupdate = form.pickupdate.value
+        }
+
+        //Show Name and Email for Anonymous User
+        if (user == 'AnonymousUser'){
+            userFormData.name = form.name.value
+            userFormData.email = form.email.value
+        }
+
+        console.log('User Info:', userFormData)
+
+        var url = "/process_order/"
+        fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-Type':'applicaiton/json',
+                'X-CSRFToken':csrftoken,
+            }, 
+            //Send form and pickup data to backend
+            body:JSON.stringify({'form':userFormData, 'pickup':pickupInfo}),
+        })
+
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+            alert('Order processed.');  
+
+            cart = {}
+            document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+            window.location.href = "{% url 'shop' %}"
+
+            })
+    }
+</script>
+
+
+{% endblock content %}

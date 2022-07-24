@@ -1,0 +1,21 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+<div class="main-wrapper">
+    <div class="prod-info">
+        <a href="{{request.META.HTTP_REFERER}}" class="go-back">Go Back</a><br>
+        <div class="prod-img2-container">
+            {% if product.Prod_Image %}<img src="{{product.Prod_Image.url}}" class="prod-img2" />{% endif %}
+        </div>
+        <h2>{{product.Prod_Name}}</h2>
+        <ul>
+            <li><label class="prod-details-title">ID: </label><label class="prod-details">{{product.id}}</label></li>
+            <li><label class="prod-details-title">Category: </label> <label class="prod-details">{{product.Cat_Name}}</label></li>
+            <li><label class="prod-details-title">Price: </label><label class="prod-details" id="price">{{product.Prod_Price|floatformat:2}}</label></li>
+            <li><label class="prod-details-title">Stock: </label><label class="prod-details">{{product.Prod_stockQty}}</label></li>
+            <li><label class="prod-details-title">Description: </label><label class="prod-details">{{product.Prod_Desc}}</label></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}

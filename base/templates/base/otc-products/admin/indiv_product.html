@@ -1,0 +1,40 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back2">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="prod-info">
+        <div class="prod-img2-container">
+            {% if product.Prod_Image %}<img src="{{product.Prod_Image.url}}" class="prod-img2" />{% endif %}
+        </div>
+        <h2>{{product.Prod_Name}}</h2>
+        <ul>
+            <li><label class="prod-details-title">ID: </label><label class="prod-details">{{product.id}}</label></li>
+            <li><label class="prod-details-title">Category: </label> <label class="prod-details">{{product.Cat_Name}}</label></li>
+            <li><label class="prod-details-title">Price: </label><label class="prod-details" id="price">{{product.Prod_Price|floatformat:2}}</label></li>
+            <li><label class="prod-details-title">Stock: </label>
+                <!-- if stock greater than 0 -->
+                {% if product.Prod_stockQty > 0 %}
+                <label class="prod-details">{{product.Prod_stockQty}}</label>
+                {% endif %}
+                <!-- if stock equal to 0 -->
+                {% if product.Prod_stockQty == 0 %}
+                <label class="prod-details">Out of Stock.</label>
+                {% endif %}
+            </li>
+            <li><label class="prod-details-title">Description: </label>
+                {% if product.Prod_Desc %}
+                <label class="prod-details">{{product.Prod_Desc}}</label>
+                {% else %}
+                <label class="prod-details" style="font-style:italic">No description.</label>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% extends 'main_products.html' %}
+{% block content %}
+
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="form-style">
+        <h2>Product Form</h2>
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <!-- PRODUCT NAME -->
+            <div class="forms-indiv-container">
+                {{ form.Prod_Name.errors }}
+                <label for="{{ form.Prod_Name.id_for_label }}">Product Name:</label>
+                {{ form.Prod_Name }}
+            </div>
+            <!-- PRODUCT TYPE -->
+            <div class="forms-indiv-container">
+                {{ form.ProdType_Name.errors }}
+                <label for="{{ form.ProdType_Name.id_for_label }}">Product Type:</label>
+                {{ form.ProdType_Name }}
+            </div>
+            <!-- CATEGORY -->
+            <div class="forms-indiv-container">
+                {{ form.Cat_Name.errors }}
+                <label for="{{ form.Cat_Name.id_for_label }}">Category:</label>
+                {{ form.Cat_Name }}
+            </div>
+            <!-- DESCRIPTION -->
+            <div class="forms-indiv-container">
+                {{ form.Prod_Desc.errors }}
+                <label for="{{ form.Prod_Desc.id_for_label }}">Description:</label>
+                {{ form.Prod_Desc }}
+            </div>
+            <!-- STATUS -->
+            <div class="forms-indiv-container">
+                {{ form.is_active.errors }}
+                <label for="{{ form.is_active.id_for_label }}">Status:</label>
+                {{ form.is_active }} <span class="text">Active</span>
+            </div>
+        </div>
+
+        <div class="form-style">
+            <!-- STOCK -->
+            <div class="forms-indiv-container">
+                {{ form.Prod_stockQty.errors }}
+                <label for="{{ form.Prod_stockQty.id_for_label }}">Stock Quantity:</label>
+                {{ form.Prod_stockQty }}
+            </div>
+            <!-- PRICE -->
+            <div class="forms-indiv-container">
+                {{ form.Prod_Price.errors }}
+                <label for="{{ form.Prod_Price.id_for_label }}">Price:</label>
+                {{ form.Prod_Price }}
+            </div>
+        </div>
+        
+        <div class="form-style">
+            <!-- EXPIRY DATE -->
+            <div class="forms-indiv-container">
+                {{ form.expiry_date.errors }}
+                <label for="{{ form.expiry_date.id_for_label }}">Expiry Date:</label>
+                {{ form.expiry_date }}
+            </div>
+            <!-- IMAGE -->
+            <div class="forms-indiv-container">
+                {{ form.Prod_Image.errors }}
+                <label for="{{ form.Prod_Image.id_for_label }}">Image:</label>
+                {{ form.Prod_Image }}
+            </div>
+            {{form.media}}
+            <input type="submit" value="Submit" onclick="return confirm('Are you sure?');">  
+        </div>
+    </form>
+</div>    
+
+
+{% endblock content %}

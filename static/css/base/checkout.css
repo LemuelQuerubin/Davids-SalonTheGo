@@ -1,0 +1,132 @@
+.checkout-main-wrapper {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 100px 0;
+    background-color: #F1F6FF;
+}
+/* CHECKOUT CONTAINER  */
+.checkout-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 80px auto 0;
+    padding: 40px 30px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+/* CHECKOUT TITLE LABEL */
+.checkout-title{
+    font-size: 18px;
+    color: #001D6E;
+    margin: 0;
+}
+/* YOUR ORDER SUMMARY */
+#order-summ-label{
+    font-size: 18px;
+}
+
+/* IMAGE */
+#checkout-img {
+    height: 120px;
+    width: 120px;
+    vertical-align: middle;
+    object-fit: cover;
+    margin-right: 10px;
+}
+/* PRODUCT NAME */
+#checkout-prod-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #001D6E;
+}
+/* PRODUCT PRICE */
+.checkout-prod-price {
+    font-size: 18px;
+    font-weight: 400;
+}
+/* TOTAL ITEMS AND PRICE CONTAINER */
+.checkout-total-container {
+    font-size: 20px;
+    margin-top: 20px;
+}
+/* TOTAL AMOUNT */
+#checkout-total-amount {
+    font-weight: 600;
+    color: #001D6E;
+    margin-top: 5px;
+}
+    /* ALIGN RIGHT */
+    .checkout-total-align-right {
+        float: right;
+    }
+
+/* CUSTOMER INFO CONTAINER  */
+.customer-info-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 20px auto 0;
+    padding: 40px 30px;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+/* CUSTOMER INFORMATION */
+.fa-solid {
+    margin-right: 10px;
+}
+.customer-info-label {
+    color: #001D6E;
+    font-weight: 600;
+}
+
+/* CUSTOMER INFO TABLE */
+table.customer-info-table {
+    border: 1px solid #C8C8C8;
+    border-radius: 20px;
+    border-spacing: 0;
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+.customer-info-table td {
+    font-size: 14px;
+    width: 50%;
+}
+/* DATE OF PICKUP */
+#date-pickup-title{
+    color: #001D6E;
+    font-weight: 600;
+    margin: 20px 0 0;
+}
+/* DATE INPUT */
+.form-field {
+    font-weight: 400;
+    margin: 13px 0 30px 25px;
+}
+#datePickerId {
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 10px;
+    font-size: 15px;
+    width: 197px;
+    border: 1px solid #C8C8C8;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+/* PLACE ORDER BUTTON */
+#make-payment {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 16px;
+    width: 100%;
+    background-color: #001D6E;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+    #make-payment:hover {
+        background-color: #002ca7;
+    }

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalOnTheGo | Shop</title>
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/all.min.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/shop.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/shop_indiv_product.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/cart.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/nav-top.css' %}">
+    <!------------------------------------ JAVASCRIPT ------------------------------------>
+    <!-- jQuery 3.x snippet -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- jQuery for the Hamburger Menu -->
+    <script>
+        $(function() {
+            $(".nav_toggle").on("click", function(){
+                if($(".nav_item").hasClass("active")){
+                    $(".nav_item").removeClass("active");
+                }
+                else {
+                    $(".nav_item").addClass("active");
+                }
+            })
+        });
+    </script>
+
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+    </script>
+</head>
+<body>
+
+  <nav>
+    <!-------------------------------------------- TOP NAVBAR MENU -------------------------------------------->
+    <ul class="nav_menu">
+        <!-- Logo-->
+
+        <!-- Home, Products, Vouchers, About Us -->
+        <li class="nav_item"><a href="#">  </a></li>
+        <li class="nav_item"><a href="#"> Home </a></li>
+        <li class="nav_item"><a href="{% url 'shop' %}"> Products </a></li>
+        <li class="nav_item"><a href="#"> Promos </a></li>
+        <li class="nav_item"><a href="#"> About </a></li>
+        <li class="nav_item"><a href="#"> Contact </a></li>
+        <li class="nav_item"><a href="#">  </a></li>
+        
+        <!-- Space -->                
+        <li class="nav_item"><a href="#"> </a></li>
+        <li class="nav_item"><a href="#"> </a></li>
+
+        <!-- Shopping Cart Icon -->
+        <li class="nav_item"><a href="{% url 'cart' %}"><img src="{% static 'images/cart.png'%}" width="25" height="25" alt="cart-icon"></a></li>
+        <!--<li class="nav_item"><a id="cart-total">{{cartItems}}</a></li>-->
+                    
+        <!-- Account Icon -->
+        <!--<li class="nav_item"><a href="#"><img src = "account.png" width="38" height="38" alt="acc-icon"></a> </li>-->
+
+    
+        <!-- Hamburger Menu -->
+        <li class="nav_toggle"><span class="nav_bars"></span></li>
+    </ul>
+</nav>
+
+    {% block content %}
+
+    {% endblock content %}
+    
+    <!-------------------------------BOOSTSTRAP JS----------------------------------->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-------------------------------JAVASCRIPT FOR DATES------------------------------->
+  <script type="text/javascript" src="{% static 'js/store-dates.js' %}"></script>
+    <!-------------------------------JAVASCRIPT FOR CART------------------------------->
+  <script type="text/javascript" src="{% static 'js/store-cart.js' %}"></script>
+
+    <!-------------------------------USER AUTHENTICATION------------------------------->
+  <script type="text/javascript">
+    var user = '{{request.user}}'
+
+    function getToken(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken');
+  </script>
+</body>
+</html>

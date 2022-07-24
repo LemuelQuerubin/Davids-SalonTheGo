@@ -1,0 +1,94 @@
+    /* GO BACK LINK */
+    .go-back-sales-invoice {
+        width: 600px;
+        margin: 0 auto 20px;
+        }
+        .go-back-sales-invoice a{
+            font-size: 18px;
+            text-decoration: none;
+            color: #001D6E;
+        }
+            .go-back-sales-invoice a:hover{
+                text-decoration: underline;
+                color: #002281;
+            }
+            .fa-circle-arrow-left {
+                margin-right: 8px;
+            }
+        /***** CONTAINER *****/
+        .sales-invoice-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 50px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            background-color: white;
+            border-radius: 20px;
+        }
+        /* SALES INVOICE FORM TITLE */
+        .sales-invoice-title {
+            margin: 20px 0 30px;
+        }
+            .fa-circle-arrow-left {
+                margin-right: 8px;
+            }
+        .sales-inv-title-label {
+            background-color: #C4DDFF;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+        /* DATE AND NAME */
+        .invoice-date-name-container {
+            padding: 10px 0 20px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+            #sales-invoice-name {
+                margin-top: 20px;
+            }
+            .sales-invoice-info {
+                margin-left: 20px;
+                font-weight: 400;
+            }
+        
+        /* TABLE */
+        .invoice-table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse; 
+            margin: 10px 0 50px;
+            padding: 40px;
+        }
+        .invoice-table th {
+            text-align: left;
+            padding: 10px 0;
+        }
+        .invoice-price-td {
+            width: 40%;
+            padding: 5px 0;
+        }
+        .total-invoice-price-td {
+            font-weight: 700;
+            padding: 20px 0;
+        }
+    
+        /* CONFIRM BUTTON */
+        .confirm-btn {
+            float: right;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 5px;
+            background-color: #001D6E;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+            .confirm-btn:hover {
+                background-color: #002ca7;
+            }
+            .clear-btn {
+                overflow: auto;
+                clear: both;
+            }
