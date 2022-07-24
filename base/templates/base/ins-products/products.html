@@ -1,0 +1,127 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+
+<div class="main-wrapper">
+    <div class="container">
+        <!-- BUTTONS -->
+        <div class="buttons">
+            <a href="{% url 'ins-create-product' %}" class="blue-btn">+ Add Product</a>
+        </div>
+        <div class="prodtable-container">
+            <div class="labels-container">
+                
+                    <!-- TITLE -->
+                    <div class="labels1">
+                        <h2>In-Salon Products</h2>
+                    </div>
+                    <div class="labels2">
+                        <ul>    
+                            <li class="top-labels">Filter</li>
+                            <li class="top-labels">
+                            <div class="search">
+                                <form method="GET" action="{% url 'ins-products' %}">
+                                    <input type="text" name="q" placeholder="Search...">
+                                </form>
+                            </div>            
+                            </li>
+                            <li class="top-labels"><a href="#" class="export-btn">Export Table</a></li>
+                        </ul>
+                    </div>
+            </div>
+            
+            <table class="products-table">
+                <thead class="products-thead">
+                    <tr>
+                        <!-- TABLE HEADER -->
+                        <th scope="col" colspan="2">Product Name</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Product Type</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
+                            <!--<th scope="col">Description</th>-->
+                            <!--<th scope="col">Status</th>-->
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+
+                <tbody class="products-tbody">
+                    {% for product in page_prod %}
+                    <tr>
+                        <!-- TABLE BODY -->
+                        <td><a href="{{product.id}}" id="prod-link">{% if product.Prod_Image %}<img src="{{product.Prod_Image.url}}" class="prod-img" />{% endif %}</a></td>
+                        <td data-label="Product Name" class="td-align-left" id="prod-name"><a href="{{product.id}}" id="prod-link">{{product.Prod_Name}}</a></td>
+                        <td data-label="ID">{{product.id}}</td>
+                        <td data-label="Product Type" id="category">{{product.ProdType_Name}}</td>
+                        <td data-label="Category" id="category">{{product.Cat_Name}}</td>
+                        <td data-label="Price" id="price">{{product.Prod_Price|floatformat:2}}</td>
+                        <!-- if stock greater than 0 -->
+                        {% if product.Prod_stockQty > 0 %}
+                        <td data-label="Stock">{{product.Prod_stockQty}}</td>
+                        {% endif %}
+                        <!-- if stock equal to 0 -->
+                        {% if product.Prod_stockQty == 0 %}
+                        <td data-label="Stock">Out of Stock</td>
+                        {% endif %}
+                            <!-- <td data-label="Description" class="td-align-left" id="description">{{product.Prod_Desc}}</td>
+                            <td><form method="POST" action="">{% csrf_token %}{{form.is_active}}</form></td> -->
+                        <td data-label="Options" id="options"><a href="{% url 'ins-update-product' product.id %}" class="option-links">Edit</a><br>
+
+                        {% empty %}
+                        <td colspan="8">No results found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PAGE NAVIGATION -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_prod.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                {% endif %}
+                
+                <!-- PAGE INDICATOR -->
+                <span class="current">
+                    Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                </span>
+        
+                {% if page_prod.has_next %}
+                    <a href="?page={{ page_prod.next_page_number }}">next</a>
+                    <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- BACK TO TOP BUTTON -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<!-- BACK TO TOP SCRIPT -->
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+{% endblock content %}

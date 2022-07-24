@@ -1,0 +1,167 @@
+{% extends 'main_shop.html' %}
+{% load static %}
+
+{% block content %}
+<div class="checkout-main-wrapper">
+    <div class="container">
+        <!-- BACK TO CART LINK -->
+        <div class="cont-shopping-link">
+            <a href="{% url 'cart' %}"><i class="fa-solid fa-circle-arrow-left"></i>Back to Cart</a>
+        </div>
+
+        <div class="checkout-container">
+            <!-- ORDER SUMMARY -->
+            <div class="checkout-title">
+                <h2>Checkout</h2>
+            </div>
+            <label id="order-summ-label">Your Order Summary</label>
+            <hr>
+            
+                <!-- ORDER ITEMS -->
+                {% for item in items %}
+                <table>
+                    <tr>
+                        <td><img id="checkout-img" src="{{item.product.Prod_Image.url}}"></td>
+                        <td>
+                            <label id="checkout-prod-name">{{item.product.Prod_Name}}</label><div><label>x {{item.quantity}}</label></div>
+                            <br>
+                            <label class="checkout-prod-price" id="price">{{item.product.Prod_Price|floatformat:2}}</label>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+                {% endfor %}
+
+                <!-- ORDER TOTAL ITEMS AND PRICE -->
+                <div class="checkout-total-container">
+                    <div><label>Total Items</label><label class="checkout-total-align-right">{{order.get_cart_items}}</label></div>
+                    <div id="checkout-total-amount"><label>Total Amount</label><label class="checkout-total-align-right" id="price">{{order.get_cart_total|floatformat:2}}</label></div> 
+                </div>
+        </div>
+
+        <div class="customer-info-container">
+            <form id="form">
+                <!-- USER INFO -->
+                <div>
+                    <div class="customer-info-label"><i class="fa-solid fa-circle-info"></i>CUSTOMER INFORMATION</div>
+                    <table class="customer-info-table">
+                        <tr>
+                            <!-- NOTE: Once connected with CUSTOMER TABLE, link with LOGGED-IN CUSTOMER-->
+                            <td>FIRST NAME</td>
+                            <td>CONTACT INFORMATION</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!--EMAIL AND NAME-->
+                <div id="user-info">
+                    <div class="form-field">
+                        <input required class="form-control" type="text" name="name" placeholder="Name">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="email" placeholder="Email">
+                    </div>
+                </div>
+
+                <!-- DATE OF PICKUP -->
+                <div id="date-pickup-title"><i class="fa-solid fa-calendar-days"></i>DATE OF PICKUP</div>
+                    <!-- DATE -->
+                    <div class="form-field">
+                        DATE: <input required class="form-control" type="date" id="datePickerId" name="pickupdate" placeholder="Date">
+                    </div>     
+                 <!-- PLACE ORDER BUTTON  -->
+                <input id="make-payment" class="place-order" type="submit" value="Place Reservation">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+<script type="text/javascript">
+    var pickup = '{{order.pickup}}'
+    var total ='{{order.get_cart_total}}'
+
+    if (pickup == 'False'){
+         document.getElementById('datePickerId').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser'){
+         document.getElementById('user-info').innerHTML = ''
+     }
+
+    if (pickup == 'False' && user != 'AnonymousUser'){
+        //Hide entire form if user is logged in and shipping is false
+            document.getElementById('form-wrapper').classList.add("hidden");
+            //Show payment if logged in user wants to buy an item that does not require shipping
+            document.getElementById('payment-info').classList.remove("hidden");
+    }
+
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        console.log('Form Submitted...')
+        // //hiding form-button
+        // document.getElementById('form-button').classList.add("hidden");
+        // //show payment-info
+        // document.getElementById('payment-info').classList.remove("hidden");
+    })
+
+    //Button Function to Submit Form
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('Place reservation button clicked')
+
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'total':total,
+        }
+
+        var pickupInfo = {
+            'pickupdate':null,
+        }
+
+        if(pickup != 'False'){
+            pickupInfo.pickupdate = form.pickupdate.value
+        }
+
+        //Show Name and Email for Anonymous User
+        // if (user == 'AnonymousUser'){
+        //     userFormData.name = form.name.value
+        //     userFormData.email = form.email.value
+        // }
+
+        console.log('User Info:', userFormData)
+
+        var url = '/shop/process_order/'
+        fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-Type':'applicaiton/json',
+                'X-CSRFToken':csrftoken,
+            }, 
+            //Send form and pickup data to backend
+            body:JSON.stringify({'form':userFormData, 'pickup':pickupInfo}),
+        })
+
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+            alert('Order processed.');  
+
+            cart = {}
+            document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+            window.location.href = "{% url 'shop' %}"
+
+            })
+    }
+</script>
+
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+
+<div class="main-wrapper">
+    <div class="container">
+    <!-- GO BACK LINK -->
+    <div class="go-back-table">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+        <div class="prodtable-container">
+            <div class="labels-container">
+                
+                    <!-- TITLE -->
+                    <div class="labels1">
+                        <h2>{{order.customer}}'s Orders</h2>
+                    </div>
+            </div>
+            <table class="products-table">
+                <thead class="products-thead">
+                    <tr>
+                        <!-- TABLE HEADER -->
+                        <th scope="col" colspan="2">Product Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody class="products-tbody">
+                {% for item in orderitems %}
+                    <tr>
+                        <!-- TABLE BODY -->
+                        <td><a href="{% url 'otc-individual-product' item.product.id %}" id="prod-link">{% if item.product.Prod_Image %}<img src="{{item.product.Prod_Image.url}}" class="prod-img" />{% endif %}</td>
+                        <td data-label="Product Name & Quantity"><a href="{% url 'otc-individual-product' item.product.id %}" id="prod-link">{{item.product}} x {{item.quantity}}</a></td>
+                        <td data-label="Price" id="price">{{item.product.Prod_Price}}</td>
+                        <td data-label="Total" id="price">{{item.get_total}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -29,6 +29,9 @@ urlpatterns = [
     path('staff/', include('staffpanel.urls')),
     # CUSTOMER
     path('customer/', include('customerpanel.urls')),
+
+    # SHOP and PRODUCTS
+    path('shop/', include('base.urls')),
     
 
 ]

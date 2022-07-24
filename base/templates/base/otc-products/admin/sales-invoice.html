@@ -1,0 +1,51 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+<div class="main-wrapper">
+    <div class="container">
+        <!-- GO BACK LINK -->
+        <div class="go-back-sales-invoice">
+            <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+        </div>
+        <!-- SALES INVOICE FORM -->
+        <div class="sales-invoice-container">
+            <div class="sales-invoice-title"><label class="sales-inv-title-label"><i class="fa fa-file-text-o"></i>SALES INVOICE FORM</label></div>
+            <div class="invoice-date-name-container">
+                <div>DATE: <label class="sales-invoice-info">Date Here</label></div>
+                <div id="sales-invoice-name">NAME: <label class="sales-invoice-info">First Name Last Name</label></div>
+            </div>
+                 
+            <table class="invoice-table">
+                <!-- TABLE HEADER -->
+                <thead>
+                    <tr>
+                        <th>PRODUCTS AVAILED:</th>
+                        <th>PRICES:</th>
+                    </tr>
+                    
+                </thead>
+                <!-- TABLE BODY -->
+                <tbody>
+                    <!--  PRODUCTS AVAILED -->
+                    
+                    <tr>
+                        <td>Product</td>
+                        <td class="invoice-price-td" id="price">100</td>
+                    </tr>
+
+                    <!-- TOTAL PRICE -->
+                    <tr>
+                        <td class="total-invoice-price-td">TOTAL PRICE</td>
+                        <td class="total-invoice-price-td" id="price">200</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clear-btn">
+                <input class="confirm-btn" value="Confirm" type="submit" confirm="Confirm" name="button">
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+{% endblock %}

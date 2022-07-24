@@ -1,0 +1,91 @@
+{% extends 'base/otc-products/main-navbar-fake.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main-2.css' %}">
+
+<!-- CONTINUE SHOPPING -->
+<a class="btn btn-outline-dark" href="{% url 'shop' %}">&#x2190; Continue Shopping</a>
+<br><br>
+
+<!---------------------------------------------- SHOPPING CART ---------------------------------------------->
+
+<h2><strong>SalOnTheGo | Shopping Cart</strong></h2>
+
+<!-------------------------------------------- SHOPPING CART BOX -------------------------------------------->
+<div class="row">
+	<div class="col-lg-12">
+        <div class="box-element-1">
+            <table class="table">
+                <tr>
+                    <!-- ITEMS AND TOTAL -->
+                        <!-- CHECKOUT BUTTON -->
+                        <a style="float:right; margin-right:2%;" class="checkout" href="{% url 'checkout' %}">
+                            Check Out
+                        </a>
+
+                        <!-- OVERALL CART TOTAL -->
+                        <a style="float:right; margin-right:4%; margin-top: 0.5%; color:#1A1052;" class="cart-total-text">
+                            <strong> &#x20B1;{{order.get_cart_total|floatformat:2}}</strong>
+                        </a>
+
+                        <!-- OVERALL TOTAL PRICE -->
+                        <a style="float:right; margin-right:2%; margin-top: 1.5%;">
+                            <h5><b>Total</b> ({{order.get_cart_items}} items):</h5>
+                        </a>
+                </tr>
+            </table>
+        </div>
+		
+		<br>
+<!-------------------------------------------- SHOPPING CART ROWS -------------------------------------------->
+		<div class="box-element">
+
+            <div class="cart-row-1">
+                <div style="flex:2"></div>
+                <div style="flex:2"><strong>Product</strong></div>
+                <div style="flex:1"><strong>Unit Price</strong></div>
+                <div style="flex:1"><strong>Quantity</strong></div>
+                <div style="flex:1"><strong>Total Price</strong></div>
+                <div style="flex:1"><strong><center>Edit</center></strong></div>
+            </div>
+            
+            {% for item in items %}
+            <div class="cart-row">
+                <!-- PRODUCT IMAGE PER ITEM -->
+                <div style="flex:2">
+                    <input class="checkbox" type="checkbox" class="checkbox">
+                    <!--<img class="row-image" src="{{product.Prod_Image.url}}">-->
+                        <!--<a href="/shop/{{product.id}}">-->
+                    <img class="row-image" src="{{item.product.Prod_Image.url}}">
+                </div>
+                <!-- PRODUCT NAME PER ITEM -->
+                <div style="flex:2">
+                    <!--<a href="/shop/{{product.id}}">-->
+                    <p>{{item.product.Prod_Name}}</p>
+                </div>
+                <!-- UNIT PRICE PER ITEM -->
+                <div style="flex:1">
+                    <p>&#x20B1;{{item.product.Prod_Price|floatformat:2}}</p>
+                </div>
+                <!-- ITEM QUANTITY - CHANGE QUANTITY -->
+                <div style="flex:1">
+                    <p class="quantity" style="margin-bottom:5%;">{{item.quantity}}</p>
+                    <div class="quantity">
+                        <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+					
+                        <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+                    </div>
+                </div>
+                <!-- TOTAL PRICE PER ITEM -->
+                <div style="flex:1"><p style="color: #001D6E; font-weight:800;">
+                    &#x20B1;{{item.get_total|floatformat:2}}
+                </p></div>
+                <div style="flex:1; color:'black';"><a class="remove-item-text" href="#">
+                    <center>Remove<br>Item</center></a>
+                </div>
+            </div>
+            {% endfor %}
+	</div>
+</div>
+
+{% endblock content %}

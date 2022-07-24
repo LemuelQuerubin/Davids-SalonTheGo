@@ -1,0 +1,118 @@
+{% extends 'main_shop.html' %}
+
+
+{% block content %}
+<nav>
+    <ul>
+        <!-- Search Icon -->
+        <li class="search-icon">
+          <form method="GET" action="{% url 'shop' %}">
+            <input type="text" name="q" placeholder="Search...">
+          </form>
+          <label class="icon">
+              <span class="fas fa-search"></span>
+          </label>
+        </li>
+    </ul>            
+</nav>
+
+<div class="discount-header">
+    <h2>Member Exclusive</h2>
+    <p>15% OFF everything + EXTRA $10 OFF for plus status</p>
+    <p>Not a member? <a href="#">Join now to shop.</a></p>
+</div>
+
+<div class="shop-wrapper">
+    <div class="shop-container">
+        <div class="category-container"> 
+            <!-- BROWSE CATEGORIES -->
+            <h2>Categories</h2>
+            <hr>
+            
+            <!-- <div class="search">
+                <form method="GET" action="{% url 'shop' %}">
+                    <input type="text" name="q" placeholder="Search...">
+                </form>
+            </div> -->
+            
+            <div class="cat-links-container">
+                <!-- ALL PRODUCTS -->
+                <a href="{% url 'shop' %}"><h3 id="all-products">All Products</h3></a>
+                <!-- PRODUCT TYPE CATEGORY -->
+                <div class="prod-type-container">
+                    <h3>Product Type</h3>
+                    {% for producttype in prod_type %}
+                    <div>
+                        <a class="cat-links" href="{% url 'shop' %}?q={{producttype.ProdType_Name}}">{{producttype.ProdType_Name}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- BRANDS AND PROMO CATEGORY -->
+                <div class="brand-promo-container">
+                    <h3>Brands and Promos</h3>
+                    {% for category in categories %}
+                    <div>
+                        <a class="cat-links" href="{% url 'shop' %}?q={{category.Cat_Name}}">{{category.Cat_Name}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>   
+
+        <div class="prod-grid">
+                {% for product in page_prod %}
+                <div class="indiv-prod-grid">
+                    <!-- IMAGE -->
+                    <div class="shop-images">
+                        <a href="/shop/{{product.id}}">{% if product.Prod_Image %}<img src="{{product.Prod_Image.url}}" />{% endif %}</a>
+                    </div>
+                    
+                    <!-- PRODUCT NAME -->
+                    <div class="shop-prodname">
+                        <a href="/shop/{{product.id}}">{{product.Prod_Name}}</a>    
+                    </div>
+                    
+                    <!-- PRICE -->
+                    <div class="shop-price">
+                        <label id="price">{{product.Prod_Price|floatformat:2}} </label>    
+                    </div>
+                    
+                    <!-- ADD TO CART -->
+                    <div class="shop-cart-btn">
+                        <button data-product={{product.id}} data-action="add" class="btn btn-primary add-btn add-btn update-cart"> Add to Cart </button>
+                    </div>
+                </div>
+
+                    {% empty %}
+                        <label>No results found.</label>
+
+                {% endfor %}
+        </div>
+
+        <div>
+            
+        </div>
+        <!-- PAGE NAVIGATION -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_prod.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                {% endif %}
+                
+                <!-- PAGE INDICATOR -->
+                <span class="current">
+                    Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                </span>
+        
+                {% if page_prod.has_next %}
+                    <a href="?page={{ page_prod.next_page_number }}">next</a>
+                    <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

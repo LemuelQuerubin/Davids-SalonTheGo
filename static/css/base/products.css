@@ -1,0 +1,244 @@
+/* BACK TO TOP BUTTON */
+#myBtn {
+    width: 60px;
+    height: 60px;
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #C4DDFF;
+    color: white;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 50%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+  
+#myBtn:hover {
+    background-color: #555;
+}
+    /***** TABLE CONTAINER *****/
+    .prodtable-container {
+        max-width: 800px;
+        width: 100%;
+        margin: 20px auto;
+        padding: 40px 30px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        /* box-shadow: rgba(0, 0, 0, 0.212) 1px 2px 3px; */
+        background-color: white;
+        border-radius: 20px;
+    }
+
+    /***** PRODUCT TITLE|FILTER|SEARCH|EXPORT *****/
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li.top-labels {
+        display: inline-block;
+    }
+
+    .labels1 {
+        float: left;
+    }
+    
+    .labels2 {
+        text-align: right;
+        float: right;
+    }
+
+    /* SEARCH BAR */
+    .search {
+        padding-right: 5px;
+    }
+    .search input[type=text]{
+        margin-left: 10px;
+        width: 180px;
+        height: 18px;
+        padding: 5px;
+        border-radius: 5px;
+        border: solid 1px #ccc;
+        margin-right: 5px;
+    }
+
+    /***** TABLE STYLE *****/
+    table.products-table { 
+        border-spacing: 1; 
+        border-collapse: collapse; 
+        background: white;
+        overflow: hidden;
+        max-width: 800px; 
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    /* TABLE HEADER */
+    thead.products-thead tr th {
+        font-weight: 400;
+        font-size: 16px;
+    }
+    thead.products-thead tr { 
+        height: 50px;
+        background: #001D6E;
+        color: white;
+    }
+    table.products-table th:first-child{
+        border-radius: 15px 0 0 15px;
+    }
+    table.products-table th:last-child{
+        border-radius: 0 15px 15px 0;
+    }
+
+    /* TABLE BODY */
+    tbody.products-tbody tr { 
+        font-family: 'Montserrat', sans-serif;
+        height: 130px; 
+        border-bottom:  .5px solid #c9c9c9;
+    }
+    tbody.products-tbody tr:last-child {
+        border: none;
+    }
+
+    .sales-inv td {
+        padding: 0%;
+    }
+    
+    .products-table td,
+    .products-tabl th {
+        text-align: center;
+        padding: 5px 10px;
+    }
+        .td-align-left {
+            text-align: left!important;
+        }
+
+    /* PRODUCT IMAGE*/
+    .prod-img{
+        height: 80px;
+        width: 80px;
+        vertical-align: middle;
+        object-fit: cover;
+    }
+    /* PRODUCT NAME */
+    #prod-name {
+        font-weight: 600;
+        max-width: 100px;
+        width: auto;
+    }
+    /* PRODUCT CATEGORY */
+    #category {
+        max-width: 100px;
+        width: auto;
+    }
+    /* PRODUCT DESCRIPTION */
+    #description {
+        max-width: 150px;
+        width: auto;
+    }
+    /* PRODUCT IN PESO */
+    #price::before {
+        content: '₱';
+    }
+
+    /* BLUE BUTTON */
+    .buttons {
+        font-weight: 600;
+        text-align: right;
+    }
+
+    a.blue-btn:link, a.blue-btn:visited {
+        background-color: #7FB5FF;
+        color: white;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        border: solid 2px #7FB5FF;
+    }
+    a.blue-btn:hover, a.blue-btn:active {
+        border: solid 2px #7FB5FF;
+        background-color: white;
+        color: #7FB5FF;
+    }
+
+    /* EXPORT BUTTON */
+    a.export-btn:link, a.export-btn:visited {
+        font-weight: 500;
+        font-size: 14px;
+        background-color: #C4DDFF;
+        color: #292929;
+        padding: 6px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+    }
+    a.export-btn:hover, a.export-btn:active {
+        color: #001D6E;
+        background-color: #a4caff;
+    }
+    /****** OPTION LINKS ******/
+    #prod-link {
+        color: black;
+        text-decoration: none;
+    }
+    #prod-link:hover {
+        color: #0645AD;
+    }
+    a.option-links {
+        color: #0645AD;
+        text-decoration: none;
+    }
+    a.option-links:hover {
+        text-decoration: underline;
+    }
+
+    /***** PAGE NAVIGATION *****/
+    .pagination {
+        margin-top: 30px;
+        text-align: center;
+    }
+    .pagination a {
+        margin: 0 1px;
+        padding: 8px;
+        text-decoration: none;
+        color: black;
+        background-color: #e9e9e9;
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+    .pagination a:hover {
+        color: black;
+        background-color: #dddddd;
+        border: 1px solid #c5c5c5;
+    }
+
+    /* RESERVATION PAGE LINK */
+    #customer-name-link {
+        font-weight: 600;
+        color: #7FB5FF;
+    }
+        #customer-name-link:hover {
+            color: #C4DDFF;
+        }
+
+    /* For mobile phones: 
+    @media only screen and (max-width: 480px) {
+        * { 
+            font-size: 13px;
+        }
+        table {
+            max-width: 480px;
+        }
+    }
+*/
+ 
