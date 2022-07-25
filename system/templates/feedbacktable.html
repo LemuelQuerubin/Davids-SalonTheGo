@@ -1,0 +1,42 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+<div class="main">
+    <br><br><br>
+    <div class="tables">
+        <!-- FEEDBACK TABLE -->
+        <p class="tbl-title">Feedback Table</p>
+        
+        <div class="admin-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead>
+                    <th>Date & Time</th>
+                    <th>Service Availed</th>
+                    <th>Stylist/s</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Option</th>
+                </thead>
+                <tbody>
+                    {% for row in customers %}
+                    <tr>
+                        <td></td> <!--Date & Time-->
+                        <td></td> <!--Service Availed-->
+                        <td></td> <!--Stylist/s-->
+                        <td></td> <!--Rating-->
+                        <td></td> <!--Review-->
+                        <td></td>  <!--Option-->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+    </div>
+</div>
+{% endblock content %}

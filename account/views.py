@@ -79,12 +79,12 @@ def registerpage(request):
         #IF USER IS ALREADY TAKEN
         if CustomUser.objects.filter(username=username):
             messages.error(request, "Username already exist")
-            return redirect('/login')
+            return redirect('/register')
         
         #IF EMAIL IS ALREADY TAKEN
         if CustomUser.objects.filter(email=email):
             messages.error(request, "Email already registered")
-            return redirect('/login')
+            return redirect('/register')
 
         #IF USERNAME LENGTH IS GREATER THAN 10
         if len(username)>10:
@@ -97,7 +97,7 @@ def registerpage(request):
         #USERNAME MUST CONSIST NUMBER AND LETTER
         if not username.isalnum():
             messages.error(request, "Username must be alpha-numeric")
-            return redirect('/login')
+            return redirect('/register')
         
         
         #TRANSFERRING TO THE BACKEND/DATABASE
@@ -119,7 +119,7 @@ def registerpage(request):
 
 
         #MESSAGE FOR SUCCESSFUL REGISTER
-        messages.success(request, "Your Account has been successfully created")
+        messages.success(request, 'Your Account has been successfully created, We have sent you a confirmation link on your email')
 
         #WELCOMING EMAIL
         subject = "Welcome to the SalOnTheGo"
@@ -148,7 +148,7 @@ def registerpage(request):
         email.send()
   
         #TO REDIRECT USER IN TO LOGIN PAGE
-        return redirect('/login')
+        return redirect('/register')
   
     return render(request, 'authentication/register.html')
 

@@ -63,7 +63,11 @@
                             
                             <div class="info-container">
                                     <h2>NAME:</h2>
-                                    <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }}</p>
+                                    {% if appointment.apptType == 'Online' %}
+                                        <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} </p>
+                                    {% else %}
+                                        <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                                    {% endif %}
                             </div>         
                             
                             <div class="info-container">
@@ -76,9 +80,14 @@
                             </div>       
                             
                             <div class="info-container">
-                                    <h4>STYLISTS:</h4>
-                                    <p>{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
+                                <h4>STYLISTS:</h4>
+                                <p>{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
                             </div>   
+
+                            <div class="info-container">
+                                    <h5>STATUS:</h5>
+                                    <p>{{ appointment.apptType }}</p>
+                            </div>
                         </div>
                     </div>
 

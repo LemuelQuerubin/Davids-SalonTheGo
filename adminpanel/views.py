@@ -67,9 +67,9 @@ def createadmin(request):
             messages.error(request, "Passwords didn't match")
         
         #USERNAME MUST CONSIST NUMBER AND LETTER
-        if not username.isalnum():
-            messages.error(request, "Username must be alpha-numeric")
-            return redirect('/login')
+        #if not username.isalnum():
+        #    messages.error(request, "Username must be alpha-numeric")
+        #    return redirect('/login')
             
         #TRANSFERRING TO THE BACKEND/DATABASE
         myuser = CustomUser.objects.create_user(username, email, password)
@@ -138,9 +138,9 @@ def createstaff(request):
             messages.error(request, "Passwords didn't match")
         
         #USERNAME MUST CONSIST NUMBER AND LETTER
-        if not username.isalnum():
-            messages.error(request, "Username must be alpha-numeric")
-            return redirect('/login')
+        #if not username.isalnum():
+        #    messages.error(request, "Username must be alpha-numeric")
+        #    return redirect('/login')
         
         
         #TRANSFERRING TO THE BACKEND/DATABASE

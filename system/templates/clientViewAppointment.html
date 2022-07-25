@@ -82,19 +82,18 @@
                                     <p>{{ appointment.appointmentStatus }}</p>
                             </div> 
                         </div>
-
                     </div>
-
-                    <div class="button-container">
+                    <br>
+                    <div class="extends">
                         <div class="">
                             <form method="POST">
                             {% csrf_token %}
                                 <input type="hidden" value="{{ appointment.id }}" name="cancel">
-                                <input class="buttons3" type="submit" value="Cancel Appointment" name="button" id="cancel" onclick="return confirm('Are you sure?');">
+                                <input class="buttons4" type="submit" value="Cancel Appointment" name="button" id="cancel" onclick="return confirm('Are you sure?');">
                             </form>
                         </div>
-                 
                     </div>
+                    
 
                 </div>
             {% endfor %}

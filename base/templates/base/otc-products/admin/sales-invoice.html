@@ -11,8 +11,10 @@
         <div class="sales-invoice-container">
             <div class="sales-invoice-title"><label class="sales-inv-title-label"><i class="fa fa-file-text-o"></i>SALES INVOICE FORM</label></div>
             <div class="invoice-date-name-container">
-                <div>DATE: <label class="sales-invoice-info">Date Here</label></div>
-                <div id="sales-invoice-name">NAME: <label class="sales-invoice-info">First Name Last Name</label></div>
+   
+                <div>DATE: <label class="sales-invoice-info">{{ invoice.order.date_ordered }}</label></div>
+                <div id="sales-invoice-name">NAME: <label class="sales-invoice-info"> {{ invoice.customer.customer.first_name }}</label></div>
+                {{ invoice.product_pickupID_id.customer_id.first_name }}
             </div>
                  
             <table class="invoice-table">
@@ -27,21 +29,37 @@
                 <!-- TABLE BODY -->
                 <tbody>
                     <!--  PRODUCTS AVAILED -->
-                    
                     <tr>
-                        <td>Product</td>
-                        <td class="invoice-price-td" id="price">100</td>
+                        <td>
+                        {% for item in items %}
+                            {% if item.order.id == invoice.order.id %}
+                                {{ item.product }} x {{ item.quantity }}<br>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                        
+                        <td class="invoice-price-td">
+                        {% for item in items %}
+                            {% if item.order.id == invoice.order.id %}
+                                <label id="price">{{ item.product.Prod_Price }}</label><br>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                        
                     </tr>
 
                     <!-- TOTAL PRICE -->
                     <tr>
                         <td class="total-invoice-price-td">TOTAL PRICE</td>
-                        <td class="total-invoice-price-td" id="price">200</td>
+                        <td class="total-invoice-price-td" id="price">{{invoice.order.get_cart_total}}</td>
                     </tr>
                 </tbody>
             </table>
             <div class="clear-btn">
-                <input class="confirm-btn" value="Confirm" type="submit" confirm="Confirm" name="button">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input class="confirm-btn" value="Confirm" type="submit" confirm="Confirm" name="button">
+                </form>
             </div>
         </div>
         

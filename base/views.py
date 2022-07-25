@@ -1,7 +1,9 @@
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
+from django.urls import reverse
+
 import json
 import datetime
 
@@ -286,10 +288,10 @@ def pending_orders(request):
     if request.method == 'POST':
         if request.POST['button'] == 'Reject':
             reject_pickup = request.POST.get('reject')
-            Order.objects.filter(pk=reject_pickup).update(pickup_status='Cancelled')
+            Order.objects.filter(pk=reject_pickup).update(pickupstat_id='Cancelled')
         elif request.POST['button'] == 'Approve':
             approve_pickup = request.POST.get('approve')
-            Order.objects.filter(pk=approve_pickup).update(pickup_status='Approved')
+            Order.objects.filter(pk=approve_pickup).update(pickupstat_id='Approved')
     
     #SEARCH -- MIGHT CHANGE LATER
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -317,16 +319,16 @@ def order_items(request, pk):
 #ADMIN VIEW: APPROVAL OF ORDERS
 def approved_orders(request):
     items = OrderItem.objects.all()
-
+    
 
     if request.method == 'POST':
         if request.POST['button'] == 'Cancel':
             cancel_pickup = request.POST.get('cancel')
-            Order.objects.filter(pk=cancel_pickup).update(pickup_status='Cancelled')
+            Order.objects.filter(pk=cancel_pickup).update(pickupstat_id='Cancelled')
         elif request.POST['button'] == 'Receive Payment':
             transac_successful = request.POST.get('transaction-successful')
-            Order.objects.filter(pk=transac_successful).update(pickup_status='Transaction Successful')
-            return redirect('sales-invoice')
+            Order.objects.filter(pk=transac_successful).update(pickupstat_id='Transaction Successful')
+            return HttpResponseRedirect(reverse('sales-invoice', args=[str(transac_successful)]))
 
     #SEARCH -- MIGHT CHANGE LATER
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -346,7 +348,28 @@ def approved_orders(request):
     return render(request, 'base/otc-products/admin/approved-reservations.html', context)
 
 #SALES INVOICE RENDER VIEW
-def salesinvoice(request):
-    
-    context = {}
+def salesinvoice(request, pk):
+    items = OrderItem.objects.all()
+    invoice = OrderPickUp.objects.get(order__id=pk)
+    #name = Order.objects.get(id=invoice.product_pickupID.id)
+    #invoices = OrderPickUp.objects.all() 'invoices': invoices
+
+    if request.method =='POST':
+        if request.POST['button'] == 'Confirm':
+    #       kunin yung quantity nung inorder
+    #       sa table na may product stock, kunin din yung quantity
+    #       nakauha mo na both diba, dun mo na minus yung quantity at stock
+    #       tsaka siya ise-save 
+    #       
+            itemquanti = OrderItem.objects.filter(order=invoice.order.id)
+            #products = otcProduct.objects.all()
+
+            for p in itemquanti:
+                prod = otcProduct.objects.get(id=p.product.id)
+                proddiff = prod.Prod_stockQty - p.quantity  
+                prod.Prod_stockQty = proddiff
+                prod.save()
+            return redirect('approved-reservations')
+    #        
+    context = {'invoice': invoice, 'items': items}
     return render(request, 'base/otc-products/admin/sales-invoice.html', context)

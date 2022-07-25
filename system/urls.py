@@ -32,7 +32,7 @@ urlpatterns = [
     # FEEDBACK
     path('feedbackClient/', views.feedbackClient, name='feedbackClient'),
     path('feedbackEditClient/', views.feedbackEditClient, name='feedbackEditClient'),
-
+    path('feedbackTable/', views.feedbackTable, name='feedbackTable'),
 
 
 

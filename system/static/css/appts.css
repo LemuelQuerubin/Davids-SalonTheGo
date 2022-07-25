@@ -642,3 +642,7 @@ ul{
     color: red;
     background-color: blue;
 }
+
+.shadow-box-contain{
+    border: 1px solid red;
+ }

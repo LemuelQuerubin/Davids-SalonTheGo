@@ -115,7 +115,7 @@
         <br><br>
 
             <!------------------------------- BUTTON ------------------------------------------->
-        <button type="button" id="shopbtn" class="shopbtn"> <a href="{% url 'registerpage' %}"> BOOK NOW </a> </button>
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> BOOK NOW </a> </button>
     </div>
 
     <br> <br> <br>
@@ -127,24 +127,25 @@
         <h2 class="head"><span>FEATURED PRODUCTS</span></h2>
         <table id="table" class="table">
             <tr>
-                <td class="items"> <img src="/images/product_images/product1.png"> </td> 
-                <td class="items"> <img src="/images/product_images/product2.png"> </td> 
-                <td class="items"> <img src="/images/product_images/product3.png"> </td> 
-                <td class="items"> <img src="/images/product_images/product4.png"> </td> 
-                <td class="items"> <img src="/images/product_images/product5.png"> </td> 
+                <td class="items"> <img src="{% static 'images/product_images/product1.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product_images/product2.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product_images/product3.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product_images/product4.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product_images/product5.png'%}"> </td> 
             </tr>
             <tr>
-                <td class="prodname"> <a href="#" class="product"> Kerastase </a> </td>
-                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
-                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
-                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
-                <td class="prodname"> <a href="#" class="product"> Product Name </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Kerastase Paris - Nutritive </a> </td>
+                <td class="prodname"> <a href="#" class="product"> SIRIEEXPORT Vitamino Color </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Kerastase Moisturizer </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Insight Rebalancing Shampoo </a> </td>
+                <td class="prodname"> <a href="#" class="product"> Skin Oasys Pure Nourishing Bar
+                </a> </td>
             </tr>
             <tr>
-                <td class="price">P 100.00</td>
-                <td class="price">P 100.00</td>
-                <td class="price">P 100.00</td>
-                <td class="price">P 100.00</td>
+                <td class="price">P 400.00</td>
+                <td class="price">P 500.00</td>
+                <td class="price">P 250.00</td>
+                <td class="price">P 450.00</td>
                 <td class="price">P 100.00</td>
             </tr>
             <tr>

@@ -42,7 +42,7 @@
                 <tbody class="products-tbody">
                     {% for orderpickup in orders %}
                         {% if orderpickup.order.complete == True %}
-                        {% if orderpickup.order.pickup_status == 'Pending' %}
+                        {% if orderpickup.order.pickupstat_id == 'Pending' %}
                         <tr>
                             <!-- TABLE BODY -->
                             <td data-label="Customer"><a href="{% url 'order-details' orderpickup.order.id %}" id="customer-name-link">{{orderpickup.order.customer}}</a></td>

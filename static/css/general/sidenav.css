@@ -138,4 +138,27 @@
     text-decoration: none;
 }
 
+.firstname-container {
+  width: 90%;
+  background-color: #C4DDFF;
+  margin-left: 20px;
+  margin-bottom:40px;
+  height: 25px;
+  align-content: center;
+  border-radius: 10px;
+}
+
+.firstname-display{
+  color: #001D6E !important;
+  width: 90%;
+  font-weight: 700;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+.customertype-container{
+  margin-left: 20px;
+  margin-bottom: 0px !important;
+}
 /* navbar end ======================================================== */

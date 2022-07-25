@@ -35,35 +35,39 @@ def appointmentsNext(request):
     customer = Customer.objects.get(customer=request.user)
     staff = Staff.objects.filter(stafftype=3)
     services = request.session['services']
-    if (services == '["Haircut"]' or services == '["Shampoo and Blowdry"]' or services == '["Setting/Ironing"]'):
-        add = 45 * 60 * 1000
-    elif (services == '["Treatment"]' or services == '["Regular Hot Oil"]' or services == '["Hair Spa"]' or services == '["Make-up"]'):
-        add = 60 * 60 * 1000
-    elif (services == '["Intense Treatment"]' or services == '["Keratin"]' or services == '["Hair & Make-up"]'):
-        add = 120 * 60 * 1000
-    else:
-        add = 180 * 60 * 1000
-    group1 = []
-    group2 = []
-    group3 = []
-    for row in staff:
-        name = row.staff.first_name
-        appt = Appointment.objects.filter(firstStylist=name)
-        times = []
-        for row1 in appt:
-            time = row1.appt_timeStart
-            t_array = (str(time)).split(':')
-            hour = int(t_array[0])
-            minute = int(t_array[1])
-            hour = hour * 3600
-            minute = minute * 60 * 1000
-            total = hour + minute
-            group3.append(total)
-            times.append(time)
-        group1.append(name)
-        group2.append(times)
-        count1 = len(group1)
-        count2 = len(group2)
+    # SCRAP KO MUNA, HANAP AKO NG ALTERNATIVE NA MAGWO-WORK FOR THE MEANTIME
+        # if (services == '["Haircut"]' or services == '["Shampoo and Blowdry"]' or services == '["Setting/Ironing"]'):
+        #     add = 45 * 60 * 1000
+        # elif (services == '["Treatment"]' or services == '["Regular Hot Oil"]' or services == '["Hair Spa"]' or services == '["Make-up"]'):
+        #     add = 60 * 60 * 1000
+        # elif (services == '["Intense Treatment"]' or services == '["Keratin"]' or services == '["Hair & Make-up"]'):
+        #     add = 120 * 60 * 1000
+        # else:
+        #     add = 180 * 60 * 1000
+        # group1 = []
+        # group2 = []
+        # group3 = []
+        # group4 = []
+        # for row in staff:
+        #     name = row.staff.first_name
+        #     appt = Appointment.objects.filter(firstStylist=name)
+        #     times = []
+        #     for row1 in appt:
+        #         time = row1.appt_timeStart
+        #         t_array = (str(time)).split(':')
+        #         hour = int(t_array[0])
+        #         minute = int(t_array[1])
+        #         time1 = t_array[0] + t_array[1]
+        #         hour = hour * 60
+        #         minute = minute + hour
+        #         minute1 = minute * 60 * 1000
+        #         group3.append(minute)
+        #         group4.append(minute1)
+        #         times.append(time1)
+        #     group1.append(name)
+        #     group2.append(times)
+        #     count1 = len(group1)
+        #     count2 = len(time)
 
     if request.method == 'POST':
         firstStylist = request.POST.get('stylist1')
@@ -71,7 +75,6 @@ def appointmentsNext(request):
         apptDate = request.POST.get('apptDate')
         stringTime = request.POST.get('appt_timeStart')
         appt_timeStart = datetime.strptime(stringTime, '%I:%M %p').time()
-        apptType = "Online"
 
         create = Appointment(customer=customer,services=services,firstStylist=firstStylist,
                             secondStylist=secondStylist,apptDate=apptDate,appt_timeStart=appt_timeStart)
@@ -81,12 +84,6 @@ def appointmentsNext(request):
 
     context = {
         'stylists':staff,
-        'add':add,
-        'group1':group1,
-        'group2':group2,
-        'group3':group3,
-        'count1':count1,
-        'count2':count2
     }
     return render(request, 'appts_next.html', context)
 
@@ -139,7 +136,10 @@ def appointmentsApproved(request):
             appt=Appointment.objects.get(pk=id)
             request.session['date'] = str(appt.apptDate)
             request.session['time'] = str(appt.appt_timeStart)
-            request.session['name'] = appt.customer_fname + " " + appt.customer_lname 
+            if appt.apptType == 'Walk In':
+                request.session['name'] = appt.customer_fname + " " + appt.customer_lname
+            else:
+                request.session['name'] = appt.customer.customer.first_name + " " + appt.customer.customer.last_name
             request.session['services'] = appt.services
             request.session['stylists'] = appt.firstStylist + "," + appt.secondStylist
             return redirect('jobOrderform')
@@ -165,12 +165,12 @@ def calendarDayView(request):
 # WALK-IN  ---------------------------------------------------------------------------------------
 def walkIn(request):
     if request.method == 'POST':
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
 
         services = request.POST.getlist('services')
-        request.session['fname'] = fname
-        request.session['lname'] = lname
+        request.session['fname'] = request.POST.get('fname')
+        request.session['lname'] = request.POST.get('lname')
+        request.session['email'] = request.POST.get('email')
+        request.session['contactNumber'] = request.POST.get('contactNumber')
         request.session['services'] = services
         return redirect('walkInNext')
     return render(request, 'appts_walkin.html')
@@ -210,7 +210,13 @@ def walkInNext(request):
 
     if request.method == 'POST':
         customer_fname = request.session['fname']
+        del request.session['fname']
         customer_lname = request.session['lname']
+        del request.session['lname']
+        email = request.session['email']
+        del request.session['email']
+        contact_num = request.session['contactNumber']
+        del request.session['contactNumber']
         firstStylist = request.POST.get('stylist1')
         secondStylist = request.POST.get('stylist2')
         apptDate = request.POST.get('apptDate')
@@ -218,7 +224,7 @@ def walkInNext(request):
         appt_timeStart = datetime.strptime(stringTime, '%I:%M %p').time()
         apptType = "Walk In"
 
-        create = Appointment(customer_fname=customer_fname,customer_lname=customer_lname,services=services,firstStylist=firstStylist,
+        create = Appointment(customer_fname=customer_fname,customer_lname=customer_lname,email=email,contact_num=contact_num,services=services,firstStylist=firstStylist,
                             secondStylist=secondStylist,apptDate=apptDate,appt_timeStart=appt_timeStart,apptType=apptType)
         create.save()
         request.session['appointment'] = "submitted"
@@ -261,6 +267,9 @@ def feedbackClient(request):
 
 def feedbackEditClient(request):
     return render(request, 'feedbackEditClient.html')
+
+def feedbackTable(request):
+    return render(request, 'feedbackTable.html')
 
 def clientViewAppointment(request):
     appointments = Appointment.objects.filter(customer=request.user.id)

@@ -43,7 +43,7 @@ urlpatterns = [
 	path('mypurchases/', views.mypurchases, name="mypurchases"),
 
     #--------------------------SALES INVOICE--------------------------
-	path('sales-invoice/', views.salesinvoice, name="sales-invoice"),
+	path('sales-invoice/<str:pk>/', views.salesinvoice, name="sales-invoice"),
 
     #ADMIN: VIEW RESERVATIONS | APPROVE/REJECT
     path('pending-reservations/', views.pending_orders, name="pending-reservations"),

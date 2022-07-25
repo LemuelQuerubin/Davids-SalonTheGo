@@ -151,8 +151,9 @@ body {
     font-size: 14px;
     border-radius: 10px;
     padding-top: 2px;
-    margin-left: 530px;
+    margin-left: 520px;
     margin-top: 40px;
+    text-align: center;
  }
 
  .buttons2{
@@ -165,7 +166,7 @@ body {
    font-size: 14px;
    border-radius: 10px;
    padding-top: 2px;
-   margin-left: 530px;
+   margin-left: 450px;
    margin-top: 30px;
 }
 
@@ -235,6 +236,14 @@ body {
 
 .whole-container{
    width: 70%;
+   border: 1px solid #cccccc;
+   margin:auto;
+   margin-top: 40px;
+   border-radius: 15px;
+}
+
+.whole-container1{
+   width: 85%;
    border: 1px solid #cccccc;
    margin:auto;
    margin-top: 40px;
@@ -616,7 +625,22 @@ input[type=number]::-webkit-outer-spin-button {
    font-size: 17px;
    border-radius: 10px; 
    font-weight: 700;
+   
 }
+
+.buttons8{   
+   height: 6vh;
+   width: 90%;
+   background-color:rgb(81, 170, 81);
+   border: none;
+   color: white;
+   font-family: Montserrat;
+   font-size: 17px;
+   border-radius: 10px; 
+   font-weight: 700;
+}
+
+
 
 .buttons5{
    height: 6vh;
@@ -785,4 +809,45 @@ input[type=number]::-webkit-outer-spin-button {
    padding-top: 2px;
    margin-left: 470px;
    margin-top: 40px;
+}
+
+/* AYUSIN SOON */
+.extends{
+   width: 120px;
+   height: 12vh;
+   display:flex;
+   margin-top: 50px;
+   margin-left: 500px;
+   margin-bottom: 0px;
+}
+
+.buttons4{  
+   height: 6vh;
+   width: 250px;
+   background-color:#001D6E;
+   border:none;
+   color: white;
+   font-family: Montserrat;
+   font-size: 17px;
+   border-radius: 10px;
+   font-weight: 500;
+}
+
+.shadow-box-contain{
+   border: 1px solid rgba(255, 255, 255, 0);
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.shadow-box-contain form {
+   margin-top: 20px;
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+.shadow-box-contain input {
+   margin-bottom:20px;
+   margin-right: 20px !important;
+}
+
+.formSection1{
+   font-size: 16px;
 }

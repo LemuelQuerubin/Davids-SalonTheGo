@@ -14,24 +14,30 @@ class Appointment(models.Model):
         ('Online', 'Online'),
         ('Walk In', 'Walk In')
     ]
-
-    customer = models.ForeignKey(Customer, verbose_name="Customer", null=True, on_delete=models.CASCADE)
-    #services = models.ManyToManyField(Services, blank=True, verbose_name="Service")
-    services = models.JSONField(default=dict)
-    #NEW
-    email=models.CharField(max_length=50, verbose_name="Email Address", null=True)
-    contact_num=models.CharField(max_length=11, verbose_name="Contact Number", null=True)
+    # ONLINE
+    customer = models.ForeignKey(Customer, verbose_name="Customer", null=True, blank=True, on_delete=models.CASCADE)
+    # WALK-IN
+    email=models.EmailField(max_length=50, verbose_name="Walk-in Email Address", null=True, blank=True)
+    contact_num=models.CharField(max_length=11, verbose_name="Walk-in Contact Number", null=True, blank=True)
+    customer_fname=models.CharField(max_length=50, verbose_name="Walk-in First Name", null=True, blank=True)
+    customer_lname=models.CharField(max_length=50, verbose_name="Walk-in Last Name", null=True, blank=True)
     
+    #services = models.ManyToManyField(Services, blank=True, verbose_name="Service")
+    services = models.JSONField(default=dict, blank=True)
     #staff = models.ForeignKey(Staff, verbose_name="Staff", null=True)
     firstStylist = models.CharField(max_length=30, verbose_name="First Stylist", null=True)
     secondStylist = models.CharField(max_length=30, verbose_name="Second Stylist", null=True)
+
     appointmentStatus = models.CharField(max_length=20, verbose_name="Appointment Status", choices=appt_stat, default='Pending')
-    apptDate = models.DateField(verbose_name="Appointment Date", blank=True, null=True)
-    appt_timeStart = models.TimeField(verbose_name="Time Start", blank=True, null=True)
+    apptDate = models.DateField(verbose_name="Appointment Date", null=True, blank=True)
+    appt_timeStart = models.TimeField(verbose_name="Time Start", null=True, blank=True)
     apptType = models.CharField(max_length=20, verbose_name="Appointment Type", choices=appt_type, default='Online')
 
     def __str__(self):
-        return '[%s] %s %s' %(self.apptType, self.customer_fname, self.customer_lname)
+        if self.apptType == 'Online':
+            return '[%s] %s %s' %(self.apptType, self.customer.customer.first_name, self.customer.customer.last_name)
+        else:
+            return '[%s] %s %s' %(self.apptType, self.customer_fname, self.customer_lname)
 
 #class AppointmentApproved(models.Model):
 '''
