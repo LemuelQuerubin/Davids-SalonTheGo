@@ -3,6 +3,10 @@ const StopEventPropagation = (e)=> {
     e.cancelBubble = true;
     if (e.stopPropagation) e.stopPropagation();
 };
+const today= new Date();
+let date = today.getDate();
+let month = today.getMonth();
+let year = today.getFullYear();
 export const Calendar = (id) => ({ 
     id: id,
     data: [],
@@ -12,16 +16,15 @@ export const Calendar = (id) => ({
     onDateClick(e) {
         StopEventPropagation(e);
         const el = e.srcElement;
-        alert(el.textContent); 
-        console.log('click'); 
-        console.log(el);
+
     },
     onEventClick(e) {
         StopEventPropagation(e);
         const el = e.srcElement;
         alert(el.textContent); 
         console.log('click'); 
-        console.log(el); 
+        console.log(el)
+        console.log(e)
     },
     bindData(events) {
         this.data = events.sort((a,b) => {
@@ -72,7 +75,7 @@ export const Calendar = (id) => ({
             if (isNaN(y) && isNaN(this.y)) {
                 this.y = moment().year();
             } else if ((!isNaN(y) && isNaN(this.y)) || (!isNaN(y) && !isNaN(this.y))) {
-                this.y = y>1600 ? y : moment().year(); //calendar doesn't exist before 1600! :)
+                this.y = y>2021 ? y : moment().year(); //calendar doesn't exist before 1600! :)
             }
             if (isNaN(m) && isNaN(this.m)) {
                 this.m = moment().month();
@@ -107,16 +110,19 @@ export const Calendar = (id) => ({
             const isSameDate = (d1, d2) => d1.format('YYYY-MM-DD') == d2.format('YYYY-MM-DD');
             let frgWeek;
             d.day(-1); //move date to the oldest Sunday, so that it lines up with the calendar layout
+            let a = parseInt(month);
+            let b = parseInt(date);
+            let c = parseInt(year);
             for(let i=0; i<5; i++){ //loop thru 35 boxes on the calendar month
                 frgWeek = document.createRange().createContextualFragment(`
                 <ol class="days list-unstyled" week="${d.week()}">
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
-                    <li class="${d.add(1,'d'),this.m != d.month()?' outside':'inside'}${isSameDate(d,now)?' today':''}"><div month="${d.month()}" class="date">${d.format('D')}</div><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
+                    <li class="${d.add(1,'d'),this.m != d.month() ?' outside':'inside'}${isSameDate(d,now)?' today':''}"><button name="date" value="${d.year() + "-" + (parseInt(d.month())+1) + "-" + d.format('D')}" month="${d.month()}" year="${d.year()}" class="date">${d.format('D')}</button><div class="events"></div></li>
                 </ol>
                 `);
                 frgCal.querySelector('.calendar').appendChild(frgWeek);

@@ -154,7 +154,7 @@
  }
 
  .button3{
-    background-color: skyblue;
+    background-color: var(--blue);
     color: #001D6E;
     width: 25%;
     border: 0;
@@ -169,6 +169,6 @@
 
  .button3:hover{
     background-color: white;
-    color: skyblue;
-    border: 1px solid skyblue;
+    color: var(--blue);
+    border: 1px solid var(--blue);
  }

@@ -1,4 +1,4 @@
-
+{% extends "general/homepage-user.html" %} 
 {% load static %}
 
 {% block content %}
@@ -31,7 +31,7 @@
 
 		<div class="container-fluid justify-content-end">
 			
-				<p class="calendar-title">CALENDAR
+				<p class="calendar-title">
 				
                 <div class="time-date-ongoing-container">
                     <div class="child">
@@ -45,7 +45,7 @@
                 </div>
             
                 <div class="col-sm-12 col-md-8 col-lg-8">
-                    <form method="POST" action="/appointments/calendarDayView/">
+                    <form method="POST" action="/appointments/admincalendardayview/">
                         {% csrf_token %}
                             <div class="cardNewProject animate slide delay-1">
                                 {% include 'index1.html' %}
@@ -84,7 +84,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
-    <script type="module" src="{% static '/js/main.js' %}"></script>
+    <script type="module" src="{% static '/js/mainAdmin.js' %}"></script>
 
     <!-- Display Current Date and time -->
     <script>

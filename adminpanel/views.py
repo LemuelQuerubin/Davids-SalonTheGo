@@ -3,7 +3,7 @@ from account.models import *
 from django.contrib import messages
 
 #from account.models import Admin
-from account.forms import UpdateAdminProfileForm
+from account.forms import *
 # from account.models import Admin
 
 from datetime import datetime
@@ -25,9 +25,11 @@ def accounts(request):
     return render(request, 'admin/accounts.html', context)
 
 def customeraccounts(request):
+    current_datetime = datetime.now() 
     customers = CustomUser.objects.filter(is_customer=1) 
     context = {
-        'customers': customers
+        'customers': customers,
+        'current_datetime':current_datetime,
     } 
     return render(request, 'admin/customer_accounts.html', context)
 
@@ -190,6 +192,10 @@ def editadminprofile(request, pk):
 
 def editadminprofile(request):
     current_datetime = datetime.now() 
+    user = request.user
+    form = Updateprofilepic(instance = user)
+   
+
 
     gender_rows = Gendertype.objects.all()
     if request.method == 'POST':
@@ -225,7 +231,9 @@ def editadminprofile(request):
     context = {
          'gender_rows':gender_rows, 
          'current_datetime':current_datetime,
+         'form': form,
      }
+
 
     return render(request, 'admin/edit-admin-profile.html', context)
 

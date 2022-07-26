@@ -6,6 +6,7 @@ from django.urls import reverse
 
 import json
 import datetime
+from datetime import datetime
 
 from .models import * #insProduct, otcProduct, ProductType, Category, C 
 from .forms import otcProductForm, insProductForm #, StatusForm
@@ -62,6 +63,7 @@ def shopIndivProduct(request, pk):
     return render(request, 'base/otc-products/client/shop_indiv_product.html', context)
 
 def otcProducts(request):
+    current_datetime = datetime.now()
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     products = otcProduct.objects.all()
     
@@ -83,7 +85,7 @@ def otcProducts(request):
     page_number = request.GET.get('page')
     page_prod = paginator.get_page(page_number)
 
-    context = {'products': products, 'search': search, 'page_prod': page_prod}
+    context = {'products': products, 'search': search, 'page_prod': page_prod,'current_datetime':current_datetime,  }
     return render(request, 'base/otc-products/admin/products.html', context)
 
 def otc_indivProduct(request, pk):
@@ -127,6 +129,7 @@ def otc_updateProduct(request, pk):
 
 # INSALON PRODUCTS ------------------------------------------------------
 def insProducts(request):
+    current_datetime = datetime.now()
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     products = insProduct.objects.all()
     
@@ -142,7 +145,7 @@ def insProducts(request):
     page_number = request.GET.get('page')
     page_prod = paginator.get_page(page_number)
 
-    context = {'products': products, 'search': search, 'page_prod': page_prod}
+    context = {'products': products, 'search': search, 'page_prod': page_prod,'current_datetime':current_datetime,}
     return render(request, 'base/ins-products/products.html', context)
 
 def ins_indivProduct(request, pk):
@@ -209,18 +212,20 @@ def checkout(request):
 
 #PURCHASES RENDER VIEW
 def mypurchases(request):
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer, complete=False)
-		items = order.orderitem_set.all()
-		cartItems = order.get_cart_items
-	else:
-		items=[]
-		order =  {'get_cart_total':0, 'get_cart_items':0, 'pickup': False}
-		cartItems = order['get_cart_items']
-		
-	context = {'items':items, 'order':order, 'cartItems':cartItems}
-	return render(request, 'base/otc-products/mypurchases.html', context)
+    current_datetime = datetime.now() 
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items=[]
+        order =  {'get_cart_total':0, 'get_cart_items':0, 'pickup': False}
+        cartItems = order['get_cart_items']
+    
+    context = {'items':items, 'order':order, 'cartItems':cartItems, 'current_datetime':current_datetime,}
+    return render(request, 'base/otc-products/mypurchases.html', context)
 
 #UPDATE ITEM RENDER VIEW
 def updateItem(request):
@@ -256,7 +261,7 @@ def updateItem(request):
 	return JsonResponse('Item was added', safe=False)
 
 def processOrder(request):
-	transaction_id = datetime.datetime.now().timestamp()
+	transaction_id = datetime.now().timestamp()
 	data = json.loads(request.body)
 
 	if request.user.is_authenticated:
@@ -318,8 +323,8 @@ def order_items(request, pk):
 
 #ADMIN VIEW: APPROVAL OF ORDERS
 def approved_orders(request):
+    current_datetime = datetime.now()
     items = OrderItem.objects.all()
-    
 
     if request.method == 'POST':
         if request.POST['button'] == 'Cancel':
@@ -344,7 +349,7 @@ def approved_orders(request):
     page_number = request.GET.get('page')
     page_prod = paginator.get_page(page_number)
 
-    context = {'orders': orders, 'items': items, 'page_prod': page_prod}
+    context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime,  }
     return render(request, 'base/otc-products/admin/approved-reservations.html', context)
 
 #SALES INVOICE RENDER VIEW

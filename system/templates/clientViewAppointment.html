@@ -38,6 +38,7 @@
 			</div>
 
             {% for appointment in appointments %}
+                {% if not appointment.appointmentStatus == 'Cancelled' %}
                 <div class="whole-container">
                     <div class="box-container">
                         <div class="month-box">
@@ -96,6 +97,7 @@
                     
 
                 </div>
+                {% endif %}
             {% endfor %}
         <!--MODAL NA HINDI KO SURE IF GUMAGANA-->
 

@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 body {
-    margin: 0;
+    margin: 0;    
+    background-color: #F1F6FF!important;
 }
 
 .cart-main-wrapper {
@@ -57,168 +58,183 @@ body {
         margin-right: 8px;
     }
 
-    /***** TABLE CONTAINER *****/
-    .cart-container {
-        max-width: 800px;
-        width: 100%;
-        margin: 20px auto;
-        padding: 40px 30px;
-        background-color: white;
-        border-radius: 20px;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+/***** TABLE CONTAINER *****/
+.cart-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.cart-title {
+    font-size: 18px;
+    color: #001D6E;
+}
+/***** CHECKOUT INLINE TOTAL, PRICE AND BUTTON *****/
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li.cart-checkout-labels {
+    display: inline-block;
+}
+
+/***** TABLE STYLE *****/
+.cart-table { 
+    border-spacing: 1; 
+    border-collapse: collapse; 
+    background: white;
+    overflow: hidden;
+    max-width: 800px; 
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* TABLE HEADER */
+.cart-thead tr th {
+    font-weight: 400;
+    font-size: 16px;
+}
+.cart-thead tr { 
+    height: 50px;
+    background: #001D6E;
+    color: white;
+}
+.cart-table th:first-child{
+    border-radius: 15px 0 0 15px;
+}
+.cart-table th:last-child{
+    border-radius: 0 15px 15px 0;
+}
+
+/***** TABLE BODY *****/
+.cart-tbody tr { 
+    font-family: 'Montserrat', sans-serif;
+    height: 140px; 
+    border-bottom:  .5px solid #c9c9c9;
+}
+.cart-tbody tr:last-child {
+    border: none;
+}
+
+.cart-table td, th {
+    text-align: center;
+    padding: 5px 5px;
+}
+
+/***** TABLE ROWS *****/
+/* CHECKBOX */
+.checkbox {
+    cursor: pointer;
+}
+
+/* PRODUCT IMAGE*/
+.cart-img{
+    height: 100px;
+    width: 100px;
+    vertical-align: middle;
+    object-fit: cover;
+}
+
+/* PRODUCT NAME */
+#cart-name {
+    text-align: left;
+    font-weight: 600;
+    max-width: 100px;
+    width: auto;
+}
+
+/* QUANTITY */
+.quantity{
+    display: inline-block;
+    padding-right:10px;
+}
+
+.chg-quantity{
+    width: 8px;
+    cursor: pointer;
+    display: block;
+    margin-top: 5px;
+    transition:.1s;
+}
+
+.chg-quantity:hover{
+    opacity: .6;
+}
+
+/* REMOVE ITEM TEXT */
+.remove-item-text {
+    color: #001D6E;
+    text-decoration: none;
+    cursor: pointer;
+}
+    .remove-item-text:hover {
+        color: #7FB5FF;
+        text-decoration: underline;
     }
 
-    .cart-title {
-        font-size: 18px;
-        color: #001D6E;
-    }
-    /***** CHECKOUT INLINE TOTAL, PRICE AND BUTTON *****/
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    li.cart-checkout-labels {
-        display: inline-block;
-    }
+.hidden{
+    display: none;
+}
 
-    /***** TABLE STYLE *****/
-    .cart-table { 
-        border-spacing: 1; 
-        border-collapse: collapse; 
-        background: white;
-        overflow: hidden;
-        max-width: 800px; 
-        width: 100%;
-        margin: 0 auto;
-        position: relative;
-    }
+/* PRODUCT IN PESO */
+#price::before {
+    content: '₱';
+}
 
-    /* TABLE HEADER */
-    .cart-thead tr th {
-        font-weight: 400;
-        font-size: 16px;
-    }
-    .cart-thead tr { 
-        height: 50px;
-        background: #001D6E;
-        color: white;
-    }
-    .cart-table th:first-child{
-        border-radius: 15px 0 0 15px;
-    }
-    .cart-table th:last-child{
-        border-radius: 0 15px 15px 0;
-    }
+/***** CART CHECKOUT CONTAINER *****/
+.cart-checkout-container {
+    max-width: 800px;
+    width: 100%;
+    height: 90px;
+    margin: 20px auto 0;
+    padding: 20px 30px;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 20px 20px 0px 0px;
+    border-radius: 20px; 
+    position: sticky;
+    bottom: 0;
+}
 
-    /***** TABLE BODY *****/
-    .cart-tbody tr { 
-        font-family: 'Montserrat', sans-serif;
-        height: 140px; 
-        border-bottom:  .5px solid #c9c9c9;
-    }
-    .cart-tbody tr:last-child {
-        border: none;
-    }
-    
-    .cart-table td, th {
-        text-align: center;
-        padding: 5px 5px;
-    }
+.cart-checkout{
+    margin-top: 10px;
+    text-align: right;
+}
 
-    /***** TABLE ROWS *****/
-    /* CHECKBOX */
-    .checkbox {
-        cursor: pointer;
-    }
-    /* PRODUCT IMAGE*/
-    .cart-img{
-        height: 100px;
-        width: 100px;
-        vertical-align: middle;
-        object-fit: cover;
-    }
-    /* PRODUCT NAME */
-    #cart-name {
-        text-align: left;
-        font-weight: 600;
-        max-width: 100px;
-        width: auto;
-    }
-    /* QUANTITY */
-    .quantity{
-        display: inline-block;
-        padding-right:10px;
-    }
-    .chg-quantity{
-        width: 8px;
-        cursor: pointer;
-        display: block;
-        margin-top: 5px;
-        transition:.1s;
-    }
-        .chg-quantity:hover{
-            opacity: .6;
-        }
+/* TOTAL ITEMS */
+#cart-total-items {
+    vertical-align: middle;
+    font-size: 18px;
+}
 
-    /* REMOVE ITEM TEXT */
-    .remove-item-text {
-        color: #001D6E;
-        text-decoration: none;
-        cursor: pointer;
-    }
-        .remove-item-text:hover {
-            color: #7FB5FF;
-            text-decoration: underline;
-        }
-    .hidden{
-        display: none;
-    }
-    /* PRODUCT IN PESO */
-    #price::before {
-        content: '₱';
-    }
-    
-    /***** CART CHECKOUT CONTAINER *****/
-    .cart-checkout-container {
-        max-width: 800px;
-        width: 100%;
-        margin: 20px auto 0;
-        padding: 20px 30px;
-        background-color: white;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        -moz-border-radius: 0px;
-        -webkit-border-radius: 20px 20px 0px 0px;
-        border-radius: 20px 20px 0px 0px; 
-        position: sticky;
-        bottom: 0;
-    }
-        .cart-checkout{
-            text-align: right;
-        }
-    /* TOTAL ITEMS */
-    #cart-total-items {
-        vertical-align: middle;
-        font-size: 18px;
-    }
-    /* TOTAL PRICE */
-    .cart-total-price {
-        padding: 0 10px;
-        vertical-align: middle;
-        font-size: 24px;
-        font-weight: 600;
-    }
+/* TOTAL PRICE */
+.cart-total-price {
+    padding: 0 10px;
+    vertical-align: middle;
+    font-size: 24px;
+    font-weight: 600;
+}
 
-    /* CHECKOUT BUTTON */
-    .checkout {
-        font-weight: 600;
-        vertical-align: middle;
-        text-decoration: none;
-        background-color: #001D6E;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 20px;
-        cursor: pointer;
-    }
-        .checkout:hover {
-            background-color: #002ca7;
-        }
+/* CHECKOUT BUTTON */
+.checkout {
+    font-weight: 600;
+    vertical-align: middle;
+    text-decoration: none;
+    background-color: #001D6E;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.checkout:hover {
+    background-color: #002ca7;
+    color: white;
+    text-decoration: none;
+}

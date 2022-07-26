@@ -1,6 +1,7 @@
-<!DOCTYPE html>
 {% load static %}
 <html>
+  <!-- NAVBAR - USER -->
+  <!-- /account/templates/general/navbar-user.html -->
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -30,7 +31,6 @@
               <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
               <img
               class="d-inline-block align-top"
-              src="static/images/logo-3.png"
               src="{% static '/images/logo-3.png' %}"
               width="150" />
       {% else %}
@@ -86,17 +86,17 @@
             -->
             
         <!-- LOGGED IN PROFILE ICON -->
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.is_customer %}
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle"
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false" style="text-decoration: none;">
-                <img src="{% static 'images/accoun.png'%}" width="40" height="40">
+                <img src="{% static 'images/account.png'%}" width="40" height="40">
             </a>
             <ul class="dropdown-menu">
-                <li><a href="/customer" class="dropdown-item"> Edit Profile </a></li>
+                <li><a href="/customer" class="dropdown-item">Profile </a></li>
                 <li><a href="#" class="dropdown-item"> Appointments </a></li>
                 <li><a href="#" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>

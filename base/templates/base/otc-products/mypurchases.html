@@ -1,7 +1,11 @@
-{% extends 'base/otc-products/main-navbar-fake.html' %}
+{% extends "general/homepage-user.html" %} 
 {% load static %}
+
 {% block content %}
+<div class="main">
 <link rel="stylesheet" type="text/css" href="{% static 'css/main-2.css' %}">
+<!-- MY PURCHASES PAGE -->
+<!-- /base/templates/mypurchases.html -->
 
 <!-- CONTINUE SHOPPING -->
 <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
@@ -97,5 +101,7 @@
             {% endfor %}
         </div>
     </div>
+</div>
+
 
 {% endblock content %}

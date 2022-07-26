@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
+<html lang="en" dir="ltr">
+    <!-- HOMEPAGE - LOGIN -->
+    <!-- /account/templates/general/homepage-login.html -->
 <html>
 <head>
     <meta charset='utf-8'>
@@ -23,13 +26,7 @@
      <!--JAVASCRIPT -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
      <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-
-     
-
-    <!-- NAVBAR INTERNAL CSS -->
-    <!-- include footer later-->
-
-    
+  
 </head>
 
 <body>    
@@ -40,7 +37,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a href="/"
                     class="navbar-logo h1">
-                        <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
+                        <!--LOGO-->
                         <img
                         class="d-inline-block align-top"
                         src="images/logo-3.png"
@@ -72,13 +69,22 @@
                 </ul>
 
                 <!-- CART ICON -->
-                    <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
-                <a href="#" class="cart-invert">
+                {% if user.is_customer %}
+                <a href="{% url 'cart' %}" class="cart-invert">
                     <img
                     class="d-inline-block align-top px-1"
                     src="/images/cart.png"
                     width="50" />
                 </a>
+
+                {% else %}
+                <a href="/login" class="cart-invert">
+                    <img
+                    class="d-inline-block align-top px-1"
+                    src="/images/cart.png"
+                    width="50" />
+                </a>
+                {% endif %}
                 <!-- CART TOTAL
                 <p id="cart-total">0</p>
                 -->
@@ -87,7 +93,6 @@
                 <div class="space-search-sign"></div>
                 
                 <!-- LOG IN BUTTON -->
-                    <!--COMMENTS FROM ORIGINAL HOMEPAGE.HTML-->
                     <!-- Logout Icon -->
                     <!-- Authentication Links -->
         
@@ -115,10 +120,14 @@
         <br><br>
 
             <!------------------------------- BUTTON ------------------------------------------->
-        <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> BOOK NOW </a> </button>
+        {% if user.is_customer %}
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="/appointments"> BOOK NOW </a> </button>
+        {% else %}
+        <button type="button" id="shopbtn" class="shopbtn"> <a href="/login"> BOOK NOW </a> </button>
+        {% endif %}
     </div>
 
-    <br> <br> <br>
+    <br><br><br>
     <!---------------------------------  END OF FIRST PART --------------------------------->
     
     <!---------------------------------  SECOND PART --------------------------------------->
@@ -127,11 +136,11 @@
         <h2 class="head"><span>FEATURED PRODUCTS</span></h2>
         <table id="table" class="table">
             <tr>
-                <td class="items"> <img src="{% static 'images/product_images/product1.png'%}"> </td> 
-                <td class="items"> <img src="{% static 'images/product_images/product2.png'%}"> </td> 
-                <td class="items"> <img src="{% static 'images/product_images/product3.png'%}"> </td> 
-                <td class="items"> <img src="{% static 'images/product_images/product4.png'%}"> </td> 
-                <td class="items"> <img src="{% static 'images/product_images/product5.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product1.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product2.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product3.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product4.png'%}"> </td> 
+                <td class="items"> <img src="{% static 'images/product5.png'%}"> </td> 
             </tr>
             <tr>
                 <td class="prodname"> <a href="#" class="product"> Kerastase Paris - Nutritive </a> </td>
@@ -164,7 +173,8 @@
 
     <!-- THIRD PART-->
     <!-- SHOP ALL PRODUCTS -->
-    <h5> &emsp; <button type="button" id="all-button" class="all-button">  Shop All Products </button> &emsp; </h5>
+    <h5> &emsp; 
+        <button type="button" id="all-button" class="all-button">  Shop All Products </button> &emsp; </h5>
     <br><br><br>
     <div id="third" class="third">
         <br><br><br><br><br><br>

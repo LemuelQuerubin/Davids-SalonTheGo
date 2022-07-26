@@ -16,9 +16,10 @@ body {
    background-color: #F1F6FF;
 }
 
-.go-back{
+.go-back a{
     margin-top: 40px;
     margin-left: 40px;
+    color: #001D6E!important;
 }
 
 .form-container{
@@ -84,12 +85,16 @@ body {
 
 .service-container{
     background-color:#C4DDFF;
-    width: 35%;
+    width: 50%;
     height: 6vh;
     padding-top: 11px;
     padding-left: 12px;
     border-radius: 10px;
     margin-top: 30px;
+ }
+
+ .form-section1 {
+   line-height: 2!important;
  }
 
  .add-service{
@@ -115,6 +120,10 @@ body {
     font-size: 11px;  
  }
 
+ .add-row h6:hover{
+   cursor: pointer!important; 
+}
+
  .service-row{
     display:inline-flex;
     width:100%;
@@ -126,7 +135,7 @@ body {
 
  .service-input{
     border:1px solid #cccccc;
-    border-radius: 4px;
+    border-radius: 10px;
     height: 5.5vh;
     width: 90%; 
     padding-left: 7px;
@@ -134,12 +143,17 @@ body {
  }
 
  .remove-service{
-    width: 130%; 
- }
+   width: 130%; 
+}
 
  .remove-service i{
     margin-top: 40px; 
  }
+
+
+ .remove-service i:hover, .remove-service:hover{
+   cursor: pointer;
+}
 
  .buttons{
     height: 5vh;
@@ -170,9 +184,9 @@ body {
    margin-top: 30px;
 }
 
- .form-select1{
+.form-select, .form-select1{
     border-radius: 10px;
-    width: 92%;
+    width: 90%;
     height: 5vh;
     border: 1px solid #CCCCCC;
     outline: none;
@@ -209,6 +223,11 @@ body {
    border: 1px solid #CCCCCC;
    outline: none;
    padding-left: 12px;
+}
+
+#timestart {
+   border: 1px solid #CCCCCC;
+   border-radius: 10px;
 }
 
 .time-container{
@@ -515,12 +534,21 @@ body {
    padding-top:12px;
 }
 
+.input-price-jof {
+   margin-left: -13px;
+}
+.input-price-jof, .input-total-jof {
+   border-radius: 10px;
+   border: 1px solid #cccccc;
+   padding: 11px 39px 10px 25px;
+}
+
 .primary-list-input{
    width:50%;
 }
 
 .primary-list-input-form{
-   width: 90%;
+   width: 67%;
    height: 6vh;
    border-radius: 10px;
    border: 1px solid #cccccc;

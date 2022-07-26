@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+<!-- EDIT ADMIN PROFILE-->
+<!-- /adminpanel/templates/edit-admin-profile.html -->
 <link rel="stylesheet" href="{% static 'css/admin/edit-profile.css' %}">
 
 <div class="main">
@@ -11,9 +13,12 @@
          </div>
 
          <div class="top-container">
-            <div class="image-container">
-                 <!--IMAGE CONTAINER-->
-            </div>
+            <img class="image-container"  src="{{ request.user.profile_pic.url }}">
+
+            <!--<div class="image-container">   
+                 IMAGE CONTAINER
+            </div>-->
+
             <div class="name-container">
                 <label class="text-label">{{ user.first_name }}</label>
                 <label class="text-label">{{ user.last_name }}</label><br>

@@ -1,0 +1,300 @@
+/*Import Montserrat font family*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap');
+
+/*----------------------------------------------------ROOT AND BODY----------------------------------------------------*/
+:root {
+	--blue: #7FB5FF;
+	--lightblue: #C4DDFF;
+	--lighterblue: #F6F7FF;
+	--navy: #001D6E;
+	--yellow: #FEE2C5;
+	--purple: #1A1052;
+	--lgray: #C4C4C4;
+}
+
+body{
+    background-color: #FFF;
+    line-height: 1.5;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000;
+    /* text-decoration: none; */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*Header with the Know More About Us Banner*/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+}
+
+/*KNOW MORE Text*/
+.sub-heading {
+    margin-left: 5%;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 42px;
+    letter-spacing: -0.015em;
+}
+
+/*ABOUT US Text*/
+.heading {
+    margin-left: 5%;
+    font-family: Montserrat;
+    font-size: 70px;
+    font-weight: bolder;
+}
+
+/*Banner picture*/
+.home {
+    background-image: url("/static/images/contact-1.png");
+    height: 620px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+/*Shop Button*/
+#shopbtn {
+    margin-left: 5%;
+    font-size: xx-large;
+    border-radius: 50px;
+    padding: 25px 80px 25px 70px;
+    background-color: var(--blue);
+    border-color: transparent;
+    margin-bottom: 300px; 
+    transition: 400ms;
+}
+
+#shopbtn a{
+    color: white;
+    font-family: Montserrat;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+#shopbtn:hover {
+    padding: 30px 85px 30px 75px;
+    cursor: pointer;
+}
+
+
+/*Explore Button for E-Commerce Text*/
+#explrbtn {
+    display: block;
+    margin: auto;
+    font-size: xx-large;
+    border-radius: 50px;
+    padding: 20px 80px 25px 70px;
+    background-color: var(--navy);
+    border-color: transparent;
+    margin-bottom: 300px; 
+    transition: 400ms;
+}
+
+#explrbtn a{
+    color: white;
+    font-family: Montserrat;
+    font-size: x-large;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+#explrbtn:hover {
+    padding: 25px 85px 30px 75px;
+    cursor: pointer;
+}
+
+/*Text for Heading1
+AN E-COMMERCE PLATFORM
+FOR PLM STUDENTS*/
+#onlineshop{
+    font-family: Montserrat;
+    font-size: 45px;
+    font-weight: bolder;
+    color: #444A4F;
+    text-align: center;
+}
+
+#onlineshop-text{
+    font-family: Montserrat;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    margin: 2% 10%;
+}
+
+/*Text for Heading2
+WE UNDERSTAND THE STRUGGLE...*/
+.heading2 {
+    width: 100%;
+    background: url("/static/images/priv-card.png");
+    height: 620px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: darken;
+  }
+
+#heading2-text{
+    font-family: Montserrat;
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+    margin-left: 5%;
+    text-align: center;
+    margin: 0% 10%;
+}
+
+/*Text for Heading3
+MEET THE TEAM AND OUR TEAM*/
+#team-1{
+  font-family: Montserrat;
+  font-size: 100px;
+  font-weight: bolder;
+  text-shadow: 2px 2px 6px rgb(88, 88, 88);
+  color: white;
+  text-align: center;
+  margin-top: 170px;
+}
+
+#team{
+    font-family: Montserrat;
+    font-size: 45px;
+    font-weight: bolder;
+    color: var(--navy);
+    text-align: center;
+}
+
+#team-text{
+    font-family: Montserrat;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    margin: 2% 10%;
+}
+
+/*Main Container for Profiles*/
+.container1 {
+    margin: 20px 40px;
+    color: #444A4F;
+  }
+  
+  .container2 {
+    margin: 150px 5px;
+    color: #444A4F;
+  }
+  
+/*Container for Profiles*/
+  .profiles {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 80px;
+  }
+  
+  .profile {
+    flex-basis: 260px;
+  }
+  
+  .profile .profile-img {
+    height: 260px;
+    width: 260px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  .profile:hover .profile-img {
+    filter: saturate(2);
+  }
+  
+  /*Username*/
+  .user-name {
+    margin-top: 30px;
+    font-size: 25px;
+    color: var(--blue);
+    text-align: center;
+  }
+  
+  .profile h5 {
+    font-size: 18px;
+    font-weight: 100;
+    letter-spacing: 3px;
+    color: #444A4F;
+    text-align: center;
+  }
+  
+  .profile p {
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: justify;
+  }
+
+/*Text for Heading4
+CONTACT US*/
+#contactUs{
+    font-family: Montserrat;
+    font-size: 45px;
+    font-weight: bolder;
+    color: #444A4F;
+    text-align: center;
+}
+
+#contactUs-text1{
+    font-family: Montserrat;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    margin: 2% 10%;
+}
+
+#contactUs-text2{
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 25px;
+    color: var(--blue);
+    text-align: center;
+    margin: 2% 10%;
+}
+
+/*---------------------------------Responsiveness---------------------------------*/  
+  @media only screen and (max-width: 1150px) {
+    .profiles {
+      flex-direction: column;
+    }
+  
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .profile p {
+      text-align: center;
+      margin: 20px 60px 80px 60px;
+      font-size: 20px;
+    }
+  }
+  
+  @media only screen and (max-width: 900px) {
+    
+    .profiles {
+      margin: 20px 0;
+    }
+  
+    .profile p {
+      margin: 20px 10px 80px 10px;
+    }
+  }
+  

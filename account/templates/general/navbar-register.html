@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+  <!-- NAVBAR - REGISTER -->
+  <!-- /account/templates/general/navbar-register.html -->
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -60,7 +62,7 @@
 
         <!-- CART ICON -->
             <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
-        <a href="#">
+        <a href="{% url 'cart' %}">
             <img
             class="d-inline-block align-top px-1"
             src="/images/cart.png"

@@ -61,7 +61,7 @@ Time, Date, Ongoing Appointments Styling */
 /* ================
 Calendar Styling */
 .calendar {
-  min-width: 1000px;
+  min-width: 1125px;
   position: relative;
   font-family: Montserrat;
   margin-top: 0px !important;

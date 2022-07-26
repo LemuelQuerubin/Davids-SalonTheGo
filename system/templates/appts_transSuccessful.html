@@ -28,8 +28,8 @@
         <h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
     </div>
 
-    <div class="go-back">
-        <h5><b>View Transaction</b></h5>
+    <div class="go-back"><br><br>
+        <h5><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View Transaction</b></h5>
     </div>
 
 
@@ -39,10 +39,10 @@
             <div class="month-box">
                 <div class="month-box-container">
                     <div class="month">
-                        <h6>{{ appointment.apptDate|date:'F' }}11</h6>
+                        <h6>{{ order.appointmentInfo.apptDate|date:'F' }}</h6>
                     </div>
                     <div class="box">
-                        <h2>{{ appointment.apptDate|date:'d' }}11</h2>
+                        <h2>{{ order.appointmentInfo.apptDate|date:'d' }}</h2>
                     </div>
                 </div>
             </div>
@@ -51,35 +51,51 @@
             <div class="information-container">
                 <div class="info-container">
                         <h1>TIME:</h1>
-                        <p>{{ appointment.appt_timeStart|time:'h:i A' }}</p>
+                        <p>{{ order.appointmentInfo.appt_timeStart|time:'h:i A' }}</p>
                 </div>
                 
                 <div class="info-container">
                         <h2>NAME:</h2>
-                        {% if appointment.apptType == 'Online' %}
-                            <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} </p>
+                        {% if order.appointmentInfo.apptType == 'Online' %}
+                            <p>{{ order.appointmentInfo.customer.customer.first_name }} {{ order.appointmentInfo.customer.customer.last_name }} </p>
                         {% else %}
-                            <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                            <p>{{ order.appointmentInfo.customer_fname }} {{ order.appointmentInfo.customer_lname }} </p>
                         {% endif %}
-                </div>         
+                </div>
                 
                 <div class="info-container">
-                        <h3>SERVICE/S:</h3>
-                        <p>
-                            {% for key in appointment.services %}
-                                {{ key }}{% if not forloop.last %},{% endif %}
-                            {% endfor %}
-                        </p>
-                </div>       
-                
-                <div class="info-container">
-                    <h4>STYLISTS: </h4>
-                    <p>{{ appointment.firstStylist }} {{ appointment.secondStylist }}</p>
+                    <h4>STYLIST: </h4>
+                    <p>&nbsp;&nbsp;&nbsp;{{ order.finalStylist }}</p>
                 </div>   
 
+                <div class="service-price-containers1">
+                    <div class="service-containers1">
+                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SERVICE/S:<h6>
+                        <h1>   
+                            {% for key in order.servicePrices.keys %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ key }}
+                                {% if not forloop.last %}
+                                    <br>
+                                {% endif %}
+                            {% endfor %}       
+                        </h1>
+                    </div>
+
+                    <div class="price-containers1">
+                        <h6>PRICES:</h6>
+                        {% load humanize %}
+                        {% for value in order.servicePrices.values %}
+                            ₱{{ value|floatformat:2|intcomma }}
+                            {% if not forloop.last %}
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
                 <div class="info-container">
-                        <h5>PRICE: </h5>
-                        <p><!--PRICE--></p>
+                    <h4>TOTAL:</h4>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₱{{ order.totalPrice|intcomma }}</p>
                 </div>
             </div>
         </div>
@@ -90,7 +106,7 @@
         <div class="button-half">
             <form method="POST">
             {% csrf_token %}
-                <input type="hidden" value="{{ appointment.id }}" name="Successful">
+                <input type="hidden" value="{{ order.appointmentInfo.id }}" name="Successful">
                 <input class="buttons8" type="submit" value="Receive Payment" name="button" id="Successful">
             </form>
         </div> 
@@ -104,7 +120,7 @@
     </div>
          
         
-        </div>
+    </div>
       
     </div>
 

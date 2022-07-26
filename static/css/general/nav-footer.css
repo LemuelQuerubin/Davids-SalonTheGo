@@ -7,7 +7,7 @@
 :root {
     --yellow: #FEE2C5;
     --purple: #1A1052;
-    --navy:#001D6E;
+    --navy: #001D6E;
     --blue: #7FB5FF;
     --lightblue: #C4DDFF;
 }
@@ -29,7 +29,7 @@ body {
 /* NAVBAR HOVER */
 .navbar-nav a:hover {
     transition: all 0.2s ease 0s!important;
-    background-color: var(--navy)!important;
+    background-color: #001D6E!important;
     color: white!important;
 }
 
@@ -44,15 +44,15 @@ body {
     font-size: medium;
     font-weight: 800;
     padding: 12px 45px;
-    background: var(--blue);
+    background: #7FB5FF;
     border-radius: 6px;
 }
 
 .nav_button a:hover {
     transition: all .25s;
-    color: var(--blue);
+    color: #7FB5FF;
     background: white;
-    border: 2px solid var(--blue);
+    border: 2px solid #7FB5FF;
 }
 
 /* SPACE BETWEEN SEARCH, PROFILE, ETC */
@@ -90,11 +90,11 @@ body {
 
 .footer ul{
     list-style-type: none;
-    background-color: var(--purple);
+    background-color: #001D6E;
 }
 
 .footer{
-    background-color: var(--purple);
+    background-color: #001D6E;
     padding: 30px 0;
 }
 
@@ -157,13 +157,13 @@ padding: 0 15px;
     text-align: center;
     line-height: 40px;
     border-radius: 50%;
-    color: var(--purple);
+    color: #001D6E;
     transition: all 0.5s ease;
 }
 
 .footer-col .social-links a:hover{
     color: white;
-    background-color: var(--blue);
+    background-color: #001D6E;
 }
 
 .hbs-copyright{

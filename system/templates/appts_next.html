@@ -27,10 +27,10 @@
 	<script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
-    
+
   </head>
   <body>
-		
+
 	
 
     <div>
@@ -52,7 +52,7 @@
                                 <div class="stylist-container">
                                     <br>
                                     <label for="stylist1" class="name-text1">Primary Stylist</label><br>
-                                    <select class="form-select1" name="stylist1" aria-label="Default select example" required>
+                                    <select class="form-select1" name="stylist1" aria-label="Default select example" id="s1" required>
                                         <option selected disabled hidden>Select Stylist</option>
                                         {% for stylist in stylists %}
                                             {% if stylist.gendertype.id == 1 %}
@@ -70,7 +70,7 @@
                                 <div class="stylist-container">
                                     <br>
                                     <label for="stylist2" class="name-text1">Secondary Stylist</label><br>
-                                    <select class="form-select1" name="stylist2" aria-label="Default select example" required>
+                                    <select class="form-select1" name="stylist2" aria-label="Default select example" id="s2" required>
                                         <option selected disabled hidden>Select Stylist</option>
                                         {% for stylist in stylists %}
                                             {% if stylist.gendertype.id == 1 %}
@@ -91,18 +91,77 @@
                                 <div class="date-container">                            
                                     <h5>Date</h5>
                                     <!--input type="text" class="form-control" id="typeText" name="apptDate" aria-describedby="companyNameHelp" required-->
-                                    <input type="date" class="date-form" id="typeDate" name="apptDate" aria-describedby="companyNameHelp" required>       
+                                    <input type="date" class="date-form" id="typeDate" name="apptDate" aria-describedby="companyNameHelp" required>
                                 </div>
 
                                 <br><br>
                                 <div class="time-container">                
                                     <h5>Time</h5>
                                     <!--input type="time" class="form-control" name="appt_timeStart" min="10:00" max="21:00" aria-describedby="companyNameHelp" required-->
-                                    <input type="text" class="time-form" id="timepicker" name="appt_timeStart" aria-describedby="companyNameHelp" required readonly style="background-color: white!important;">                 
+                                    {% comment %}<input type="text" class="time-form" id="timepicker" name="appt_timeStart" aria-describedby="companyNameHelp" required readonly style="background-color: white!important;">{% endcomment %}
+                                    <select name="appt_timeStart" style="border-radius: 10px; border: 1px solid #CCCCCC; width: 32%; height: 5vh;" id="timeStart" required>
+                                        <option value="" disabled hidden selected>Select Time</option>
+                                        <option value="10:00" id="10:00">10:00 AM</option>
+                                        <option value="10:15" id="10:15">10:15 AM</option>
+                                        <option value="10:30" id="10:30">10:30 AM</option>
+                                        <option value="10:45" id="10:45">10:45 AM</option>
+                                        
+                                        <option value="11:00" id="11:00">11:00 AM</option>
+                                        <option value="11:15" id="11:15">11:15 AM</option>
+                                        <option value="11:30" id="11:30">11:30 AM</option>
+                                        <option value="11:45" id="11:45">11:45 AM</option>
+                                        
+                                        <option value="12:00" id="12:00">12:00 PM</option>
+                                        <option value="12:15" id="12:15">12:15 PM</option>
+                                        <option value="12:30" id="12:30">12:30 PM</option>
+                                        <option value="12:45" id="12:45">12:45 PM</option>
+                                        
+                                        <option value="13:00" id="13:00">1:00 PM</option>
+                                        <option value="13:15" id="13:15">1:15 PM</option>
+                                        <option value="13:30" id="13:30">1:30 PM</option>
+                                        <option value="13:45" id="13:45">1:45 PM</option>
+                                        
+                                        <option value="14:00" id="14:00">2:00 PM</option>
+                                        <option value="14:15" id="14:15">2:15 PM</option>
+                                        <option value="14:30" id="14:30">2:30 PM</option>
+                                        <option value="14:45" id="14:45">2:45 PM</option>
+                                        
+                                        <option value="15:00" id="15:00">3:00 PM</option>
+                                        <option value="15:15" id="15:15">3:15 PM</option>
+                                        <option value="15:30" id="15:30">3:30 PM</option>
+                                        <option value="15:45" id="15:45">3:45 PM</option>
+                                        
+                                        <option value="16:00" id="16:00">4:00 PM</option>
+                                        <option value="16:15" id="16:15">4:15 PM</option>
+                                        <option value="16:30" id="16:30">4:30 PM</option>
+                                        <option value="16:45" id="16:45">4:45 PM</option>
+                                        
+                                        <option value="17:00" id="17:00">5:00 PM</option>
+                                        <option value="17:15" id="17:15">5:15 PM</option>
+                                        <option value="17:30" id="17:30">5:30 PM</option>
+                                        <option value="17:45" id="17:45">5:45 PM</option>
+                                        
+                                        <option value="18:00" id="18:00">6:00 PM</option>
+                                        <option value="18:15" id="18:15">6:15 PM</option>
+                                        <option value="18:30" id="18:30">6:30 PM</option>
+                                        <option value="18:45" id="18:45">6:45 PM</option>
+                                        
+                                        <option value="19:00" id="19:00">7:00 PM</option>
+                                        <option value="19:15" id="19:15">7:15 PM</option>
+                                        <option value="19:30" id="19:30">7:30 PM</option>
+                                        <option value="19:45" id="19:45">7:45 PM</option>
+                                        
+                                        <option value="20:00" id="20:00">8:00 PM</option>
+                                        <option value="20:15" id="20:15">8:15 PM</option>
+                                        <option value="20:30" id="20:30">8:30 PM</option>
+                                        <option value="20:45" id="20:45">8:45 PM</option>
+                                        
+                                        <option value="21:00" id="21:00">9:00 PM</option>
+                                    </select>
                                 </div>
         
                                 <br><br>
-                                <p><b>NOTE:</b> Stylist 2 will be the one who will do the service in case Stylist 1 is unavailable.</p>
+                                <p><b>NOTE:</b> Secondary Stylist will be the one who will do the service in case Primary Stylist is unavailable.</p>
                                 <br>
                                
                                 <input class="buttons2" type="button" value="Book Appointment" id="book">
@@ -156,11 +215,12 @@
         min = yyyy + '-' + mmMin + '-' + dd;
         max = yyyy + '-' + mmMax + '-' + dd;
         $('#typeDate').attr('value',min).attr('min',min).attr('max',max);
-
+        {% comment %}
         const start = '10';
 
         $('#timepicker').timepicker({ timeFormat: 'hh:mm p', minTime: start, maxTime: '21:00', defaultTime: start,
-                                    startTime: start, interval: 15, dropdown: true, scrollbar: true, dynamic: false });
+                                    startTime: start, interval: 15, dropdown: true, scrollbar: true, dynamic: false }); 
+        {% endcomment %}
         
         // DISABLE SAME OPTION FROM BEING PICKED
         $('select[name=stylist2]').on('change', function() {
@@ -177,23 +237,74 @@
             });
         });
 
-        /*
-        $('select[name=stylist1]').on('change', function() {
-            let self = this;
-            $('select[name=appt_timeStart]').find('option').prop('disabled'), function() {
-                for (i=0;i<={{count1}};i++){
-                    if self.value == {{group1.i}}{
-                        for (j=0;j<={{count2}};i++){
-                            let end = parseInt(this.value) + group3.j
-                            return this.value < {{group2.j}} && this.value > end
+        let s1 = document.getElementById("s1");
+        let d1 = document.getElementById("typeDate");
+
+        function disableTime(){
+            let time = document.getElementById("timeStart").getElementsByTagName("option");
+            let staff1 = document.getElementById("s1").value;
+            let date = document.getElementById("typeDate").value;
+            let group1 = JSON.parse('{{group1|safe}}');
+            let group2 = JSON.parse('{{group2|safe}}');
+            let group3 = JSON.parse('{{group3|safe}}');
+            let group4 = JSON.parse('{{group4|safe}}');
+            let looping = 0
+            if (staff1 == "Any"){
+                for (let i=0; i< time.length; i++){
+                    time[i].disabled = false;
+                }
+            }
+            else{
+                for (let i=0; i< time.length; i++){
+                    time[i].disabled = false;
+                    for (let j=0; j < group1.length; j++){
+                        if (staff1 == group1[j] && group4[j] == date){
+                            if (time[i].value == group2[j]){
+                                time[i].disabled = true;
+                                time[i].value == Null;
+                                looping = 1;
+                            }
+                        }
+                        if (looping == 1){
+                            if (time[i].value == group3[j]){
+                                time[i].disabled = true;
+                                time[i].value == Null;
+                                looping = 0;
+                            }
+                            else {
+                                time[i].disabled = true;
+                                time[i].value == Null;
+                            }
                         }
                     }
                 }
-            
             }
+        };
+
+        s1.addEventListener('change', disableTime, true);
+        d1.addEventListener('change', disableTime, true);
+
+        {% comment %} for (let i = 0; i <= op.length; i++){
+            if (op[i].value == "11:00") {
+                op[i].disabled = true;
+              }
+        } {% endcomment %}
+
+         {% comment %} aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaABCDEFHJ
+        document.getElementById("10:00").disabled = true; {% endcomment %}
+        /*
+        $('select[name=appt_timeStart]').find('option').prop('disabled', function() {
+            for (i=0;i<={{count1}};i++){
+                if self.value == {{group1}}.i{
+                    for (j=0;j<={{count2}};j++){
+                        return this.value == {{group2}}.j
+                    }
+                }
+            }
+            });
         })*/
         
-        var cancel = document.getElementById('book');
+        let cancel = document.getElementById('book');
         cancel.onclick = function(){
             $(document).ready(function(){
                 $('#click')[0].click(function(){

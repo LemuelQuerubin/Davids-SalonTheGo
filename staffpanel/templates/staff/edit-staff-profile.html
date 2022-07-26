@@ -11,9 +11,7 @@
          </div>
 
          <div class="top-container">
-            <div class="image-container">
-                 <!--IMAGE CONTAINER-->
-            </div>
+            <img class="image-container"  src="{{ request.user.profile_pic.url }}">
             <div class="name-container">
                 <label class="text-label">{{ user.first_name }}</label>
                 <label class="text-label">{{ user.last_name }}</label><br>

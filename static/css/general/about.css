@@ -58,7 +58,7 @@ header {
 
 /*Banner picture*/
 .home {
-    background-image: url('about-1.png');
+    background-image: url("/static/images/about-1.png");
     height: 620px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -139,7 +139,7 @@ FOR PLM STUDENTS*/
 WE UNDERSTAND THE STRUGGLE...*/
 .heading2 {
     width: 100%;
-    background: url('about-2.png');
+    background: url("/images/about-2.png");
     height: 620px;
     background-repeat: no-repeat;
     background-size: cover;

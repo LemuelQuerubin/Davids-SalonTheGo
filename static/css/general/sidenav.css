@@ -18,7 +18,7 @@
     flex: 10%;
     background-color:  #001D6E;
     border-bottom: 1px solid #ccc;
-
+    max-width: 300px;
   }
   
   /* Main column */
@@ -33,10 +33,12 @@
   
   
   /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-  @media (max-width: 700px) {
+  @media (max-width: 500px) {
     .row, .navbar {   
       flex-direction: column;
-      
+    }
+    .side {
+      max-width: 100%;
     }
   }
 
@@ -161,4 +163,31 @@
   margin-left: 20px;
   margin-bottom: 0px !important;
 }
+
+.image-name-container{
+   width:100%;
+   display:flex;
+   height: 10vh;
+   margin-bottom: 30px;
+}
+
+.prof-image{
+  width: 30%;
+}
+
+.prof-image img{
+  width: 100%;
+  height:100%;
+  border-radius: 100%;
+}
+
+.name-role-container{
+  width: 70%;
+}
+
+.name1{
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
 /* navbar end ======================================================== */

@@ -1,14 +1,16 @@
 from django.db import models
 
 from account.models import *
+from base.models import *
+from base.models import insProduct
 
 class Appointment(models.Model):
     appt_stat = [
         ('Pending', 'Pending'),
         ('Cancelled', 'Cancelled'),
+        ('Approved', 'Approved'),
         ('Confirmed', 'Confirmed'),
-        ('Successful', 'Successful'),
-        ('Approved', 'Approved')   
+        ('Successful', 'Successful')
     ]
     appt_type = [
         ('Online', 'Online'),
@@ -24,7 +26,8 @@ class Appointment(models.Model):
     
     #services = models.ManyToManyField(Services, blank=True, verbose_name="Service")
     services = models.JSONField(default=dict, blank=True)
-    #staff = models.ForeignKey(Staff, verbose_name="Staff", null=True)
+    #firstStylist = models.ForeignKey(Staff, verbose_name="First Stylist", null=True)
+    #secondStylist = models.ForeignKey(Staff, verbose_name="Second Stylist", null=True)
     firstStylist = models.CharField(max_length=30, verbose_name="First Stylist", null=True)
     secondStylist = models.CharField(max_length=30, verbose_name="Second Stylist", null=True)
 
@@ -46,7 +49,7 @@ class JobOrderForm(models.Model):
     appointmentInfo = models.ForeignKey(Appointment, on_delete=models.CASCADE) #pag-aralan ng on_delete
     servicesPrices = models.JSONField(default=dict)
     inSalonProducts = models.JSONField(default=dict) # kunin from in salon product inventory
-    privilegeCardInfo = models.CharField(max_length=7, verbose_name="Privelege Card Information", blank=True, null=True)
+    privilegeCardInfo = models.CharField(max_length=7, verbose_name="Privilege Card Information", blank=True, null=True)
     STYLIST = ''
 
     PRIMARY_STYLIST_CHOICES = [
@@ -67,3 +70,42 @@ class ServiceReview:
     appointmentInfo = models.ForeignKey(Appointment, on_delete=models.CASCADE)
 # class ProductReview:
 '''
+
+class jobOrderform(models.Model):
+    appointmentInfo = models.OneToOneField(Appointment, verbose_name="Appointment", on_delete=models.PROTECT)
+    servicePrices = models.JSONField(default=dict, blank=True)
+    totalPrice = models.DecimalField(default=0, max_digits=9, decimal_places=2, verbose_name="Total", null=True)
+    finalStylist = models.CharField(max_length=30, verbose_name="Stylist", null=True)
+    
+    #date_today = models.DateField(auto_now_add=True)
+    #insproductused = models.ForeignKey(insProduct, on_delete=models.SET_NULL, blank=False, null=True)
+    #quantity = models.IntegerField(default=0, null=True, blank=True)
+    # privilegeCardInfo = models.CharField(max_length=7, verbose_name="Privelege Card Information", blank=True, null=True)
+    # consumed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s' %(self.appointmentInfo)
+
+    # def __str__(self):
+    #     if self.consumed == True:
+    #         insprod_used = self.insproduct.Prod_stockQty - 1
+    #         return insprod_used
+
+    # def idk(self):
+    #     recordused = self.insproduct.totalUsed + 1
+    #     return recordused
+    
+    # @property
+    # def get_total(self):
+    #     totalproduct_cost = self.insproduct.Prod_Price * self.quantity
+    #     totalservice_cost = self.servicesPrices +
+    #     return total, total_service
+
+class clientFeedback(models.Model):
+    feedbackInfo = models.OneToOneField(jobOrderform, verbose_name="jobOrderform", on_delete=models.PROTECT)
+    review = models.CharField(max_length=100, verbose_name="Review", null=True)
+    isPositive = models.BooleanField(null=True)
+    isNegative = models.BooleanField(null=True)
+
+    def __str__(self):
+        return '%s' %(self.feedbackInfo)

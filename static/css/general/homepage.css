@@ -186,7 +186,7 @@
     }
 
     .items img{
-        height: 180px;
+        height: 303px;
         width: 100%;
     }
 
@@ -283,7 +283,7 @@
     .third {
         background-image: url('/images/home3.jpg');
         background-repeat: no-repeat;
-        background-size: 100% 100%;   
+        background-size: 100% 100%;
     }
 
     #thirdhead{
@@ -306,11 +306,13 @@
         border-spacing: 35px 35px;
         width: 55%;
         margin-top: 50px;
+        overflow: hidden;
     }
 
     #rev-table img{
-        height:100%;
+        height: 100%;
         width: 100%;
+        object-fit: cover;
     }
 
 
@@ -367,7 +369,7 @@
             overflow-x: auto;
             margin-left: 2%;
             border-spacing: 25px 10px;
-            
+            border: none;   
         }
 
         #table td{

@@ -1,12 +1,17 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Admin
+from .models import *
 
 
 class UpdateAdminProfileForm(forms.ModelForm):
     class Meta:
         model = Admin
-        fields = ['gendertype', 'contact_number']
+        fields = ['gendertype', 'contact_number', ]
+
+class Updateprofilepic(ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['profile_pic']
 '''
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()

@@ -10,11 +10,12 @@
     
     <div class="time-date-ongoing-container">
         <div class="child">
-            <p class="time-date"> MONTH DATE </p>
+            <p class="time-date"> {{a}} </p>
+            {% comment %} |date:"F n, Y" {% endcomment %}
             <p>Date</p>
         </div>
         <div class = "child">
-            <p class="time-date">0 </p>
+            <p class="time-date">{{apptCount}} </p>
             <p>Booked Appointments</p>
         </div>
     </div>

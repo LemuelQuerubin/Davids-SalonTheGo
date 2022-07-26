@@ -1,3 +1,55 @@
+    /* RESERVATIONS --- ACCEPT-REJECT AND RECEIVE-CANCEL BUTTONS*/
+    #approve1, #transaction-successful {
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--blue); 
+        color: white;
+        margin-top: 5%;
+        text-align: center;
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid;
+        cursor: pointer;
+        width: 170px;
+        text-decoration: none;
+        transition: 400ms;
+    }
+
+    #reject1, #cancel1 {
+        font-family: "Montserrat", sans-serif;
+        background-color: white; 
+        color: var(--blue);
+        margin-top: 5%;
+        text-align: center;
+        border: 1px solid;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid;
+        cursor: pointer;
+        width: 170px;
+        text-decoration: none;
+        transition: 400ms;
+    }
+    
+    
+    #approve1:hover, #transaction-successful:hover {
+        background-color: #3c7dd8;
+        border-color: white;
+        border: 1px solid;
+        text-decoration: none;
+        color: white;
+    }
+    
+    #reject1:hover, #cancel1:hover {
+        font-weight: 700px;
+        border-color: var(--blue);
+        border: 1px solid;
+        text-decoration: none;
+        color: #3c7dd8;
+    }
+
+
 /* BACK TO TOP BUTTON */
 #myBtn {
     width: 60px;
@@ -23,9 +75,20 @@
 }
     /***** TABLE CONTAINER *****/
     .prodtable-container {
-        max-width: 800px;
+        max-width: 1130px;
         width: 100%;
         margin: 20px auto;
+        padding: 40px 30px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        /* box-shadow: rgba(0, 0, 0, 0.212) 1px 2px 3px; */
+        background-color: white;
+        border-radius: 20px;
+    }
+    /***** TABLE CONTAINER *****/
+    .prodtable-container1 {
+        max-width: 1130px;
+        width: 100%;
+        margin: 20px 134px;
         padding: 40px 30px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         /* box-shadow: rgba(0, 0, 0, 0.212) 1px 2px 3px; */
@@ -59,7 +122,7 @@
         margin-left: 10px;
         width: 180px;
         height: 18px;
-        padding: 5px;
+        padding: 15px;
         border-radius: 5px;
         border: solid 1px #ccc;
         margin-right: 5px;
@@ -71,7 +134,7 @@
         border-collapse: collapse; 
         background: white;
         overflow: hidden;
-        max-width: 800px; 
+        max-width: 1130px; 
         width: 100%;
         margin: 0 auto;
         position: relative;
@@ -109,7 +172,7 @@
     }
     
     .products-table td,
-    .products-tabl th {
+    .products-table th {
         text-align: center;
         padding: 5px 10px;
     }
@@ -127,17 +190,12 @@
     /* PRODUCT NAME */
     #prod-name {
         font-weight: 600;
-        max-width: 100px;
+        max-width: 150px!important;
         width: auto;
     }
     /* PRODUCT CATEGORY */
     #category {
         max-width: 100px;
-        width: auto;
-    }
-    /* PRODUCT DESCRIPTION */
-    #description {
-        max-width: 150px;
         width: auto;
     }
     /* PRODUCT IN PESO */
@@ -185,6 +243,7 @@
     }
     /****** OPTION LINKS ******/
     #prod-link {
+        font-size: medium;
         color: black;
         text-decoration: none;
     }
@@ -202,6 +261,7 @@
     /***** PAGE NAVIGATION *****/
     .pagination {
         margin-top: 30px;
+        margin-left: 50%;
         text-align: center;
     }
     .pagination a {

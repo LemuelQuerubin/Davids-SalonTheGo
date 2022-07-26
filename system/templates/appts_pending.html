@@ -36,7 +36,7 @@
 	<div>	
 
 			<div class="go-back">		
-				<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+				<h5 class="pageHeader"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
 			</div>
 
             {% for appointment in appointments %}
@@ -85,8 +85,8 @@
                             </div>   
 
                             <div class="info-container">
-                                    <h5>STATUS:</h5>
-                                    <p>{{ appointment.apptType }}</p>
+                                    <h5>TYPE:</h5>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ appointment.apptType }}</p>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                             <form method="POST">
                             {% csrf_token %}
                                 <input type="hidden" value="{{ appointment.id }}" name="approve">
-                                <input class="buttons3" type="submit" value="Approve Appointment" name="button" id="approve">
+                                <input class="buttons5" type="submit" value="Approve Appointment" name="button" id="approve">
                             </form>
                         </div>
                     
@@ -104,7 +104,7 @@
                             <form method="POST">
                             {% csrf_token %}
                                 <input type="hidden" value="{{ appointment.id }}" name="reject">
-                                <input class="buttons4" type="submit" value="Reject Appointment" name="button" id="reject">
+                                <input class="buttons6" type="submit" value="Reject Appointment" name="button" id="reject">
                             </form>
                         </div>  
                     </div>

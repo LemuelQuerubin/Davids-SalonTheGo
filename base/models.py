@@ -4,6 +4,7 @@ from django.utils import timezone
 #from django.contrib.auth.models import User
 
 from account.models import Customer
+from system.models import *
 
 # Create your models here.
 
@@ -46,6 +47,8 @@ class insProduct(models.Model):
     active_objects = IsActiveManager() #For Active Records Only
     date_created = models.DateTimeField(default=timezone.now)
     expiry_date = models.DateField(null=True, blank=False, verbose_name="Expiry Date")
+    # recording of total times insalon has been used
+    totalUsed = models.IntegerField(default=0,verbose_name="Total Times Used")
     
     #insProd_totalUsed = models.IntegerField(verbose_name="Total Used")
     #insProd_dateRestocked = models.DateTimeField(auto_now=True)

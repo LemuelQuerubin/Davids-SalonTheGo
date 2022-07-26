@@ -38,8 +38,9 @@
  .image-container{
     width:20%;
     height:25vh;
-    border: 1px solid black;
+    border:1px solid black;
  }
+
 
  .name-container{
     width:80%;

@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+
+body {
+    margin: 0;
+}
+
+.main-wrapper {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 100px 0;
+    margin: 0 auto; 
+}
+
+/***** CUSTOMER CONTAINER *****/
+.customer-container {
+    max-width: 700px;
+    width: 100%;
+    padding: 50px 60px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+/* TITLE */
+#customer-title {
+    color: #001D6E;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.top-container {
+    display: inline-flex;
+}
+/* IMG */
+.image-container {
+    width: 180px;
+    height: 180px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+}
+/* CUSTOMER NAME */
+.customer-label {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/***** CUSTOMER TABLE *****/
+.customer-details-tbl {
+    margin-bottom: 30px;
+}
+/* LABEL NAMES */
+.label-bold {
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+/***** BUTTONS *****/
+.btn-container {
+    overflow: auto;
+    clear: both;
+}
+
+.edit-profile-btn,
+.change-pass-btn {
+    padding: 7px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    float: right;
+}
+/* EDIT PROFILE BUTTON */
+.edit-profile-btn {
+    color: white;
+    background-color: #001D6E;
+    border: 1px solid #001D6E;
+}
+    .edit-profile-btn:hover {
+        background-color: #002ca7;
+        border: 1px solid #002ca7;
+    }
+/* CHANGE PASSWORD BUTTON */
+.change-pass-btn {
+    color: #001D6E;
+    background-color: transparent;
+    border: 1px solid #001D6E;
+    margin-right: 10px;
+}
+    .change-pass-btn:hover {
+        color: white;
+        background-color: #001D6E;
+        border: 1px solid #001D6E;
+    }

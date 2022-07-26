@@ -3,23 +3,24 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    <!-- REGISTER PAGE -->
+    <!-- accounts/templates/authentication/register.html -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SALONTHEGO | REGISTER</title>
+    <title>SALONTHEGO | Register </title>
 
     <link rel="stylesheet" href="{% static 'css/authentication/register.css' %}">
 </head>
 <body>
-
     <div class="register-form-container">
         <center><h1>Account Signup</h1></center>
         <center><p>Welcome! Signup to get Started.</p></center>
 
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissable fade show" role="alert">
-            <strong>Message: </strong> {{ message }}
+            <strong style="color:red">Message:  </strong>{{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -49,8 +50,9 @@
                         <input class="form-box1" type="password" id="pass2" name="pass2" placehoder="Confirm Password" Required>
 
                         <button class="btns" type="submit">Create an account</button>
-                        <br><br>
+                        
                     </form>
+                   
         </div>
     </div>
 

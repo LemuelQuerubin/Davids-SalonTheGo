@@ -15,9 +15,7 @@
      
        
         <div class="top-container">
-            <div class="image-container">
-                 <!--IMAGE CONTAINER-->
-            </div>
+            <img class="image-container"  src="{{ request.user.profile_pic.url }}">
             <div class="name-container">
                 <label class="text-label">{{ user.first_name }}</label>
                 <label class="text-label">{{ user.last_name }}</label><br>
@@ -37,12 +35,10 @@
             <label class="text-label1">Gender</label>
             <label class="text-label3">{{ user.customer.gendertype }}</label><br><br>
 
-
-            <a href="editcustomerprofile/"><button class="button1">Edit Profile</button></a>
-            <a href="#"><button class="button2">Change Password</button></a>
-
-            
-
+            <div class="btn-container">
+                <a href="editcustomerprofile/"><button class="button1">Edit Profile</button></a>
+                <a href="#"><button class="button2">Change Password</button></a>
+            </div>
         </div>
     </div>
 

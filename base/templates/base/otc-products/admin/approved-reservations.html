@@ -1,10 +1,12 @@
-{% extends 'main_products.html' %}
+{% extends "general/homepage-user.html" %} 
+{% load static %}
 
 {% block content %}
 
+<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 <div class="main-wrapper">
     <div class="container">
-        <div class="prodtable-container">
+        <div class="prodtable-container1">
             <div class="labels-container">
                 
                     <!-- TITLE -->
@@ -66,7 +68,7 @@
                                 <br>
                                 <!-- CANCEL -->
                                 <input type="hidden" value="{{orderpickup.order.id}}" name="cancel">
-                                <input type="submit" value="Cancel" name="button" id="cancel" onclick="return confirm('Cancel Reservation?');">
+                                <input type="submit" value="Cancel" name="button" id="cancel1" onclick="return confirm('Cancel Reservation?');">
                             </form>
                         </td>
                     {% endif %}

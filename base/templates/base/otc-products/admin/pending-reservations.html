@@ -1,11 +1,12 @@
-
-{% extends 'main_products.html' %}
+{% extends "general/homepage-user.html" %} 
+{% load static %}
 
 {% block content %}
 
+<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 <div class="main-wrapper">
     <div class="container">
-        <div class="prodtable-container">
+        <div class="prodtable-container1">
             <div class="labels-container">
                 
                     <!-- TITLE -->
@@ -63,11 +64,11 @@
                                 {% csrf_token %}
                                     <!-- APPROVE -->
                                     <input type="hidden" value="{{orderpickup.order.id}}" name="approve">
-                                    <input type="submit" value="Approve" name="button" id="approve" onclick="return confirm('Approve Reservation?');">
+                                    <input type="submit" value="Approve" name="button" id="approve1" onclick="return confirm('Approve Reservation?');">
                                     <br>
                                     <!-- REJECT -->
                                     <input type="hidden" value="{{orderpickup.order.id}}" name="reject">
-                                    <input type="submit" value="Reject" name="button" id="reject" onclick="return confirm('Reject Reservation?');">
+                                    <input type="submit" value="Reject" name="button" id="reject1" onclick="return confirm('Reject Reservation?');">
                                 </form>
                             </td>
                         {% endif %}

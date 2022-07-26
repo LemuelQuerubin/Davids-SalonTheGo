@@ -1,0 +1,73 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<div class="main">
+<link rel="stylesheet" href="{% static 'css/admin/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/admincalendarview.css' %}">
+
+<div class="main">
+    <h5 class="go-back"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Calendar</a></h5>
+    
+    <div class="time-date-ongoing-container">
+        <div class="child">
+            <p class="time-date"> {{a}}</p>
+            <p>Date</p>
+        </div>
+        <div class = "child">
+            <p class="time-date">{{ apptCount }}</p>
+            <p>Total Number of Appointments</p>
+        </div>
+    </div>
+
+    {% for appointment in appointments %}
+        {% if appointment.appointmentStatus == 'Approved' %}
+        <!-- if appointment.appointmentStatus == 'Approved' and appointment.apptDate == -->
+            <div class="schedule">
+                    <div class="info-container-left">
+                        <div class="info-container">
+                            <p class="info-label">TIME START:</p> 
+                            <p class="info-input">{{ appointment.appt_timeStart|time:'h:i A' }} </p>
+                        </div>
+
+                        <div class="info-container">
+                            <p class="info-label">NAME:</p>
+                                {% if appointment.apptType == 'Online' %}
+                                <p class="info-input">{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }}</p>
+                                {% else %}
+                                <p class="info-input"> {{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                                {% endif %}
+                        </div>
+
+                        <div class="info-container">
+                            <p class="info-label">STYLISTS:</p>
+                            <p class="info-input">{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-container-right">
+                        <div class="info-container">
+                            <p class="info-label">DATE:</p> 
+                            <p class="info-input">{{ appointment.apptDate }}</p>
+                        </div>
+
+                        <div class="info-container">
+                            <p class="info-label">SERVICE/S:</p>
+                            {% for key in appointment.services %}
+                            <p class="info-input"> {{ key }}</p>{% if not forloop.last %},{% endif %}
+                            {% endfor %}    
+                        </div>
+
+                        <div class="info-container">
+                            <p class="info-label">TYPE:</p>
+                            <p class="info-input">{{ appointment.apptType }}</p>  
+                        </div>       
+                    </div>
+
+            
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

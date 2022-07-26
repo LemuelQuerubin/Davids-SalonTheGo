@@ -22,15 +22,87 @@
                     <th>Option</th>
                 </thead>
                 <tbody>
-                    {% for row in customers %}
+                    {% for row in form %}
+                    {% if row.appointmentInfo.appointmentStatus == 'Successful' %}
                     <tr>
-                        <td></td> <!--Date & Time-->
-                        <td></td> <!--Service Availed-->
-                        <td></td> <!--Stylist/s-->
-                        <td></td> <!--Rating-->
-                        <td></td> <!--Review-->
-                        <td></td>  <!--Option-->
+                        <td>{{ row.appointmentInfo.apptDate|date:'F d, Y' }} {{ row.appointmentInfo.appt_timeStart|time:'h:i A' }}</td> <!--Date & Time-->
+                        <td>{% for key in row.appointmentInfo.services %}{{ key }}{% if not forloop.last %}, {% endif %}{% endfor %}</td> <!--Service Availed-->
+                        <td>{{ row.finalStylist }}</td> <!--Stylist/s-->
+                        <td>
+                            {% if fb %}
+                            {% regroup fb by appointmentInfo as appt %}
+                                {% if row in appt %} <!--if feedback object exists-->
+                                    {{row.id}}
+                                    <div class="button-container">
+                                    <div class="button-half">
+                                        <form method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ fb.id }}" name="edit">
+                                            <input class="buttons5" type="submit" value="Edit Review" name="button" id="edit">
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <div class="button-container">
+                                    <div class="button-half">
+                                        <form method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ row.id }}" name="create">
+                                            <input class="buttons5" type="submit" value="Create Review" name="button" id="create">
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            <div class="button-half">
+                                <form method="POST">
+                                {% csrf_token %}
+                                    <input type="hidden" value="{{ row }}" name="delete">
+                                    <input class="buttons6" type="submit" value="Delete Review" name="button" id="delete">
+                                </form>
+                            </div>
+                        </td> <!--Rating-->
+                        
+                        <td>{{ fb.review }}</td> <!--Review-->
+                        
+                        <td>
+                        {% comment %} try ko sa ibang column {% endcomment %}
+                            {% comment %}{% if fb %}{% endcomment %}
+                                {% for feedback in fb %}
+                                
+                                    {% if row.id == feedback.feedbackInfo.id %} <!--if feedback object exists-->
+                                        <div class="button-container">
+                                        <div class="button-half">
+                                            <form method="POST">
+                                            {% csrf_token %}
+                                                <input type="hidden" value="{{ fb.id }}" name="edit">
+                                                <input class="buttons5" type="submit" value="Edit Review" name="button" id="edit">
+                                            </form>
+                                        </div>
+                                        
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                                {% comment %}{% if e = 0 %}{% endcomment %}
+                                    <div class="button-container">
+                                    <div class="button-half">
+                                        <form method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ row.id }}" name="create">
+                                            <input class="buttons5" type="submit" value="Create Review" name="button" id="create">
+                                        </form>
+                                    </div>
+                                {% comment %}{% endif %}{% endcomment %}
+                            
+                            {% comment %}{% endif %}{% endcomment %}
+                            <div class="button-half">
+                                <form method="POST">
+                                {% csrf_token %}
+                                    <input type="hidden" value="{{ row }}" name="delete">
+                                    <input class="buttons6" type="submit" value="Delete Review" name="button" id="delete">
+                                </form>
+                            </div>
+                        </div></td>  <!--Option-->
                     </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

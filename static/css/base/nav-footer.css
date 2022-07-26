@@ -41,15 +41,15 @@ nav {
     font-size: medium;
     font-weight: 800;
     padding: 12px 45px;
-    background: var(--blue);
+    background: #7FB5FF;
     border-radius: 6px;
 }
 
 .nav_button a:hover {
     transition: all .25s;
-    color: var(--blue);
+    color: #7FB5FF;
     background: white;
-    border: 2px solid var(--blue);
+    border: 2px solid #7FB5FF;
 }
 
 /* SPACE BETWEEN SEARCH, PROFILE, ETC */
@@ -58,7 +58,7 @@ nav {
 }
 
 .space-profile {
-    padding-left: 6%;
+    padding-left: 2%;
 }
 
 /* CART TOTAL */
@@ -87,11 +87,11 @@ nav {
 
 .footer ul{
     list-style-type: none;
-    background-color: #1A1052;
+    background-color: #001D6E;
 }
 
 .footer{
-    background-color: #1A1052;
+    background-color: #001D6E;
     padding: 30px 0;
 }
 
@@ -160,7 +160,7 @@ padding: 0 15px;
 
 .footer-col .social-links a:hover{
     color: white;
-    background-color: var(--blue);
+    background-color: #7FB5FF;
 }
 
 .hbs-copyright{

@@ -40,7 +40,7 @@ th:hover, thead td {
 
 /* Table Title */
 .tbl-title{
-    margin-bottom: 0px;
+    margin-bottom: 33px;
     font-size: 20px;
     font-weight: 600;
 }

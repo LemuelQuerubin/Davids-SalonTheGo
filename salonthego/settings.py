@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
     #appointments
     'system',
+    'django.contrib.humanize',
     
     #shop and product inv
     'base',

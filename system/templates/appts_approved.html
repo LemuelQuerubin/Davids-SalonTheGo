@@ -33,7 +33,7 @@
 	<div>	
 
 				<div class="go-back">
-					<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+					<h5 class="pageHeader"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
 				</div>
 
             {% for appointment in appointments %}
@@ -62,9 +62,9 @@
                             <div class="info-container">
                                     <h2>NAME:</h2>
                                     {% if appointment.apptType == 'Online' %}
-                                        <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} </p>
+                                        <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }}</p>
                                     {% else %}
-                                        <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                                        <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }}</p>
                                     {% endif %}
                             </div>         
                             
@@ -83,8 +83,8 @@
                             </div>   
 
                             <div class="info-container">
-                                    <h5>STATUS:</h5>
-                                    <p>{{ appointment.apptType }}</p>
+                                    <h5>TYPE:</h5>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ appointment.apptType }}</p>
                             </div>
                         </div>
                     </div>

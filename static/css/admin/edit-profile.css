@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
+/* ROOT AND BODY  */
+:root {
+   --yellow: #FEE2C5;
+   --purple: #1A1052;
+   --navy:#001D6E;
+   --blue: #7FB5FF;
+   --lightblue: #C4DDFF;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -147,7 +156,7 @@
  }
 
  .button3{
-    background-color: skyblue;
+    background-color: var(--blue);
     color: #001D6E;
     width: 25%;
     border: 0;
@@ -162,6 +171,6 @@
 
  .button3:hover{
     background-color: white;
-    color: skyblue;
-    border: 1px solid skyblue;
+    color: var(--blue);
+    border: 1px solid var(--blue);
  }

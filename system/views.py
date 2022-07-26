@@ -5,17 +5,18 @@ from django.shortcuts import render, redirect
 from .models import *
 
 from account.models import *
+from base.models import *
 
 from datetime import datetime
 from datetime import date
-
-def home(request):
-    return render(request, 'home.html')
+import json
+from datetime import timedelta
 
 # APPOINTMENTS ----------------------------------------------------------------------------------
 def appointments(request):
     #services_list = Services.objects.filter(servicetype_id__in=[1,2,3,4,5])
     # services in database
+    current_datetime = datetime.now()
     if request.method == 'POST':
         services = request.POST.getlist('services')
         request.session['services'] = services
@@ -27,54 +28,70 @@ def appointments(request):
 
     '''context = {
         'services_list': services_list
-    }'''
-    return render(request, 'appts.html')#, context)
+    }'''  
+    context = {     
+        'current_datetime':current_datetime,    
+    }
+    return render(request, 'appts.html', context)#, context)
 
 
 def appointmentsNext(request):
+    current_datetime = datetime.now() 
     customer = Customer.objects.get(customer=request.user)
     staff = Staff.objects.filter(stafftype=3)
     services = request.session['services']
-    # SCRAP KO MUNA, HANAP AKO NG ALTERNATIVE NA MAGWO-WORK FOR THE MEANTIME
-        # if (services == '["Haircut"]' or services == '["Shampoo and Blowdry"]' or services == '["Setting/Ironing"]'):
-        #     add = 45 * 60 * 1000
-        # elif (services == '["Treatment"]' or services == '["Regular Hot Oil"]' or services == '["Hair Spa"]' or services == '["Make-up"]'):
-        #     add = 60 * 60 * 1000
-        # elif (services == '["Intense Treatment"]' or services == '["Keratin"]' or services == '["Hair & Make-up"]'):
-        #     add = 120 * 60 * 1000
-        # else:
-        #     add = 180 * 60 * 1000
-        # group1 = []
-        # group2 = []
-        # group3 = []
-        # group4 = []
-        # for row in staff:
-        #     name = row.staff.first_name
-        #     appt = Appointment.objects.filter(firstStylist=name)
-        #     times = []
-        #     for row1 in appt:
-        #         time = row1.appt_timeStart
-        #         t_array = (str(time)).split(':')
-        #         hour = int(t_array[0])
-        #         minute = int(t_array[1])
-        #         time1 = t_array[0] + t_array[1]
-        #         hour = hour * 60
-        #         minute = minute + hour
-        #         minute1 = minute * 60 * 1000
-        #         group3.append(minute)
-        #         group4.append(minute1)
-        #         times.append(time1)
-        #     group1.append(name)
-        #     group2.append(times)
-        #     count1 = len(group1)
-        #     count2 = len(time)
+    group1 = []
+    group2 = []
+    group3 = []
+    group4 = []
+    for row in staff:
+        name = row.staff.first_name
+        appt = Appointment.objects.filter(firstStylist=name)
+        for row1 in appt:
+            t_array=[]
+            s = row1.services
+            add = 0
+            for i in range(0, len(s)):
+                if (s[i] == "Haircut" or s[i] == "Shampoo and Blowdry" or s[i] == "Setting Ironing"):
+                    add = add + 45
+                elif (s[i] == "Treatment" or s[i] == "Regular Hot Oil" or s[i] == "Hair Spa" or s[i] == "Make-up"):
+                    add = add + 60
+                elif (s[i] == "Intense Treatment" or s[i] == "Keratin" or s[i] == "Hair & Make-up"):
+                    add = add + 120
+                else:
+                    add = add + 180
+            time = row1.appt_timeStart
+            name1 = row1.firstStylist
+            d = row1.apptDate
+            t_array = (str(time)).split(':')
+            hour = int(t_array[0])
+            minute = int(t_array[1])
+            group1.append(name1)
+            group2.append("{:02d}:{:02d}".format(hour, minute))
+            t = hour * 60 + minute + add
+            hour, minute = divmod(t, 60)
+            group3.append("{:02d}:{:02d}".format(hour, minute))
+            group4.append(str(d))
+    g1 = json.dumps(group1)
+    g2 = json.dumps(group2)
+    g3 = json.dumps(group3)   
+    g4 = json.dumps(group4) 
 
     if request.method == 'POST':
         firstStylist = request.POST.get('stylist1')
         secondStylist = request.POST.get('stylist2')
         apptDate = request.POST.get('apptDate')
         stringTime = request.POST.get('appt_timeStart')
-        appt_timeStart = datetime.strptime(stringTime, '%I:%M %p').time()
+        arrTime = (str(stringTime)).split(':')
+        h = int(arrTime[0])
+        m = int(arrTime[1])
+        h %= 24
+        suffix = 'a' if h < 12 else 'p'
+        h %= 12
+        if h == 0:
+            h = 12
+        strTime = "{:02d}:{:02d} {}m".format(h, m, suffix)
+        appt_timeStart = datetime.strptime(strTime, '%I:%M %p').time()
 
         create = Appointment(customer=customer,services=services,firstStylist=firstStylist,
                             secondStylist=secondStylist,apptDate=apptDate,appt_timeStart=appt_timeStart)
@@ -84,6 +101,11 @@ def appointmentsNext(request):
 
     context = {
         'stylists':staff,
+        'current_datetime':current_datetime,
+        'group1': g1,
+        'group2': g2,
+        'group3': g3,
+        'group4': g4
     }
     return render(request, 'appts_next.html', context)
 
@@ -91,6 +113,7 @@ def index(request):
     return render(request, 'index.html')
 
 def appointmentsPending(request):
+    current_datetime = datetime.now() 
     appointments = Appointment.objects.all()
     if "appointment" in request.session.keys():
         next = request.session['appointment']
@@ -99,7 +122,8 @@ def appointmentsPending(request):
         next = None
     context = {
         'appointments':appointments,
-        'next':next
+        'next':next,
+        'current_datetime':current_datetime
     }
     if request.method == 'POST':
         if request.POST['button'] == 'Reject Appointment':
@@ -114,6 +138,7 @@ def appointmentsPending(request):
     return render(request, 'appts_pending.html', context)
 
 def appointmentsApproved(request):
+    current_datetime = datetime.now() 
     appointments = Appointment.objects.all()
 
     if "appointment" in request.session.keys():
@@ -123,7 +148,8 @@ def appointmentsApproved(request):
         next = None
     context = {
         'appointments':appointments,
-        'next':next
+        'next':next,
+        'current_datetime':current_datetime
     }
     if request.method == 'POST':
         if request.POST['button'] == 'Cancel Appointment':
@@ -133,39 +159,72 @@ def appointmentsApproved(request):
         
         elif request.POST['button'] == 'Confirm Appointment':
             id = request.POST['confirm']
-            appt=Appointment.objects.get(pk=id)
-            request.session['date'] = str(appt.apptDate)
+            request.session['apptApproved'] = id
+            # ?????
+            '''request.session['date'] = str(appt.apptDate)
             request.session['time'] = str(appt.appt_timeStart)
             if appt.apptType == 'Walk In':
                 request.session['name'] = appt.customer_fname + " " + appt.customer_lname
             else:
                 request.session['name'] = appt.customer.customer.first_name + " " + appt.customer.customer.last_name
             request.session['services'] = appt.services
-            request.session['stylists'] = appt.firstStylist + "," + appt.secondStylist
+            request.session['stylists'] = appt.firstStylist + "," + appt.secondStylist'''
+            # request.session['stylist1'] = appt.firstStylist
+            # request.session['stylist2'] = appt.secondStylist
             return redirect('jobOrderform')
     
     return render(request, 'appts_approved.html', context) 
 
-def transactionSuccessful(request):
-    return render(request, 'appts_transSuccessful.html')
+
 # CALENDAR ---------------------------------------------------------------------------------------
 def calendar(request):
+    current_datetime = datetime.now() 
     today = date.today()
-    return render(request, 'calendar.html', {'date': today} )
+    context = {
+        'date': today,
+        'current_datetime':current_datetime
+    }
+    return render(request, 'calendar.html', context)
 
 def calendarDayView(request):
     a = request.POST['date']
     appointments = Appointment.objects.filter(apptDate = a)
+    apptCount = Appointment.objects.filter(apptDate = a, appointmentStatus='Approved').count()
     context = {
-        'appointments':appointments
+        'a':a,
+        'appointments':appointments,
+        'apptCount':apptCount
     }
+    
     return render(request, 'calendar_day_view.html', context)
+
+def admincalendar(request):
+    current_datetime = datetime.now() 
+    today = date.today()
+    context = {
+        'date': today,
+        'current_datetime':current_datetime
+    }
+    return render(request, 'admincalendar.html', context )
+
+def admincalendardayview(request):
+    current_datetime = datetime.now() 
+    a = request.POST['date']
+    appointments = Appointment.objects.filter(apptDate = a, appointmentStatus='Approved')
+    apptCount = Appointment.objects.filter(apptDate = a, appointmentStatus='Approved').count()
+    context = { 
+        'a':a,
+        'appointments':appointments,
+        'current_datetime':current_datetime,
+        'apptCount': apptCount
+    }
+    return render(request, 'admincalendardayview.html', context)
 
 
 # WALK-IN  ---------------------------------------------------------------------------------------
 def walkIn(request):
+    current_datetime = datetime.now() 
     if request.method == 'POST':
-
         services = request.POST.getlist('services')
         request.session['fname'] = request.POST.get('fname')
         request.session['lname'] = request.POST.get('lname')
@@ -173,55 +232,77 @@ def walkIn(request):
         request.session['contactNumber'] = request.POST.get('contactNumber')
         request.session['services'] = services
         return redirect('walkInNext')
-    return render(request, 'appts_walkin.html')
+        
+    context = {
+        'current_datetime':current_datetime
+    }
+    return render(request, 'appts_walkin.html', context)
 
 def walkInNext(request):
+    current_datetime = datetime.now() 
     staff = Staff.objects.filter(stafftype=3)
     services = request.session['services']
-    if (services == '["Haircut"]' or services == '["Shampoo and Blowdry"]' or services == '["Setting/Ironing"]'):
-        add = 45 * 60 * 1000
-    elif (services == '["Treatment"]' or services == '["Regular Hot Oil"]' or services == '["Hair Spa"]' or services == '["Make-up"]'):
-        add = 60 * 60 * 1000
-    elif (services == '["Intense Treatment"]' or services == '["Keratin"]' or services == '["Hair & Make-up"]'):
-        add = 120 * 60 * 1000
-    else:
-        add = 180 * 60 * 1000
+    # request.session.pop('services', None)
     group1 = []
     group2 = []
     group3 = []
+    group4 = []
     for row in staff:
         name = row.staff.first_name
         appt = Appointment.objects.filter(firstStylist=name)
-        times = []
         for row1 in appt:
+            t_array=[]
+            s = row1.services
+            add = 0
+            for i in range(0, len(s)):
+                if (s[i] == "Haircut" or s[i] == "Shampoo and Blowdry" or s[i] == "Setting Ironing"):
+                    add = add + 45
+                elif (s[i] == "Treatment" or s[i] == "Regular Hot Oil" or s[i] == "Hair Spa" or s[i] == "Make-up"):
+                    add = add + 60
+                elif (s[i] == "Intense Treatment" or s[i] == "Keratin" or s[i] == "Hair & Make-up"):
+                    add = add + 120
+                else:
+                    add = add + 180
             time = row1.appt_timeStart
+            name1 = row1.firstStylist
+            d = row1.apptDate
             t_array = (str(time)).split(':')
             hour = int(t_array[0])
             minute = int(t_array[1])
-            hour = hour * 3600
-            minute = minute * 60 * 1000
-            total = hour + minute
-            group3.append(total)
-            times.append(time)
-        group1.append(name)
-        group2.append(times)
-        count1 = len(group1)
-        count2 = len(group2)
+            group1.append(name1)
+            group2.append("{:02d}:{:02d}".format(hour, minute))
+            t = hour * 60 + minute + add
+            hour, minute = divmod(t, 60)
+            group3.append("{:02d}:{:02d}".format(hour, minute))
+            group4.append(str(d))
+    g1 = json.dumps(group1)
+    g2 = json.dumps(group2)
+    g3 = json.dumps(group3)   
+    g4 = json.dumps(group4) 
 
     if request.method == 'POST':
         customer_fname = request.session['fname']
-        del request.session['fname']
+        # request.session.pop('fname', None)
         customer_lname = request.session['lname']
-        del request.session['lname']
+        # request.session.pop('lname', None)
         email = request.session['email']
-        del request.session['email']
+        # request.session.pop('email', None)
         contact_num = request.session['contactNumber']
-        del request.session['contactNumber']
+        # request.session.pop('contactNumber', None)
         firstStylist = request.POST.get('stylist1')
         secondStylist = request.POST.get('stylist2')
         apptDate = request.POST.get('apptDate')
         stringTime = request.POST.get('appt_timeStart')
-        appt_timeStart = datetime.strptime(stringTime, '%I:%M %p').time()
+        arrTime = (str(stringTime)).split(':')
+        h = int(arrTime[0])
+        m = int(arrTime[1])
+        h %= 24
+        suffix = 'a' if h < 12 else 'p'
+        h %= 12
+        if h == 0:
+            h = 12
+        strTime = "{:02d}:{:02d} {}m".format(h, m, suffix)
+        appt_timeStart = datetime.strptime(strTime, '%I:%M %p').time()
         apptType = "Walk In"
 
         create = Appointment(customer_fname=customer_fname,customer_lname=customer_lname,email=email,contact_num=contact_num,services=services,firstStylist=firstStylist,
@@ -232,18 +313,22 @@ def walkInNext(request):
 
     context = {
         'stylists':staff,
-        'add':add,
-        'group1':group1,
-        'group2':group2,
-        'group3':group3,
-        'count1':count1,
-        'count2':count2
+        'current_datetime':current_datetime,
+        'group1': g1,
+        'group2': g2,
+        'group3': g3,
+        'group4': g4
     }
     return render(request, 'appts_walkinnext.html', context)
 
 # JOB ORDER AND FEEDBACK  ---------------------------------------------------------------------------------------
-def jobOrderform(request):
-    date = request.session['date']
+def jobOrderForm(request):
+    current_datetime = datetime.now() 
+    insalon_prods = insProduct.objects.all()
+    id = request.session['apptApproved']
+    appt = Appointment.objects.get(pk=id)
+    # ?????
+    '''date = request.session['date']
     d = datetime.strptime(date, '%Y-%m-%d')
     date = datetime.strftime(d, "%B %d, %Y")
     time = request.session['time']
@@ -251,27 +336,80 @@ def jobOrderform(request):
     time = datetime.strftime(t, "%I:%M %p")
     name = request.session['name']
     services = request.session['services']
-    stylists = request.session['stylists']
+    stylists = request.session['stylists']'''
+    # total = servicePrices 
+    
+    # consumed_product = request.POST.get['consumed_product']
     context = {
-        'date': date,
-        'time': time,
-        'name': name,
-        'services': services,
-        'stylists': stylists,
+        'insalon_prods': insalon_prods,
+        'appt':appt,
+        #date': date,
+        #time': time,
+        #name': name,
+        #services': services,
+        #stylists': stylists,
+        # 'stylist1':stylist1,
+        # 'stylist2':stylist2,
+        'current_datetime':current_datetime
     }
-
+    if request.method == 'POST':
+        prices = request.POST.getlist('price')
+        servicePrices = dict(zip(appt.services, prices))
+        totalPrice = request.POST.get('total')
+        finalStylist = request.POST.get('stylist2')
+        jobOrder = jobOrderform(appointmentInfo=appt,servicePrices=servicePrices,totalPrice=totalPrice,finalStylist=finalStylist)
+        jobOrder.save()
+        request.session['jobOrder'] = jobOrder.id
+        appt.appointmentStatus='Confirmed'
+        appt.save()
+        return redirect('transactionSuccessful')
     return render(request, 'jobOrderform.html', context)
 
+def transactionSuccessful(request):
+    current_datetime = datetime.now()
+    #order = jobOrderform.objects.get(pk=request.session.pop('jobOrder', None))
+    order = jobOrderform.objects.get(pk=request.session['jobOrder'])
+    context = {
+        'current_datetime':current_datetime,
+        'order':order
+    }
+    if request.method == 'POST':
+        id = request.POST.get('Successful')
+        Appointment.objects.filter(pk=id).update(appointmentStatus='Successful')
+        return redirect('appointmentsApproved')
+    return render(request, 'appts_transSuccessful.html', context)
+
+
 def feedbackClient(request):
+    current_datetime = datetime.now() 
+    
     return render(request, 'feedbackClient.html')
 
 def feedbackEditClient(request):
+    current_datetime = datetime.now() 
     return render(request, 'feedbackEditClient.html')
 
 def feedbackTable(request):
-    return render(request, 'feedbackTable.html')
+    current_datetime = datetime.now() 
+    appt = Appointment.objects.filter(customer=request.user.id)
+    form = jobOrderform.objects.filter(appointmentInfo__in=appt)
+    fb = clientFeedback.objects.filter(feedbackInfo__in=form)
+    context = {
+        'current_datetime':current_datetime, 
+        'form':form,
+        'fb':fb,
+    }
+    if request.method == 'POST':
+        if request.POST['button'] == 'Create Review':
+            jobOrderID = request.POST.get('create')
+            jobOrder = jobOrderform.objects.get(pk=jobOrderID)
+            feedback = clientFeedback(feedbackInfo=jobOrder)
+            feedback.save()
+            return redirect('feedbackClient')
+    return render(request, 'feedbackTable.html', context)
 
 def clientViewAppointment(request):
+    current_datetime = datetime.now() 
     appointments = Appointment.objects.filter(customer=request.user.id)
     if "appointment" in request.session.keys():
         next = request.session['appointment']
@@ -280,7 +418,8 @@ def clientViewAppointment(request):
         next = None
     context = {
         'appointments':appointments,
-        'next':next
+        'next':next,
+        'current_datetime':current_datetime
     }
     if request.method == 'POST':
         #if request.POST['button'] == 'Cancel Appointment':
@@ -288,8 +427,3 @@ def clientViewAppointment(request):
             Appointment.objects.get(pk=apptReject).delete()
             return redirect('clientViewAppointment')
     return render(request, 'clientViewAppointment.html', context)
-
-def admincalendar(request):
-    return render(request, 'admincalendar.html')
-
-

@@ -51,3 +51,4 @@ urlpatterns = [
     # ----- VIEW ORDER DETAILS
     path('order-items/<str:pk>/', views.order_items, name="order-details"),
 ]
+

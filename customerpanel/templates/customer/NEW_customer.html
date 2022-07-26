@@ -1,0 +1,61 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/admin/profile.css' %}">
+
+
+<div class="main-wrapper">
+        <div class="customer-container">
+            <!-- TITLE -->
+            <div class="header-container">
+            <label id="customer-title">Customer Profile</label>
+            </div>
+        
+        
+            <div class="top-container">
+                <!-- IMAGE -->
+                <img class="image-container"  src="{{ request.user.profile_pic.url }}">
+
+                <!-- NAME -->
+                <div class="name-container">
+                    <label class="customer-label">{{ user.first_name }}</label>
+                    <label class="customer-label">{{ user.last_name }}</label><br>
+                    <label class="customer-type-label">{{ user.customer.customertype }}</label>
+                </div>
+            </div>
+
+            <!-- CUSTOMER INFORMATION -->
+            <div class="bottom-container">
+                <table class="customer-details-tbl">
+                    <tr>
+                        <td><label class="label-bold">First Name</label>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-bold">Last Name</label>{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-bold">Email</label>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-bold">Phone Number</label>{{ user.customer.contact_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-bold">Gender</label>{{ user.customer.gendertype }}</td>
+                    </tr>
+                </table>
+
+                <!-- BUTTONS -->
+                <div class="btn-container">
+                    <a href="editcustomerprofile/"><button class="edit-profile-btn">Edit Profile</button></a>
+                    <a href="#"><button class="change-pass-btn">Change Password</button></a>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+</div>
+{% include 'general/footer.html' %}
+{% endblock content %}

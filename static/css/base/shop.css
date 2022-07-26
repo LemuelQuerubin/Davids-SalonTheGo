@@ -3,6 +3,7 @@
     body {
         background-color: #ffffff;
         margin: 0;
+        line-height: 1!important;
     }
 
     .main-wrapper {
@@ -71,15 +72,17 @@
 .cat-links-container h3 {
     font-size: 16px;
     color: black;
-    text-decoration: none;
+    font-weight: 600!important;
+    text-decoration: none!important;
     text-transform: uppercase;
     margin-bottom: 8px;
 }
     #all-products {
-        font-size: 17px;
+        color: #7FB5FF;
+        font-size: 18px;
     }
     #all-products:hover {
-        color: #7FB5FF;
+        color: #b0d1ff;
     }
 /* LINKS */
 .cat-links {
@@ -199,7 +202,7 @@
 /***** PAGE NAVIGATION *****/
 .pagination {
     margin-top: 45px;
-    text-align: center;
+    text-align: center!important;
 }
 .pagination a {
     margin: 0 1px;

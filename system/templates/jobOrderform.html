@@ -34,16 +34,21 @@
                          
                                 <div class="date-time-container">
                                     <div class="date-container1">
-                                        <h6>DATE:</h6> <p>{{ date }}</p>
+                                        <h6>DATE:</h6> <p>{{ appt.apptDate|date:'F d, Y' }}</p>
                                     </div>
                                     <div class="time-container1">   
-                                        <h6>TIME:</h6> <p>{{ time }}</p>
+                                        <h6>TIME:</h6> <p>{{ appt.appt_timeStart|time:'h:i A' }}</p>
                                     </div> 
                                 </div>
      
                                 <div class="job-name-container">
                                     <div class="name-container1">
-                                        <h6>NAME:</h6><p>{{name}}</p>
+                                        <h6>NAME:</h6>
+                                        {% if appt.apptType == 'Online' %}
+                                            <p>{{ appt.customer.customer.first_name }} {{ appt.customer.customer.last_name }}</p>
+                                        {% else %}
+                                            <p>{{ appt.customer_fname }} {{ appt.customer_lname }}</p>
+                                        {% endif %}
                                     </div>
                                 </div> 
                        
@@ -51,7 +56,7 @@
                                     <div class="service-containers1">
                                         <h6> SERVICE/S:<h6>
                                         <h1>   
-                                            {% for key in services %}
+                                            {% for key in appt.services %}
                                             <ul>
                                                 <li>{{ key }}</li>       
                                             </ul>
@@ -64,8 +69,8 @@
 
                                     <div class="price-containers1">
                                         <h6> PRICES: </h6>
-                                        {% for key in services %}
-                                            <input onchange="findTotal()" type="text" name="price"/>
+                                        {% for key in appt.services %}
+                                            <input onchange="findTotal()" type="text" name="price" class="input-price-jof"/>
                                             {% if not forloop.last %}
                                                 <br><br>
                                             {% endif %}
@@ -75,22 +80,42 @@
                                 </div>
 
 
+                                {% comment %} 
                                 <div class="product-used-container">
                                     <div class="product-used-label">
                                         <h6>PRODUCTS USED: </h6>
-                                        <!--Dapat may dropdown dito-->
+                                        <select name="used_product">
+                                                <option value="">None</option>
+                                                {% for row in insalon_prods %}
+                                                    <option value="{{row.id}}"> {{row.Prod_Name}}</option>
+                                                {% endfor %}        
+                                                
+                                        </select>
+                                        <button>+ add another product</button>
+                                        
+                                        
                                     </div>
-                                </div>
+
+                                    <div class="product-used-checkbox">
+                                        <input type="checkbox" name="consumed_product">
+                                    </div> 
+                                </div> 
+                                {% endcomment %}
 
 
                                 <div class="primary-list-container">
                                     <div class="primary-list-label">
-                                        <h6>PRIMARY STYLIST:</h6>
+                                        <h6>STYLIST:</h6>
                                     </div>
 
                                     <div class="primary-list-input">
+                                        {% comment %} get from database {% endcomment %}
                                         <select class="primary-list-input-form" name="stylist2" aria-label="Default select example" required>
                                             <option selected disabled hidden>Select Stylist</option>
+                                            {% comment %} <option value="{{ stylists }}">{{ stylists }}</option>
+                                            <option value="{{ stylist1 }}">{{ stylist1 }}</option>
+                                            <option value="{{ stylist2 }}">{{ stylist2 }}</option>
+                                            <option value="{{ stylists }}">{{ stylists }}</option> {% endcomment %}
                                             <option value="Oscar">Mr. Oscar</option>
                                             <option value="Steph">Ms. Steph</option>
                                             <option value="Mike">Mr. Mike</option>
@@ -113,15 +138,13 @@
                                             <h6>TOTAL PRICE: </h6>
                                         </div>   
                                         <div class="total-price-text">
-                                            <input type="text" id="total" name="total" disabled>
+                                            <input type="text" id="total" name="total" class="input-total-jof" readonly>
                                         </div>                              
                                     </div> 
                                               
                                     <div class="job-button-container">
-                                        <form method="POST">
-                                        {% csrf_token %}
                                             <input type="hidden" value="{{ appointment.id }}" name="approve">
-                                            <input class="job-button-container-submit" type="submit" confirm="Confirm" name="button" id="confirm">
+                                            <input class="job-button-container-submit" type="submit" value="Confirm" confirm="Confirm" name="button" id="confirm">
                                     </div>
                                
                     </form>
@@ -130,8 +153,8 @@
             var arr = document.getElementsByName('price');
             var tot=0;
             for(var i=0;i<arr.length;i++){
-                if(parseInt(arr[i].value))
-                    tot += parseInt(arr[i].value);
+                if(parseFloat(arr[i].value))
+                    tot += parseFloat(arr[i].value);
             }
             document.getElementById('total').value = tot;
         }

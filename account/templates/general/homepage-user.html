@@ -9,6 +9,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel="stylesheet" href="{% static 'css/general/sidenav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/sales-invoice.css' %}">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/base/products.css' %}">
 
     <!--BOOTSTRAP CSS-->
@@ -211,12 +213,11 @@
     <!------------------------------- NAVBAR ------------------------------------------->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         {% if user.is_customer %} 
-        <a href="{% url 'homepage'%}
-            class="navbar-logo h1">
+        <a href="{% url 'homepage'%}" class="navbar-logo h1">
                 <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                 <img
                 class="d-inline-block align-top"
-                src="static/images/logo-3.png"
+                src="{% static '/images/logo-3.png' %}"
                 width="150" />
         {% else %}
          <a href="{% url 'homepage'%}"
@@ -224,7 +225,7 @@
                 <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
                 <img
                 class="d-inline-block align-top"
-                src="static/images/logo-3.png"
+                src="{% static '/images/logo-3.png' %}"
                 width="150" />
         {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -306,7 +307,6 @@
                 src="/images/cart.png"
                 width="50" />
             </a>
-            <p id="cart-total">0</p>
         {% elif user.is_customer %}  
             <a href="{% url 'cart' %}">
                 <img
@@ -314,7 +314,6 @@
                 src="/images/cart.png"
                 width="50" />
             </a>
-            <p id="cart-total">0</p> 
         {% else %}  
             
         {% endif %}
@@ -333,22 +332,20 @@
             <ul class="dropdown-menu">
                 <li><a href="/customer" class="dropdown-item">Profile </a></li>
                 <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
-                <li><a href="#" class="dropdown-item"> My Purchases </a></li>
+                <li><a href="/shop/mypurchases" class="dropdown-item"> My Purchases </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
             {% elif user.is_admin %}
             <ul class="dropdown-menu">
                 <li><a href="/admin" class="dropdown-item">Profile </a></li>
-                <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
-                <li><a href="#" class="dropdown-item"> My Purchases </a></li>
+                <li><a href="/appointments/walkIn" class="dropdown-item"> Appointments </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
 
             {% else %}
             <ul class="dropdown-menu">
                 <li><a href="/staff" class="dropdown-item">Profile </a></li>
-                <li><a href="/appointments" class="dropdown-item"> Appointments </a></li>
-                <li><a href="#" class="dropdown-item"> My Purchases </a></li>
+                <li><a href="/appointments/walkIn" class="dropdown-item"> Appointments </a></li>
                 <li><a href="/logout" class="dropdown-item"> Log Out </a></li>
             </ul>
             {% endif %}
@@ -368,12 +365,20 @@
             <!-- SIDE NAV --------------------------------------------------------------------------------------->
             <div class="sidenav">
                 <ul>
-                <div class="firstname-container">
-                    <p class="firstname-display">{{ user.first_name }} {{ user.last_name }}</p>
-                </div>
+            
                 {% if user.is_customer %}
+                <div class="firstname-container">
+                    <p class="firstname-display">&nbsp;&nbsp;{{current_datetime}}</p>
+                </div>
                 <div class="customertype-container">
-                    <p>{{ user.customer.customertype }}</p> <br><br>
+                    <div class="image-name-container">
+                        <div class="prof-image">
+                           <img src="{{ request.user.profile_pic.url }}"> 
+                        </div>
+                        <div class="name-role-container">
+                            <p class="name1">{{ user.first_name }} {{ user.last_name }} <br> {{ user.customer.customertype }}</p>              
+                        </div>
+                    </div>
                 </div>
                 <li><a href="/customer">Customer Profile</a></li>
                 <!--<li><a href="#">Change Password</a></li>-->
@@ -381,18 +386,33 @@
                 <li><a href="/appointments">Create Appointment</a></li>
                 <li><a href="/appointments/clientViewAppointment/">Pending Appointments</a></li>
                 <!--<li><a href="#">Dashboard & History</a></li>-->
-                <li><a href="#">Ratings & Reviews</a></li> <!--X-->
-                <li><a href="#">My Purchases</a></li>
+                <li><a href="{% url 'feedbackTable' %}">Ratings & Reviews</a></li> <!--X-->
                 <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+                <li><a href="/shop/mypurchases">My Purchases</a></li>     
                 {% elif user.is_admin %}
+                <div class="firstname-container">
+                    <p class="firstname-display">&nbsp;&nbsp;{{current_datetime}}</p>
+                </div>
+                <div class="customertype-container">
+                    <div class="image-name-container">
+                        <div class="prof-image">
+                           <img src="{{ request.user.profile_pic.url }}"> 
+                        </div>
+                        <div class="name-role-container">
+                            <p class="name1">{{ user.first_name }} {{ user.last_name }} <br> {{ user.admin.stafftype }}</p>              
+                        </div>
+                    </div>
+                </div>
                 <li><a href="/admin">Profile</a></li>
                 <!--<li><a href="#">Change Password</a></li>-->
                 <li><a href="/admin/accounts">Staff Accounts</a></li>
                 <li><a href="/admin/customeraccounts/">Customer Accounts</a></li>
-                <li><a href="{% url 'calendar' %}">Calendar</a></li> 
-                <li><a href="/appointments/walkIn">Appointments</a></li>
+                <li><a href="/appointments/admincalendar">Calendar</a></li> 
+                <li><a href="/appointments/walkIn">Walk-in Appointments</a></li>
                 <li><a href="/appointments/appointmentsPending">Pending Appointments</a></li>
                 <li><a href="/appointments/appointmentsApproved">Approved Appointments</a></li>
+                <li><a href="/shop/pending-reservations/">Pending Reservations</a></li>
+                <li><a href="/shop/approved-reservations/">Approved Reservations</a></li>
                 <!--<li><a href="#">All Reports</a></li> X-->
                 <li><a href="/shop/ins/products">In-Salon Products</a></li>
                 <li><a href="/shop/otc/products">Over-the-Counter Products</a></li>
@@ -400,11 +420,23 @@
                 <!-- <li><a href="#">Promos</a></li>-->
                 <li><a href="/appointments/feedbackTable">Ratings & Reviews</a></li>
                 {% else %}
-                <p>{{ user.staff.stafftype }}</p><br><br>
+                <div class="firstname-container">
+                    <p class="firstname-display">&nbsp;&nbsp;{{current_datetime}}</p>
+                </div>
+                <div class="customertype-container">
+                    <div class="image-name-container">
+                        <div class="prof-image">
+                           <img src="{{ request.user.profile_pic.url }}"> 
+                        </div>
+                        <div class="name-role-container">
+                            <p class="name1">{{ user.first_name }} {{ user.last_name }} <br> {{ user.staff.stafftype }}</p>              
+                        </div>
+                    </div>
+                </div>
                 <li><a href="/staff">Staff Profile</a></li>
                 <!--<li><a href="#">Change Password</a></li>-->
                 <li><a href="#">Appointments</a></li>
-                <li><a href="/feedbackTable">Ratings & Reviews</a></li>
+                <li><a href="/appointments/feedbackTable">Ratings & Reviews</a></li>
                 <br><br><br><br><br>
                 {% endif %}
     
