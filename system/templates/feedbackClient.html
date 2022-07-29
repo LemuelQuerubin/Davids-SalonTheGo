@@ -21,40 +21,44 @@
 
   <body>
     <div class="content-container">
-		<h5 class="go-back"><a href="{% url 'walkIn' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Appointments</h5>
+		<h5 class="go-back"><a href="{% url 'feedbackTable' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Ratings & Reviews</a></h5>
        
-        <div class="form-container">
+        <div class="form-container shadow-box-contain fbc-left">
             <form method="POST">
                 {% csrf_token %}
                     <div class="header-container">
-                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM- SERVICES</h5>								
+                        <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;RATE AND REVIEW - SERVICES</h5>								
                     </div>
     
 
             <div class="date-time-container">
                 <div class="date-container1">
-                    <h6>DATE: {{ appointment.apptDate|date:'F' }} {{ appointment.apptDate|date:'d' }}</h6>
+                    <h6>DATE: <span style="weight:100;">{{ order.appointmentInfo.apptDate|date:'F d, Y' }}</span></h6>
                 </div>
                 <div class="time-container1">   
-                    <h6>TIME: {{ appointment.appt_timeStart|time:'h:i A' }} </h6> 
+                    <h6>TIME: {{ order.appointmentInfo.appt_timeStart|time:'h:i A' }} </h6> 
                 </div>    
             </div>
 
             <div class="job-order-container">
                 <div class="job-order-label">
-                    <h6>JOB ORDER FORM NO.: </h6>
+                    <h6></h6>
                 </div>
                 <div class="job-order-label-text">  
-                    <h6 >PLACEHOLDER</h6>
+                    <h6 ></h6>
                 </div> 
             </div>
 
             <div class="name-container3">       
                 <div class="name-container3-label">
                     <h6>NAME:</h6>
-                </div>
-                <div class="name-container3-text"> 
-                    <h6>{{ appointment.customer_fname }} {{ appointment.customer_lname }}</h6>
+                {% comment %} </div>
+                <div class="name-container3-text">  {% endcomment %}
+                        {% if order.appointmentInfo.apptType == 'Online' %}
+                            <p>{{ order.appointmentInfo.customer.customer.first_name }} {{ order.appointmentInfo.customer.customer.last_name }} </p>
+                        {% else %}
+                            <p>{{ order.appointmentInfo.customer_fname }} {{ order.appointmentInfo.customer_lname }} </p>
+                        {% endif %}
                 </div>
             </div> 
 
@@ -62,30 +66,32 @@
             <div class="service-price-containers1">  <!--TEMPOPARY CLASS-->
                 <div class="service-containers1">
                     <h6> SERVICE/S:</h6>
-                        {% for key in appointment.services %}
-                        <ul>
-                            <li>{{ key }}</li>       
-                        </ul>
-                        {% if not forloop.last %} 
-                        {% endif %}
-                        {% endfor %}              
+                    <h1>   
+                        {% for key in order.servicePrices.keys %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ key }}
+                            {% if not forloop.last %}
+                                <br>
+                            {% endif %}
+                        {% endfor %}       
+                    </h1>            
                 </div>
 
                 <div class="price-containers1"> <!--TEMPOPARY CLASS-->
                     <h6>STYLIST:  </h6>
+                    <p>&nbsp;&nbsp;&nbsp;{{ order.finalStylist }}</p>
                 </div>
 
             </div>
 
             <div class="rating-container">
                 <div class="rating-label">
-                    <h6> RATING </h6>
+                    <h6> RATE </h6>
                 </div>
 
                 <div class="rating-button-container">
                     <script src="https://use.fontawesome.com/fe459689b4.js"></script>
-                        <button class="btn1" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
-                        <button class="btn1" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+                        <button class="btn1" id="green" name="button" value="thmbsup"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+                        <button class="btn1" id="red" name="button" value="thmbsdn"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
                 </div>
             </div>
 
@@ -97,14 +103,14 @@
                 </div>
            
                 <div class="review-form">
-                    <textarea id="textarea" name="comment" id="usercomment" rows="4" cols="50">Review..</textarea>
+                    <textarea id="textarea" name="comment" id="usercomment" rows="4" cols="50" placeholder="Review.." style="resize:none;">{{feed.review }}</textarea>
                 </div>
             </div>
 
             <div>
                 <form method="POST">
                 {% csrf_token %}
-                    <input class="buttons7" type="submit" name="button" id="usercomment"></form>
+                    <input class="buttons7" type="submit" name="button" id="usercomment" value="Submit"></form>
             </div>
             </form>
     

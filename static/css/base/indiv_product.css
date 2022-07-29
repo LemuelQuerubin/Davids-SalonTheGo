@@ -1,10 +1,28 @@
+    /* GO BACK BUTTON */
+    .go-back-indiv-prod {
+        width: 570px;
+        margin: 0 auto 20px;
+    }
+    .go-back-indiv-prod a{
+        font-size: 18px;
+        text-decoration: none;
+        color: #001D6E;
+    }
+        .go-back-indiv-prod a:hover{
+            text-decoration: underline;
+            color: #002281;
+        }
+        .fa-circle-arrow-left {
+            margin-right: 8px;
+        }
+
     /*************** INDIVIDUAL PRODUCT INFORMATION PAGE ***************/
     /* CONTAINER */
     .prod-info {
-        max-width: 350px;
+        max-width: 500px;
         width: 100%;
         margin: 0 auto;
-        padding: 40px 30px;
+        padding: 40px 40px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         background-color: white;
         border-radius: 20px;
@@ -49,3 +67,49 @@
         color: #2e2e2e;
         font-size: 18px;
     }
+
+    /* TITLE */
+    .stock-title {
+        margin: 40px 0 0px;
+    }
+    /* BUTTONS */
+    .stock-btns {
+        float: right;
+    }
+    .use-stock-btn,
+    .restock-btn {
+        padding: 7px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #2e2e2e;
+        font-weight: 500;
+    }
+    .use-stock-btn {
+        background-color: #C4DDFF;
+    }
+        .use-stock-btn:hover {
+            background-color: #a2c9ff;
+        }
+    .restock-btn {
+        background-color: #FEE2C5;
+    }
+        .restock-btn:hover {
+            background-color: #ffd4a7;
+        }
+
+    /* MESSAGES */
+    .stock-msg {
+        text-align: center;
+        width: 570px;
+        margin: 0 auto;
+        font-size: 17px;
+        font-weight: 500;
+    }
+    li.success {
+        padding: 15px 5px;
+        background-color: #C4DDFF;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+    

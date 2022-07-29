@@ -2,109 +2,109 @@
 {% load static %}
 
 {% block content %}
-
+<div class="main"> 
 <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-<div class="main-wrapper">
-    <div class="container">
-        <div class="prodtable-container1">
-            <div class="labels-container">
-                
-                    <!-- TITLE -->
-                    <div class="labels1">
-                        <h2>Approved Reservations</h2>
-                    </div>
-                    <div class="labels2">
-                        <ul>    
-                            <!-- <li class="top-labels">Filter</li> -->
-                            <li class="top-labels">
-                                <div class="search">
-                                    <form method="GET" action="">
-                                        <input type="text" name="q" placeholder="Search...">
-                                    </form>
-                                </div>            
-                            </li>
-                        </ul>
-                    </div>
-            </div>
-            <table class="products-table">
-                <thead class="products-thead">
-                    <tr>
-                        <!-- TABLE HEADER -->
-                        <th scope="col">Customer</th>
-                        <th scope="col">Transaction ID</th>
-                        <th scope="col">Pickup Date</th>
-                        <th scope="col">Order</th>
-                        <th scope="col">Date Ordered</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-
-                <tbody class="products-tbody">
-                    {% for orderpickup in orders %}
-                        {% if orderpickup.order.complete == True %}
-                        {% if orderpickup.order.pickupstat_id == 'Approved' %}
-                        <tr>
-                            <!-- TABLE BODY -->
-                            <td data-label="Customer"><a href="{% url 'order-details' orderpickup.order.id %}" id="customer-name-link">{{orderpickup.order.customer}}</a></td>
-                            <td data-label="Transaction ID">{{orderpickup.order.transaction_id}}</td>
-                            <td data-label="Pickup Date">{{orderpickup.pickup}}</td>
-                            <td data-label="Order">
-                                {% for item in items %}
-                                    {% if item.order.id == orderpickup.order.id %}
-                                        {{ item.product }} x {{ item.quantity }}<br>
-                                    {% endif %}
-                                {% endfor %}
-                            </td>     
-                            <td data-label="Date Ordered">{{orderpickup.order.date_ordered}}</td>
-                            <td data-label="Total" id="price">{{orderpickup.order.get_cart_total}}</td>
-                                           
-                        <td>    
-                            <form method="POST">
-                            {% csrf_token %}
-                                <!-- RECEIVE PAYMENT -->
-                                <input type="hidden" value="{{orderpickup.order.id}}" name="transaction-successful">
-                                <input type="submit" value="Receive Payment" name="button" id="transaction-successful" onclick="return confirm('Payment Received?');">
-                                <br>
-                                <!-- CANCEL -->
-                                <input type="hidden" value="{{orderpickup.order.id}}" name="cancel">
-                                <input type="submit" value="Cancel" name="button" id="cancel1" onclick="return confirm('Cancel Reservation?');">
-                            </form>
-                        </td>
-                    {% endif %}
-                    {% endif %}
-
-                        {% empty %}
-                        <td colspan="7">No results found.</td>
-                    </tr>
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="prodtable-container1">
+                <div class="labels-container">
                     
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        <!-- TITLE -->
+                        <div class="labels1">
+                            <h2>Approved Reservations</h2>
+                        </div>
+                        <div class="labels2">
+                            <ul>    
+                                <!-- <li class="top-labels">Filter</li> -->
+                                <li class="top-labels">
+                                    <div class="search">
+                                        <form method="GET" action="">
+                                            <input type="text" name="q" placeholder="Search...">
+                                        </form>
+                                    </div>            
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                <table class="products-table">
+                    <thead class="products-thead">
+                        <tr>
+                            <!-- TABLE HEADER -->
+                            <th scope="col">Customer</th>
+                            <th scope="col">Transaction ID</th>
+                            <th scope="col">Pickup Date</th>
+                            <th scope="col">Order</th>
+                            <th scope="col">Date Ordered</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
 
-        <!-- PAGE NAVIGATION -->
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_prod.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_prod.previous_page_number }}">previous</a>
-                {% endif %}
-                
-                <!-- PAGE INDICATOR -->
-                <span class="current">
-                    Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                    <tbody class="products-tbody">
+                        {% for orderpickup in orders %}
+                            {% if orderpickup.order.complete == True %}
+                            {% if orderpickup.order.pickupstat_id == 'Approved' %}
+                            <tr>
+                                <!-- TABLE BODY -->
+                                <td data-label="Customer"><a href="{% url 'order-details' orderpickup.order.id %}" id="customer-name-link">{{orderpickup.order.customer}}</a></td>
+                                <td data-label="Transaction ID">{{orderpickup.order.transaction_id}}</td>
+                                <td data-label="Pickup Date">{{orderpickup.pickup}}</td>
+                                <td data-label="Order">
+                                    {% for item in items %}
+                                        {% if item.order.id == orderpickup.order.id %}
+                                            {{ item.product }} x {{ item.quantity }}<br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>     
+                                <td data-label="Date Ordered">{{orderpickup.order.date_ordered}}</td>
+                                <td data-label="Total" id="price">{{orderpickup.order.get_cart_total}}</td>
+                                            
+                            <td>    
+                                <form method="POST">
+                                {% csrf_token %}
+                                    <!-- RECEIVE PAYMENT -->
+                                    <input type="hidden" value="{{orderpickup.order.id}}" name="transaction-successful">
+                                    <input type="submit" value="Receive Payment" name="button" id="transaction-successful" onclick="return confirm('Payment Received?');">
+                                    <br>
+                                    <!-- CANCEL -->
+                                    <input type="hidden" value="{{orderpickup.order.id}}" name="cancel">
+                                    <input type="submit" value="Cancel" name="button" id="cancel1" onclick="return confirm('Cancel Reservation?');">
+                                </form>
+                            </td>
+                        {% endif %}
+                        {% endif %}
+
+                            {% empty %}
+                            <td colspan="7">No results found.</td>
+                        </tr>
+                        
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGE NAVIGATION -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_prod.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                    {% endif %}
+                    
+                    <!-- PAGE INDICATOR -->
+                    <span class="current">
+                        Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                    </span>
+            
+                    {% if page_prod.has_next %}
+                        <a href="?page={{ page_prod.next_page_number }}">next</a>
+                        <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
                 </span>
-        
-                {% if page_prod.has_next %}
-                    <a href="?page={{ page_prod.next_page_number }}">next</a>
-                    <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+            </div>
         </div>
     </div>
 </div>
-
 <!-- BACK TO TOP BUTTON -->
 <button onclick="topFunction()" id="myBtn" title="Go to top">
     <i class="fa-solid fa-arrow-up"></i>

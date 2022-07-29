@@ -9,6 +9,7 @@ urlpatterns = [
        
     # EDIT CUSTOMER PROFILE
        path('editcustomerprofile/', views.editcustomerprofile, name="editcustomerprofile"),
+       path('changepassword/', views.changepasswordcustomer, name="changepasswordcustomer"),
     
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -36,7 +36,7 @@
 	<div>	
 
 			<div class="go-back">		
-				<h5 class="pageHeader"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+				<h5 class="pageHeader"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Calendar</a></h5>
 			</div>
 
             {% for appointment in appointments %}
@@ -134,13 +134,6 @@
 		
       
 	</div>
-
-
-
-
-
-
-
 
     <script>
         if ("{{ next }}" == "submitted") {

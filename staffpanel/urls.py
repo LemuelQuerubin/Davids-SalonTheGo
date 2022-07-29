@@ -10,5 +10,6 @@ urlpatterns = [
 
     # EDIT ADMIN PROFILE
        path('editstaffprofile/', views.editstaffprofile, name="editadminprofile"),
+       path('changepassword/', views.changepasswordstaff, name="changepasswordstaff"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

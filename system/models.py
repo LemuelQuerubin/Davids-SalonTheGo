@@ -10,7 +10,9 @@ class Appointment(models.Model):
         ('Cancelled', 'Cancelled'),
         ('Approved', 'Approved'),
         ('Confirmed', 'Confirmed'),
-        ('Successful', 'Successful')
+        ('Ongoing', 'Ongoing'),
+        ('Successful', 'Successful'),
+        
     ]
     appt_type = [
         ('Online', 'Online'),

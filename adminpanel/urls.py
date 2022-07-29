@@ -13,6 +13,10 @@ urlpatterns = [
     # EDIT ADMIN PROFILE
        path('editadminprofile/', views.editadminprofile, name="editadminprofile"),
    
+    # EDIT STAFF INFO
+       path('editstaffinfo/<str:pk>/', views.editstaffinfo, name="editstaffinfo"),
+       #path('editstaffinfo/', views.editstaffinfo, name="editstaffinfo"),
+
    # VIEW CUSTOMER ACCOUNTS
        path('customeraccounts/', views.customeraccounts, name="customeraccounts"),
 
@@ -21,6 +25,9 @@ urlpatterns = [
        path('createservicetype/', views.createservicetype, name="createservicetype"),
        path('viewservices/', views.viewservices, name="viewservices"),
        path('viewservicetypes/', views.viewservicetypes, name="viewservicetypes"),
+
+       path('changepassword/', views.changepassword, name="changepassword"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

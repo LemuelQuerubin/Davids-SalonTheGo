@@ -34,7 +34,7 @@
 	<div class="">	
 
 			<div class="go-back">		
-				<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+				<h5 class="pageHeader"><a href="{% url 'calendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Calendar</a></h5>
 			</div>
 
             {% for appointment in appointments %}
@@ -89,8 +89,12 @@
                         <div class="">
                             <form method="POST">
                             {% csrf_token %}
+                            {% if appointment.appointmentStatus == 'Successful' %}
+                                
+                            {% elif appointment.appointmentStatus == 'Pending' or appointment.appointmentStatus == 'Approved' %}
                                 <input type="hidden" value="{{ appointment.id }}" name="cancel">
                                 <input class="buttons4" type="submit" value="Cancel Appointment" name="button" id="cancel" onclick="return confirm('Are you sure?');">
+                            {% endif %}
                             </form>
                         </div>
                     </div>

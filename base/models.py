@@ -50,9 +50,10 @@ class insProduct(models.Model):
     # recording of total times insalon has been used
     totalUsed = models.IntegerField(default=0,verbose_name="Total Times Used")
     
-    #insProd_totalUsed = models.IntegerField(verbose_name="Total Used")
-    #insProd_dateRestocked = models.DateTimeField(auto_now=True)
-    #insProd_DateUsed
+    add_stock = models.IntegerField(default='0', blank=True, null=True)
+    supplier = models.CharField(max_length=50, blank=True, null=True)
+    deduct_stock = models.IntegerField(default='0', blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     class Meta:
         verbose_name = 'In-salon Product'
@@ -75,6 +76,10 @@ class otcProduct(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
     expiry_date = models.DateField(null=True, blank=False, verbose_name="Expiry Date")
 
+    add_stock = models.IntegerField(default='0', blank=True, null=True)
+    supplier = models.CharField(max_length=50, blank=True, null=True)
+    deduct_stock = models.IntegerField(default='0', blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     digital = models.BooleanField(default=False, null=True, blank=False)
 
@@ -83,6 +88,51 @@ class otcProduct(models.Model):
 
     def __str__(self):
         return self.Prod_Name
+
+class insStockHistory(models.Model):
+    Prod_Name = models.CharField(null=True, max_length=200, verbose_name="Product Name")
+    ProdType_Name = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Product Type")
+    Cat_Name = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Category")
+    Prod_Desc = models.TextField(max_length=200, null=True, blank=True, verbose_name="Description")
+    Prod_stockQty = models.IntegerField(blank=False, null=True, verbose_name="Stock Quantity")
+    Prod_Price = models.DecimalField(null=True, decimal_places=2, max_digits=6, verbose_name="Price")
+    Prod_Image = models.ImageField(default="placeholder-image.png", upload_to="product_images", null=True, verbose_name="Product Image")
+    is_active = models.BooleanField(default=True, verbose_name="Status")
+    objects = models.Manager() #For All Records  
+    active_objects = IsActiveManager() #For Active Records Only
+    date_created = models.DateTimeField(default=timezone.now)
+    expiry_date = models.DateField(null=True, blank=False, verbose_name="Expiry Date")
+
+    add_stock = models.IntegerField(default='0', blank=True, null=True)
+    deduct_stock = models.IntegerField(default='0', blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
+
+    def __str__(self):
+        return self.Prod_Name
+
+class otcStockHistory(models.Model):
+    Prod_Name = models.CharField(null=True, max_length=200, verbose_name="Product Name")
+    ProdType_Name = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Product Type")
+    Cat_Name = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Category")
+    Prod_Desc = models.TextField(max_length=200, null=True, blank=True, verbose_name="Description")
+    Prod_stockQty = models.IntegerField(blank=False, null=True, verbose_name="Stock Quantity")
+    Prod_Price = models.DecimalField(null=True, decimal_places=2, max_digits=6, verbose_name="Price")
+    Prod_Image = models.ImageField(default="placeholder-image.png", upload_to="product_images", null=True, verbose_name="Product Image")
+    is_active = models.BooleanField(default=True, verbose_name="Status")
+    objects = models.Manager() #For All Records  
+    active_objects = IsActiveManager() #For Active Records Only
+    date_created = models.DateTimeField(default=timezone.now)
+    expiry_date = models.DateField(null=True, blank=False, verbose_name="Expiry Date")
+
+    add_stock = models.IntegerField(default='0', blank=True, null=True)
+    deduct_stock = models.IntegerField(default='0', blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
+
+    def __str__(self):
+        return self.Prod_Name
+
+
+
 
 #ECOMMERCE MODELS ------------------------------------------------------
 #CUSTOMER
@@ -117,7 +167,7 @@ class Order(models.Model):
     @property
     def pickup(self):
         pickup = False
-        orderitems= self.orderitem_set.all()
+        orderitems = self.orderitem_set.all()
         for i in orderitems:
             if i.product.digital == False:
                 pickup = True

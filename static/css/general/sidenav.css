@@ -101,12 +101,11 @@
     color: #FFFFFF;
     padding: 8px 16px;
     text-decoration: none;
-    border-bottom: 1px solid #ccc;
+    /**border-bottom: 1px solid #ccc;**/
 }
 
 
 .sidenav li {
-    font-size: 15px;
     padding: 4px;
 }
 
@@ -122,22 +121,42 @@
     white-space: nowrap;
     text-decoration: none;
     font-weight: bold;
-    font-size: 17px;
 }
 
 .sidenav li a:hover:not(.active) {
     border-color: gray;
+    background-color: #001D6E;
     color: #FFFFFF;
     text-overflow: hidden;
     white-space: nowrap;
     transition: 0.2s;
     text-decoration: none;
     font-weight: bold;
-    font-size: 17px;
 }
 
 .sidenav li a:visited{
     text-decoration: none;
+}
+
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 30px 8px 30px 20px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+  background-color: #000e33;
 }
 
 .firstname-container {
@@ -177,7 +196,6 @@
 
 .prof-image img{
   width: 100%;
-  height:100%;
   border-radius: 100%;
 }
 

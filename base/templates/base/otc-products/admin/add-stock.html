@@ -1,0 +1,32 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="form-style">
+        <h2>RESTOCK</h2>
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <!-- RESTOCK -->
+            <div class="forms-indiv-container">
+                {{ form.add_stock.errors }}
+                <label for="{{ form.add_stock.id_for_label }}">Add to Stock:</label>
+                {{ form.add_stock }}
+            </div>
+            <!-- EXPIRY DATE -->
+            <div class="forms-indiv-container">
+                {{ form.expiry_date.errors }}
+                <label for="{{ form.add_stock.id_for_label }}">Expiry Date:</label>
+                {{ form.expiry_date }}
+            </div>
+        <input type="submit" value="Submit" onclick="return confirm('Are you sure?');">  
+        </form>
+</div>    
+
+
+{% endblock content %}

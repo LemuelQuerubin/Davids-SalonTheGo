@@ -23,17 +23,18 @@ body {
 }
 
 .form-container{
+   padding: 20px;
     width: 55%;
     margin-top: 60px;
     margin-left: 100px;
     margin-bottom: 150px;
-    border-radius: 10px;
+    border-radius: 20px;
     /*box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;*/
 }
 
 .header-container{
    background-color:#C4DDFF;
-   width: 50%;
+   width: 60%;
    height: 6vh;
    padding-top: 11px;
    padding-left: 12px;
@@ -408,7 +409,7 @@ body {
    font-weight: 500;
    font-size: 17px;
    padding-top: 6px;
-   margin-left: 150px;
+   margin-left: 15px;
  }
 
 .time-container1{
@@ -428,7 +429,7 @@ body {
     font-weight: 500;
     font-size: 17px;
     padding-top: 6px;
-    margin-left: 150px;
+    margin-left: 15px;
   }
 
 
@@ -455,7 +456,7 @@ body {
    font-weight: 500;
    font-size: 17px;
    padding-top: 6px;
-   margin-left: 142px;
+   margin-left: 15px;
 }
 
 
@@ -523,7 +524,7 @@ body {
 }
 
 .primary-list-label{
-   width: 48%;
+   width: 50%;
 }
 
 .primary-list-label h6{
@@ -534,9 +535,6 @@ body {
    padding-top:12px;
 }
 
-.input-price-jof {
-   margin-left: -13px;
-}
 .input-price-jof, .input-total-jof {
    border-radius: 10px;
    border: 1px solid #cccccc;
@@ -548,7 +546,7 @@ body {
 }
 
 .primary-list-input-form{
-   width: 67%;
+   width: 264px;
    height: 6vh;
    border-radius: 10px;
    border: 1px solid #cccccc;
@@ -563,7 +561,7 @@ body {
 }
 
 .privilege-card-label{
-   width: 48%;
+   width: 50%;
 }
 
 .privilege-card-label h6{
@@ -594,7 +592,7 @@ body {
 }
 
 .total-price-label{
-   width: 48%;
+   width: 50%;
 }
 
 .total-price-label h6{
@@ -606,7 +604,7 @@ body {
 }
 
 .total-price-text{
-   width: 48%;
+   width: 50%;
 }
 
 .total-price-text h6{
@@ -615,11 +613,6 @@ body {
    font-weight: 500;
    font-size: 17px; 
    padding-top:12px;
-}
-
-.job-button-container-submit{
-   width: 100%;
-   border: 1px solid red;
 }
 
 .job-button-container-submit{
@@ -682,6 +675,18 @@ input[type=number]::-webkit-outer-spin-button {
    font-weight: 700;
 }
 
+.buttons10{
+   height: 6vh;
+   width: 90%;
+   background-color: #001D6E;
+   border: none;
+   color: white;
+   font-family: Montserrat;
+   font-size: 17px;
+   border-radius: 10px; 
+   font-weight: 700;
+}
+
 .buttons6{
    height: 6vh;
    width: 90%;
@@ -699,6 +704,8 @@ input[type=number]::-webkit-outer-spin-button {
    display:flex;
    margin-bottom: 10px;
    margin-top: 10px;
+   /* margin-left: auto;
+   margin-right: auto; */
 }
 
 .job-order-label{
@@ -827,7 +834,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .buttons7{
    height: 5vh;
-   width: 15%;
+   width: 17%;
    background-color:#001D6E;
    border:none;
    color: white;
@@ -878,4 +885,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 .formSection1{
    font-size: 16px;
+}
+
+/* .submit-btn-fb{
+
+
+} */
+
+.fbc-left form{
+   margin-left: 30px;
 }

@@ -25,6 +25,9 @@ urlpatterns = [
     #OTC PRODUCTS (ADMIN SIDE)
     path('otc/products/', views.otcProducts, name="otc-products"),
     path('otc/products/<str:pk>/', views.otc_indivProduct, name="otc-individual-product"),
+    path('deduct-stock/<str:pk>/', views.deduct_items, name="deduct-stock"),
+    path('restock/<str:pk>/', views.add_items, name="restock"),
+    path('otc/history/', views.otc_history, name='otc-history'),
 
     path('otc/create-product/', views.otc_createProduct, name="otc-create-product"),
     path('otc/update-product/<str:pk>/', views.otc_updateProduct, name="otc-update-product"),
@@ -40,7 +43,7 @@ urlpatterns = [
 
     #--------------------------MY PURCHASES--------------------------
     #NEEDS FIXING - LOOP
-	path('mypurchases/', views.mypurchases, name="mypurchases"),
+	path('my-purchases/', views.my_purchases, name="my-purchases"),
 
     #--------------------------SALES INVOICE--------------------------
 	path('sales-invoice/<str:pk>/', views.salesinvoice, name="sales-invoice"),

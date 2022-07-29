@@ -92,6 +92,9 @@
         }
         
         /*Searchbar and Search Icon*/
+        nav .fas {
+            margin-top: 10px;
+        }
         nav .search-icon {
             height: 40px;
             width: 730px;

@@ -19,16 +19,16 @@
 		
 	<div>			
         <div class="go-back">
-            <h5><a href="{% url 'appointmentsApproved' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Appointments</h5>
+            <h5><a href="{% url 'alljobOrderforms' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Job Order Forms</a></h5>
         </div>
 
-            <div class="form-container">
+            <div class="form-container shadow-box-contain">
                 <div>
                     <form method="POST">
                         {% csrf_token %}
                             <div>
                                 <div class="header-container">
-                                    <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM- SERVICES</h5>								
+                                    <h5 class="formSection1"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;JOB ORDER FORM - SERVICES</h5>								
                                 </div>
                                     
                          
@@ -116,9 +116,18 @@
                                             <option value="{{ stylist1 }}">{{ stylist1 }}</option>
                                             <option value="{{ stylist2 }}">{{ stylist2 }}</option>
                                             <option value="{{ stylists }}">{{ stylists }}</option> {% endcomment %}
-                                            <option value="Oscar">Mr. Oscar</option>
+                                            {% comment %} <option value="Oscar">Mr. Oscar</option>
                                             <option value="Steph">Ms. Steph</option>
-                                            <option value="Mike">Mr. Mike</option>
+                                            <option value="Mike">Mr. Mike</option> {% endcomment %}
+                                            {% for stylist in stylists %}
+                                                {% if stylist.gendertype.id == 1 %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Mr. {{ stylist.staff.first_name }}</option>
+                                                {% elif stylist.gendertype.id == 2 %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Ms. {{ stylist.staff.first_name }}</option>
+                                                {% else %}
+                                                    <option value="{{ stylist.staff.first_name }}" >Mx. {{ stylist.staff.first_name }}</option>   
+                                            {% endif %}
+                                        {% endfor %}
                                         </select>
                                     </div>                                     
                                 </div>
@@ -142,12 +151,15 @@
                                         </div>                              
                                     </div> 
                                               
-                                    <div class="job-button-container">
+                                    <div class="job-order-container">
                                             <input type="hidden" value="{{ appointment.id }}" name="approve">
                                             <input class="job-button-container-submit" type="submit" value="Confirm" confirm="Confirm" name="button" id="confirm">
                                     </div>
                                
                     </form>
+                </div>
+            </div>
+        </div>
     <script>
         function findTotal(){
             var arr = document.getElementsByName('price');

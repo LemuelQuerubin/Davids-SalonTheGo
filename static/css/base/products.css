@@ -88,7 +88,6 @@
     .prodtable-container1 {
         max-width: 1130px;
         width: 100%;
-        margin: 20px 134px;
         padding: 40px 30px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         /* box-shadow: rgba(0, 0, 0, 0.212) 1px 2px 3px; */
@@ -203,12 +202,34 @@
         content: '₱';
     }
 
-    /* BLUE BUTTON */
+    /* HISTORY BUTTON */
+    a.history-btn {
+        margin-bottom: 10px;
+    }
+    a.history-btn:link, a.history-btn:visited {
+        background-color: transparent;
+        color: #7FB5FF;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        border: solid 2px #7FB5FF;
+    }
+        a.history-btn:hover, a.history-btn:active {
+            border: solid 2px #7FB5FF;
+            background-color: #7FB5FF;
+            color: white;
+        }
+
+    /* ADD PRODUCT BUTTON */
+    .buttons a {
+        width: 170px;
+    }
     .buttons {
         font-weight: 600;
         text-align: right;
     }
-
     a.blue-btn:link, a.blue-btn:visited {
         background-color: #7FB5FF;
         color: white;
@@ -219,11 +240,11 @@
         border-radius: 5px;
         border: solid 2px #7FB5FF;
     }
-    a.blue-btn:hover, a.blue-btn:active {
-        border: solid 2px #7FB5FF;
-        background-color: white;
-        color: #7FB5FF;
-    }
+        a.blue-btn:hover, a.blue-btn:active {
+            border: solid 2px #5da1ff;
+            background-color: #5da1ff;
+            color: white;
+        }
 
     /* EXPORT BUTTON */
     a.export-btn:link, a.export-btn:visited {
@@ -260,8 +281,9 @@
 
     /***** PAGE NAVIGATION *****/
     .pagination {
-        margin-top: 30px;
-        margin-left: 50%;
+        display: inline-block!important;
+        width: 100%;
+        margin: 30px auto;
         text-align: center;
     }
     .pagination a {
@@ -290,7 +312,9 @@
         #customer-name-link:hover {
             color: #C4DDFF;
         }
-
+    #transaction-style {
+        width: 20px;
+    }
     /* For mobile phones: 
     @media only screen and (max-width: 480px) {
         * { 

@@ -20,11 +20,15 @@ urlpatterns = [
     # APPOINTMENTS
     path('appointmentsPending/', views.appointmentsPending, name='appointmentsPending'),
     path('appointmentsApproved/', views.appointmentsApproved, name='appointmentsApproved'),
+    path('appointmentsOngoing/', views.appointmentsOngoing, name='appointmentsOngoing'),
+    path('alljobOrderforms/', views.alljobOrderforms, name='alljobOrderforms'),
     path('jobOrderform/', views.jobOrderForm, name='jobOrderform'),
     path('walkIn/', views.walkIn, name='walkIn'),
     path('walkInNext/', views.walkInNext, name='walkInNext'),
     path('admincalendar/', views.admincalendar, name='admincalendar'),
     path('admincalendardayview/', views.admincalendardayview, name='admincalendardayview'),
+    path('appointmentsDone/', views.appointmentsDone, name='appointmentsDone'),
+    
 
 
     # TRANSACTION SUCCESSFUL

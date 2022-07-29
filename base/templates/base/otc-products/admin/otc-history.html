@@ -1,0 +1,113 @@
+<style>
+    /* CONTAINER */
+    .history-container {
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+    }
+	/* TABLE HEADER */
+	.history-thead tr th {
+        font-weight: 400;
+        font-size: 16px;
+    }
+    .history-thead tr { 
+        height: 50px;
+        background: #C4DDFF;
+    }
+	/* TABLE BODY */
+	.history-tbody tr { 
+        font-family: 'Montserrat', sans-serif;
+        height: 80px; 
+        border-bottom:  .5px solid #c9c9c9;
+    }
+</style>
+
+{% extends 'main_products.html' %}
+
+{% block content %}
+
+<div class="main-wrapper">
+	<div class="history-container">
+        <!-- GO BACK LINK -->
+        <div class="go-back-table">
+            <a href="{% url 'otc-products' %}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+        </div>
+
+		<div class="prodtable-container">
+			<div class="labels-container">		
+				<!-- TITLE -->
+				<div class="labels1">
+						<h2>OTC Products Logs</h2>
+				</div>
+
+				<table class="products-table">
+                    <!-- TABLE HEAD -->
+					<thead class="history-thead">
+						<tr>
+							<th>#</th>
+							<th>Product Name</th>
+							<th>Deduct Quantity</th>
+							<th>Restock Quantity</th>
+                            <th>Total Stock</th>
+                            <th>Expiry Date</th>
+							<th>Timestamp</th>
+						</tr>
+					</thead>
+
+                    <!-- TABLE BODY -->
+					<tbody class="history-tbody">
+						{% for instance in page_prod %}
+						<tr>
+                            <!-- COUNTER -->
+							<td>{{forloop.counter}}</td>
+                            <!-- PRODUCT NAME -->
+							<td>{{instance.Prod_Name}}</td>
+                            <!-- DEDUCT QUANTITY -->
+                            {% if instance.deduct_stock == 0 %}
+                                <td>{{instance.deduct_stock}}</td>
+                            {% else %}
+                                <td>-{{instance.deduct_stock}}</td>
+                            {% endif %}
+                            <!-- ADD QUANTITY -->
+                            {% if instance.add_stock == 0 %}
+                                <td>{{instance.add_stock}}</td>
+                            {% else %}
+                                <td>+{{instance.add_stock}}</td>
+                            {% endif %}
+							<!-- TOTAL STOCK -->
+                            {% if instance.Prod_stockQty == 0 %}
+                                <td>Out of Stock.</td>
+                            {% else %}
+                                <td>{{instance.Prod_stockQty}}</td>
+                            {% endif %}
+                            <!-- EXPIRY DATE -->
+                            <td>{{instance.expiry_date}}</td>
+                            <!-- LAST UPDATED -->
+							<td>{{instance.last_updated}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+			</table>
+		</div>
+	</div>
+    <!-- PAGE NAVIGATION -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_prod.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <!-- PAGE INDICATOR -->
+            <span class="current">
+                Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+            </span>
+    
+            {% if page_prod.has_next %}
+                <a href="?page={{ page_prod.next_page_number }}">next</a>
+                <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

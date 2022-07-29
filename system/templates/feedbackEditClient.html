@@ -6,7 +6,7 @@
 <div class ="main">
 
   <head>
-  	<title>Appointments</title>
+  	<title>Edit Feedback</title>
     <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,13 +28,21 @@
     <th>Options</th>
   </tr>
   <tr>
-    <td>{{}}</td>
-    <td></td>
-    <td></td>
+    <td>{{ row.appointmentInfo.apptDate|date:'F d, Y' }} {{ row.appointmentInfo.appt_timeStart|time:'h:i A' }}</td>
+    <td>{% for key in row.appointmentInfo.services %}{{ key }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+    <td>{{ row.finalStylist }}</td>
     <td></td>
     <td></td>
     <td></td>
     </tr></td>
+
+  <div class="submit-btn-fb">
+    <form method="POST">
+    {% csrf_token %}
+        <input type="hidden" value="{{ row.id }}" name="submit">
+        <input class="buttons5" type="submit" value="Submit Review" name="button" id="submit">
+    </form>
+  </div>
     
 
 </table>

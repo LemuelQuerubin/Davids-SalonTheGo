@@ -2,10 +2,18 @@
 
 {% block content %}
 <div class="main-wrapper">
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <!-- GO BACK LINK -->
-    <div class="go-back2">
-        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    <div class="go-back-indiv-prod">
+        <a href="{% url 'otc-products' %}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <!-- STOCK MESSAGE -->
+    <div class="stock-msg">
+        <ul>
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div class="prod-info">
@@ -35,7 +43,41 @@
                 {% endif %}
             </li>
         </ul>
-    </div>
+
+        <!-- BUTTONS -->
+        <div class="labels-container">
+                <!-- TITLE -->
+                <div>
+                    <h2 class="stock-title">Stock</h2>
+                    <div class="stock-btns">
+                        <ul> 
+                            <li class="top-labels"><a href="{% url 'deduct-stock' product.id %}" class='use-stock-btn'>USE STOCK</a></li>
+                            <li class="top-labels"><a href="{% url 'restock' product.id %}" class='restock-btn'>RESTOCK</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+
+        <table class="products-table">
+            <thead class="products-thead">
+                <tr>
+                    <!-- TABLE HEADER -->
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity in Stock</th>
+                    <th scope="col">Last Updated</th>
+                </tr>
+            </thead>
+
+            <tbody class="products-tbody">
+ 
+                <tr>
+                    <!-- TABLE BODY -->
+                    <td data-label="Product Name" class="td-align-left">{{product.Prod_Name}}</td>
+                    <td data-label="ID">{{product.Prod_stockQty}}</td>
+                    <td data-label="Product Type" id="category">{{product.last_updated}}</td> 
+                </tr>
+            </tbody>
+        </table>
 </div>
 
 {% endblock content %}

@@ -11,9 +11,12 @@
         <div class="header-container">
             <p>Edit Admin Profile</p>
          </div>
-
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
          <div class="top-container">
-            <img class="image-container"  src="{{ request.user.profile_pic.url }}">
+            {% if request.user.profile_pic %}
+                <img class="image-container"  src="{{ user.profile_pic.url }}">
+            {% endif %}
 
             <!--<div class="image-container">   
                  IMAGE CONTAINER
@@ -22,7 +25,9 @@
             <div class="name-container">
                 <label class="text-label">{{ user.first_name }}</label>
                 <label class="text-label">{{ user.last_name }}</label><br>
-                <button class="button3">Upload Photo</button>
+                
+                <input type="file" name="profilepic" id="profilepic" value="Upload Photo">
+
             </div>
         </div>
 
@@ -31,8 +36,6 @@
             <label class="text-label1">Admin Role</label>
             <label class="text-label5">{{ user.admin.stafftype }}</label><br><br>
 
-            <form method="POST" enctype="multipart/form-data" action="">
-                {% csrf_token %}
                 
                 <label class="text-label1">First name</label>
                 <input class="form-box" type="text" id="fname" name="fname" value="{{ user.first_name }}" Required>

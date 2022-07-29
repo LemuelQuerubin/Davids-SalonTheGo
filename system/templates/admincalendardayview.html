@@ -17,15 +17,25 @@
         </div>
         <div class = "child">
             <p class="time-date">{{ apptCount }}</p>
-            <p>Total Number of Appointments</p>
+            <p>Total Number of Approved Appointments</p>
+        </div>
+        <div class = "child">
+            <p class="time-date">{{ apptCountSucc }}</p>
+            <p>Total Number of Successful Appointments</p>
         </div>
     </div>
 
     {% for appointment in appointments %}
-        {% if appointment.appointmentStatus == 'Approved' %}
+        {% if appointment.appointmentStatus == 'Successful' or appointment.appointmentStatus == 'Approved'   %}
         <!-- if appointment.appointmentStatus == 'Approved' and appointment.apptDate == -->
-            <div class="schedule">
+        <div class="item-image{% if foo %} own-image{% endif %}">
+            <div class="schedule{% if appointment.appointmentStatus == 'Successful' %} green {% endif %}">
                     <div class="info-container-left">
+                        <div class="info-container">
+                            <p class="info-label">STATUS:</p> 
+                            <p class="info-input">{{ appointment.appointmentStatus }} </p>
+                        </div>
+
                         <div class="info-container">
                             <p class="info-label">TIME START:</p> 
                             <p class="info-input">{{ appointment.appt_timeStart|time:'h:i A' }} </p>
@@ -42,7 +52,14 @@
 
                         <div class="info-container">
                             <p class="info-label">STYLISTS:</p>
-                            <p class="info-input">{{ appointment.firstStylist }}, {{ appointment.secondStylist }}</p>
+                           
+                            <p class="info-input">
+                                {% if appointment.appointmentStatus == 'Successful'  %}
+                                    {{ appointment.joborderform.finalStylist }}
+                                {% elif appointment.appointmentStatus == 'Approved'  %}
+                                    {{ appointment.firstStylist }}, {{ appointment.secondStylist }}
+                                {% endif %} 
+                            </p>
                         </div>
                     </div>
 

@@ -1,0 +1,27 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="form-style">
+        <h2>USE STOCK</h2>
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <!-- ISSUE QUANTITY / DEDUCT -->
+            <div class="forms-indiv-container">
+                {{ form.deduct_stock.errors }}
+                <label for="{{ form.deduct_stock.id_for_label }}">Deduct from Stock:</label>
+                {{ form.deduct_stock }}
+            </div>
+
+        <input type="submit" value="Submit" onclick="return confirm('Are you sure?');">  
+        </form>
+</div>    
+
+
+{% endblock content %}

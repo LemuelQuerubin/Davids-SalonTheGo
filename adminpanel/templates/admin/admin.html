@@ -13,10 +13,23 @@
         <div class="header-container">
            <p>Admin Profile</p>
         </div>
+
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissable fade show" role="alert">
+                <strong style="color:red">Message:  </strong>{{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+
      
        
         <div class="top-container">
-            <img class="image-container"  src="{{ request.user.profile_pic.url }}">
+            {% if request.user.profile_pic %}
+                {% comment %} <img src="{{ user.profile_pic.url }}">  {% endcomment %}
+                <img class="image-container"  src="{{ request.user.profile_pic.url }}">
+            {%endif%}
             <div class="name-container">
                 <label class="text-label">{{ user.first_name }}</label>
                 <label class="text-label">{{ user.last_name }}</label><br>
@@ -38,7 +51,7 @@
 
 
             <a href="editadminprofile/"><button class="button1">Edit Profile</button></a>
-            <a href="#"><button class="button2">Change Password</button></a>
+            <a href="changepassword/"><button class="button2">Change Password</button></a>
 
         </div>
     </div>

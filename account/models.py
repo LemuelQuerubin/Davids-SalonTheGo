@@ -10,9 +10,8 @@ class CustomUser (AbstractUser):
     is_customer = models.BooleanField(default=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-
-    profile_pic= models.ImageField(default="default-prof.jpg", null=True, blank=True)
-
+    profile_pic= models.ImageField(upload_to='profile_pic', default="default-prof.jpg", null=True, blank=True)
+    
 class Gendertype (models.Model):
     id = models.AutoField(primary_key=True)
     gendertype = models.CharField(max_length=20)

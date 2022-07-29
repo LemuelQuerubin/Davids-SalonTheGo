@@ -18,12 +18,14 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
+from django.contrib.auth.decorators import login_required
 
 
 
 
 # GENERAL PAGES
 def homepage(request):
+    user = request.user
     return render(request, 'general/homepage-login.html')
 
 def products(request):

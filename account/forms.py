@@ -8,10 +8,7 @@ class UpdateAdminProfileForm(forms.ModelForm):
         model = Admin
         fields = ['gendertype', 'contact_number', ]
 
-class Updateprofilepic(ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['profile_pic']
+
 '''
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()

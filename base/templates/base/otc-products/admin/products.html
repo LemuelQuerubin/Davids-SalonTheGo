@@ -8,6 +8,7 @@
     <div class="container">
         <!-- BUTTONS -->
         <div class="buttons">
+            <a class="history-btn" href="{% url 'otc-history' %}">Product Logs</a><br>
             <a href="{% url 'otc-create-product' %}" class="blue-btn">+ Add Product</a>
         </div>
         <div class="prodtable-container">
@@ -19,7 +20,7 @@
                     </div>
                     <div class="labels2">
                         <ul>    
-                            <li class="top-labels">Filter</li>
+                            <!-- <li class="top-labels">Filter</li> -->
                             <li class="top-labels">
                             <div class="search">
                                 <form method="GET" action="{% url 'otc-products' %}">
@@ -68,8 +69,10 @@
                         {% endif %}
                             <!-- <td data-label="Description" class="td-align-left" id="description">{{product.Prod_Desc}}</td>
                             <td><form method="POST" action="">{% csrf_token %}{{form.is_active}}</form></td> -->
-                        <td data-label="Options" id="options"><a href="{% url 'otc-update-product' product.id %}" class="option-links">Edit</a><br>
-
+                        <td data-label="Options" id="options">
+                            <a href="{% url 'otc-update-product' product.id %}" class="option-links">Edit</a><br>
+                            <!-- <a href="{% url 'restock' product.id %}" class='option-links'>Restock</a><br> -->
+                        </td>  
                         {% empty %}
                         <td colspan="8">No results found.</td>
                     </tr>

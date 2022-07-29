@@ -97,3 +97,26 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
     font-size: 20px;
     margin: 0;
 }
+.button-half{
+height: 6vh;
+   width: 65%;
+   background-color:#001D6E;
+   border:none;
+   color: white;
+   font-family: Montserrat;
+   font-size: 17px;
+   border-radius: 10px;
+   font-weight: 500;
+}
+
+.buttons5{
+    height: 6vh;
+    width: 100%;
+    background-color:#C4DDFF;
+    border: none;
+    color: #001D6E;
+    font-family: Montserrat;
+    font-size: 12px;
+    border-radius: 10px; 
+    font-weight: 700;
+ }

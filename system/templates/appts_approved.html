@@ -33,7 +33,7 @@
 	<div>	
 
 				<div class="go-back">
-					<h5 class="pageHeader"><a href="{% url 'admincalendar' %}"><span class="fa fa-arrow-circle-left mr-3"></span></a>Go Back to Calendar</h5>
+					<h5 class="pageHeader"><a href="{% url 'appointmentsPending' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Calendar</a></h5>
 				</div>
 
             {% for appointment in appointments %}
@@ -95,7 +95,7 @@
                             <form method="POST">
                             {% csrf_token %}
                                 <input type="hidden" value="{{ appointment.id }}" name="confirm">
-                                <input class="buttons5" type="submit" value="Confirm Appointment" name="button" id="confirm">
+                                <input class="buttons10" type="submit" value="Confirm Appointment" name="button" id="confirm">
                             </form>
                         </div>
                                     
