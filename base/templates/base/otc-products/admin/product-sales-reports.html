@@ -7,45 +7,62 @@
 <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <div class="main-wrapper">
         <div class="container">
+            <!-- START OF COUNTER -->
+            <div class="sales-container-1">    
+                <div class="sales-container">
+                    <label class="sales-title">Online Product Reservations</label><br>
+                    <label class="sales-counter">{{sales_count}}</label>
+                </div>
+                <div class="sales-container">
+                    <label class="sales-title">Total Sales</label><br>
+                    <label class="sales-counter" id="price">{{total_sales.total|floatformat:2}}</label>
+                </div>
+            </div>
+            <!-- END OF COUNTER -->
             <div class="prodtable-container1">
                 <div class="labels-container">
-                    
+                    <form method="POST">
                         <!-- TITLE -->
-                        <div class="labels1">
-                            <h2>My Purchases</h2>
+                        <div class="labels0">
+                            <h2>Product Reservation Sales</h2>
                         </div>
-                        <div class="labels2">
-                            <ul>    
-                                <!-- <li class="top-labels">Filter</li> -->
-                                <li class="top-labels">
-                                    <div class="search">
-                                        <form method="GET" action="">
-                                            <input type="text" name="q" placeholder="Search...">
-                                        </form>
-                                    </div>            
-                                </li>
-                            </ul>
+                        <!-- NEW DIV -->
+                        <div class="date-export-container" style="padding-top: 25px;">
+
+                            <div class="date-export-child-date">
+                                {% csrf_token %}
+                                From: <input type="date" class="filter-date-input" name="fromdate" required/>
+                                &nbsp; To: <input type="date" class="filter-date-input" name="todate" required/>
+                                    <input type ="submit" class="filter-search" name="button" value="Search"/>
+                            </div>
+                            <div class="date-export-child-export">
+                                <a href="/shop/createpdf-productsales" class="export-btn">Export Table</a>
+                            </div>
+                            
                         </div>
+                        <!-- END OF NEW DIV -->
+                    </form>
                 </div>
                 <table class="products-table">
                     <thead class="products-thead">
                         <tr>
                             <!-- TABLE HEADER -->
+                            <th scope="col">Customer</th>
                             <th scope="col">Transaction ID</th>
                             <th scope="col">Pickup Date</th>
                             <th scope="col">Order</th>
                             <th scope="col">Date Ordered</th>
                             <th scope="col">Total</th>
-                            <th scope="col">Status</th>
                         </tr>
                     </thead>
 
                     <tbody class="products-tbody">
-                    {% for orderpickup in page_prod %}
-                        {% if request.user.customer == orderpickup.order.customer %}
+                        {% for orderpickup in page_prod %}
                             {% if orderpickup.order.complete == True %}
+                            {% if orderpickup.order.pickupstat_id == 'Transaction Successful' %}
                             <tr>
                                 <!-- TABLE BODY -->
+                                <td data-label="Customer"><a href="{% url 'order-details' orderpickup.order.id %}" id="customer-name-link">{{orderpickup.order.customer}}</a></td>
                                 <td data-label="Transaction ID" id="transaction-style">{{orderpickup.order.transaction_id}}</td>
                                 <td data-label="Pickup Date">{{orderpickup.pickup}}</td>
                                 <td data-label="Order">
@@ -56,13 +73,14 @@
                                     {% endfor %}
                                 </td>     
                                 <td data-label="Date Ordered">{{orderpickup.order.date_ordered}}</td>
-                                <td data-label="Total" id="price">{{orderpickup.order.get_cart_total}}</td>
-                                                
-                                <td>{{orderpickup.order.pickupstat_id}}</td>
+                                <td data-label="Total" id="price">{{orderpickup.order.get_cart_total}}</td>                
                             {% endif %}
+                            {% endif %}
+
+                                {% empty %}
+                                <td colspan="7">No results found.</td>
                             </tr>
-                        {% endif %}
-                    {% endfor %}  
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

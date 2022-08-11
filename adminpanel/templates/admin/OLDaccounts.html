@@ -1,0 +1,130 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<!-- ACCOUNTS -->
+<!-- /adminpanel/templates/accounts.html -->
+<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+<script src="https://kit.fontawesome.com/978ddb0a33.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+<div class="main">
+    <div class="tables">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissable fade show" role="alert">
+                <strong style="color:red">Message:  </strong>{{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br>
+        {% endfor %}
+        <!-- ADMIN TABLE -->
+        <div class="title-button">
+            <p class="tbl-title">Admin Table</p>
+            <a href="/admin/createadmin"><button class="addButton">+ Add Admin</button></a>
+        </div>
+        
+        <div class="admin-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead class="accounts-thead">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Staff Role</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                </thead>
+                <tbody>
+                    {% for row in admins %}
+                    <tr>
+                        <td>{{row.first_name}}</td> 
+                        <td>{{row.last_name}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.username}}</td>
+                        <td>{{row.admin.stafftype.stafftype}}</td>
+                        <td>{{row.admin.gendertype.gendertype}}</td>
+                        <td>{{row.admin.contact_number}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- STAFF TABLE -->
+        <div class="title-button">
+            <p class="tbl-title">Staff Table</p>
+            <a href="/admin/createstaff"><button class="addButton">+ Add Staff</button></a>
+        </div>
+        
+        <div class="staff-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead class="accounts-thead">
+                    <th>Status</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email<br></th>
+                    <th>Username</th>
+                    <th>Staff Role</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                    <th>Option</th>
+                </thead>
+                <tbody>
+                    {% for row in staffs %}
+                    <tr>
+                        <div class="td-height">
+                            <td>
+                                {% if row.is_active == 1 %}
+                                    <i class="fa-solid fa-user-check" style="color:#77C66E; font-size: 25px;"></i>
+                                {% elif row.is_active == 0 %}
+                                    <i class="fa-solid fa-user-xmark" style="color:#DC143C; font-size: 25px;"></i>
+                                {% endif %}
+                                
+                            </td> 
+                            <td>{{row.first_name}}</td> 
+                            <td>{{row.last_name}}</td> 
+                            <td>{{row.email}}</td> 
+                            <td>{{row.username}}</td> 
+                            <td>{{row.staff.stafftype.stafftype}}</td> 
+                            <td>{{row.staff.gendertype.gendertype}}</td> 
+                            <td>{{row.staff.contact_number}}</td>
+                            {% comment %} <td><a href ="editstaffinfo/{{row.staff.staff_id}}">Edit</a></td>
+                             {% endcomment %}
+                             <td>
+                                <form method="post">
+                                    {% csrf_token %} 
+                                    <a href ="{% url 'editstaffinfo' row.id %}"><i class="fa-solid fa-user-pen"  style="font-size: 20px"></i></a></td>
+                                </form> 
+                                
+                                {% comment %} <form method="POST">
+                                    {% csrf_token %}
+                                        <input type="hidden" value="{{ appointment.id }}" name="jof">
+                                        <input class="buttons5" type="submit" value="Proceed in Job Order Form" name="button" id="jof">
+                                </form> {% endcomment %}
+                        </div> 
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+
+            <!-- Start Pagination 
+			<div class='pagination-container' >
+				<nav>
+				  <ul class="pagination">
+                    <li data-page="prev" >
+                        <span> < <span class="sr-only">(current)</span></span>
+                    </li>
+                    <!- Here the JS Function Will Add the Rows 
+                    <li data-page="next" id="prev">
+                        <span> > <span class="sr-only">(current)</span></span>
+                    </li>
+	    		  </ul>
+				</nav>
+			</div>
+            -->
+    </div>
+</div>
+{% endblock content %}

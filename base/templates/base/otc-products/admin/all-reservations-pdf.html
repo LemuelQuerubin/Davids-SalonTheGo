@@ -1,0 +1,125 @@
+{% load static %}
+<html>
+<head>
+    <title>ALL PRODUCT RESERVATION REPORT</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <style>       
+        table{
+            border: 1px solid black;
+        }
+
+        th{
+            font-weight: 700;
+            font-size: 13px;
+            height: 45px;   
+            background-color:  #092147;
+            padding-top: 5px;
+            color: white;
+        }
+
+        td{
+            text-align: center;   
+            height: 95px;   
+            font-size: 11px; 
+            padding-top: 5px;
+        }
+
+        h1{
+            font-size: 20px;
+        }
+
+        .order{
+            font-size:12px;
+        }
+
+        #orders{
+            width: 15%;
+        }
+       
+    </style>
+
+<div class="main"> 
+    <u><b>DATE:</b> {{ current_datetime|date:'F m, Y | l' }}</i></u><br>
+    <u><b>TIME:</b> {{ current_datetime|time:'f:s A' }}</i></u><br>
+    
+    
+    <center>
+        <h1>ALL PRODUCT RESERVATIONS REPORT</h1>
+        {% comment %} DATE START: <i>insert date range here</i>
+        DATE END: <i>insert date range here</i> {% endcomment %}
+    </center>
+
+    <table>
+        <thead>
+            <tr>
+                <td>No. of Distinct Customers</td>
+                <td>No. of Pending Reservations</td>
+                <td>No. of Approved Reservations</td>
+                <td>No. of Completed Reservations</td>
+                <td>No. of Cancelled Reservations</td>
+                <td>Total No. of Reservations</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ cust_count }}</td>
+                <td>{{ pending_count }}</td>
+                <td>{{ approve_count }}</td>
+                <td>{{ complete_count }}</td>
+                <td>{{ cancelled_count }}</td>
+                <td>{{ reservation_count }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <table class="products-table">
+        <thead class="products-thead">
+            <tr>
+                <!-- TABLE HEADER -->
+                <th scope="col">Customer</th>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Pickup Date</th>
+                <th scope="col">Order</th>
+                <th scope="col">Date Ordered</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+
+        <tbody class="products-tbody">
+            {% for orderpickup in page_prod %}
+                {% if orderpickup.order.complete == True %}
+                <tr>
+                    <!-- TABLE BODY -->
+                    <td data-label="Customer">{{orderpickup.order.customer}}</td>
+                    <td data-label="Transaction ID" id="transaction-style">{{orderpickup.order.transaction_id}}</td>
+                    <td data-label="Pickup Date">{{orderpickup.pickup}}</td>
+                    <td data-label="Order">
+                        {% for item in items %}
+                            {% if item.order.id == orderpickup.order.id %}
+                                {{ item.product }} x {{ item.quantity }}<br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>     
+                    <td data-label="Date Ordered">{{orderpickup.order.date_ordered}}</td>
+                    <td data-label="Total" id="price">PHP {{orderpickup.order.get_cart_total}}</td>
+                    
+                    <td>{{orderpickup.order.pickupstat_id}}</td>
+                {% endif %}
+
+                    {% empty %}
+                    <td colspan="7">No results found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+         
+
+

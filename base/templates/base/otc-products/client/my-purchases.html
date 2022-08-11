@@ -1,0 +1,184 @@
+<style>
+    .labels-container {
+        height: 60px;
+    }
+    .pickup-status-container{
+        height: 80px;
+    }
+    .pickup-status-container-1{
+        height: 55px;
+        padding-top: 20px;
+        padding-left: 40px;
+        color: #7FB5FF;
+        border-radius: 15px;
+        box-shadow: rgba(100, 100, 111, 0.2) 1px 4px 10px 1px;
+    }
+    
+    .status-categories {
+        display: inline-block;
+        text-align: center;
+    }
+    .status-links {
+        padding: 8px 50px;
+        color: #7FB5FF;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .status-links:hover {
+        color: #7FB5FF;
+        text-decoration: none;
+        border-bottom: 4px solid #7FB5FF;
+    }
+
+</style>
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<div class="main"> 
+<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="prodtable-container1">
+
+                <div class="labels-container">          
+                        <!-- TITLE -->
+                        <div class="labels1">
+                            <h2>My Purchases</h2>
+                        </div>
+                </div>
+
+                <!-- PRODUCT PICKUP STATUS -->
+                <div class="pickup-status-container">
+                    <div class="pickup-status-container-1">
+                        <div class="status-categories"><a class="status-links" href="{% url 'my-purchases' %}">All Orders</a></div>
+                        <div class="status-categories"><a class="status-links" href="{% url 'my-purchases' %}?q=Pending">Pending</a></div>
+                        <div class="status-categories"><a class="status-links" href="{% url 'my-purchases' %}?q=Approved">Approved</a></div>
+                        <div class="status-categories"><a class="status-links" href="{% url 'my-purchases' %}?q=Transaction%20Successful">Completed</a></div>
+                        <div class="status-categories"><a class="status-links" href="{% url 'my-purchases' %}?q=Cancelled">Cancelled</a></div>
+                    </div>
+                </div>
+
+                <table class="products-table">
+                    <thead class="products-thead">
+                        <tr>
+                            <!-- TABLE HEADER -->
+                            <th scope="col">Transaction ID</th>
+                            <th scope="col">Pickup Date</th>
+                            <th scope="col">Order</th>
+                            <th scope="col">Date Ordered</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="products-tbody">
+                    {% for orderpickup in page_prod %}
+                        {% if request.user.customer == orderpickup.order.customer %}
+                            {% if orderpickup.order.complete == True %}
+                            <tr>
+                                <!-- TABLE BODY -->
+                                <td data-label="Transaction ID" id="transaction-style">{{orderpickup.order.transaction_id}}</td>
+                                <td data-label="Pickup Date">{{orderpickup.pickup}}</td>
+                                <td data-label="Order">
+                                    {% for item in items %}
+                                        {% if item.order.id == orderpickup.order.id %}
+                                            {{ item.product }} x {{ item.quantity }}<br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>     
+                                <td data-label="Date Ordered">{{orderpickup.order.date_ordered}}</td>
+                                <td data-label="Total" id="price">{{orderpickup.order.get_cart_total}}</td>
+                                                
+                                <td>
+                                    <!-- CANCEL BUTTON FOR APPROVED AND PENDING -->
+                                    {% if orderpickup.order.pickupstat_id == 'Approved' or orderpickup.order.pickupstat_id == 'Pending' %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                            <!-- CANCEL -->
+                                            <input type="hidden" value="{{orderpickup.order.id}}" name="cancel">
+                                            <input type="submit" value="Cancel" name="button" id="cancel1" onclick="return confirm('Cancel Reservation?');">
+                                    </form>
+                                    <!-- ELSE SHOW OTHER STATUS -->
+                                    {% elif orderpickup.order.pickupstat_id == 'Transaction Successful' and review.review == NULL %}
+                                        <a href="{% url 'review' orderpickup.order.id %}">Review</a>
+                                    {% elif orderpickup.order.pickupstat_id == 'Transaction Successful' and review.review != NULL %}
+                                        <a href="{% url 'edit-review' orderpickup.order.id %}">Edit Review</a>
+                                    {% else %}
+                                        {{orderpickup.order.pickupstat_id}}
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}  
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGE NAVIGATION -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_prod.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                    {% endif %}
+                    
+                    <!-- PAGE INDICATOR -->
+                    <span class="current">
+                        Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                    </span>
+            
+                    {% if page_prod.has_next %}
+                        <a href="?page={{ page_prod.next_page_number }}">next</a>
+                        <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ACTIVE SCRIPT -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    $('button').on('click', function(){
+        $('button').removeClass('selected');
+        $(this).addClass('selected');
+    });
+</script>
+
+<!-- BACK TO TOP BUTTON -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<!-- BACK TO TOP SCRIPT -->
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+{% endblock content %}

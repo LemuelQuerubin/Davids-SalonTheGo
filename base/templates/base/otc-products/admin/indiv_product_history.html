@@ -1,0 +1,72 @@
+{% extends 'main_products.html' %}
+
+{% block content %}
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back-indiv-prod">
+        <a href="{% url 'otc-individual-product' product.id %}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="prod-info">
+        <!-- BUTTONS -->
+        <div class="labels-container">
+                <!-- TITLE -->
+                <div>
+                    <h2 class="stock-title">{{product.Prod_Name}}</h2>
+                </div>
+        </div>
+        <br>
+        <div class="labels2">
+            <ul>    
+                <li class="top-labels"><a href="{% url 'createpdf-indiv-product-log' product.id %}" class="export-btn">Export Table</a></li>
+            </ul>
+        </div>
+        <table class="products-table">
+            <thead class="products-thead">
+                <tr>
+                    <!-- TABLE HEADER -->
+                    <th scope="col">#</th>
+                    <th scope="col">Deduct Quantity</th>
+                    <th scope="col">Restock Quantity</th>
+                    <th scope="col">Quantity in Stock</th>
+                    <th scope="col">Expiry Date</th>
+                    <th scope="col">Last Updated</th>
+                </tr>
+            </thead>
+            
+            <tbody class="products-tbody">
+                {% for row in history %}
+                <tr>
+                    <!-- TABLE BODY -->
+                        <td data-label="Product Name" class="td-align-left">{{forloop.counter}}</td>
+                        <!-- DEDUCT QUANTITY -->
+                        {% if row.deduct_stock == 0 %}
+                            <td data-label="Deduct Stock">{{row.deduct_stock}}</td>
+                        {% else %}
+                            <td data-label="Deduct Stock">-{{row.deduct_stock}}</td>
+                        {% endif %}
+                        <!-- ADD QUANTITY -->
+                        {% if row.add_stock == 0 %}
+                            <td data-label="Add Stock">{{row.add_stock}}</td>
+                        {% else %}
+                            <td data-label="Add Stock">+{{row.add_stock}}</td>
+                        {% endif %}
+                        <!-- QUANTITY IN STOCK -->
+                        {% if row.Prod_stockQty == 0 %}
+                            <td>Out of Stock.</td>
+                        {% else %}
+                            <td>{{row.Prod_stockQty}}</td>
+                        {% endif %}
+                        <!-- EXPIRY DATE -->
+                        <td>{{row.expiry_date}}</td>
+                        <!-- LAST UPDATED -->
+                        <td data-label="Product Type" id="category">{{row.last_updated}}</td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+{% endblock content %}

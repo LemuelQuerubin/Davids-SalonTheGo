@@ -79,6 +79,7 @@ class jobOrderform(models.Model):
     totalPrice = models.DecimalField(default=0, max_digits=9, decimal_places=2, verbose_name="Total", null=True)
     finalStylist = models.CharField(max_length=30, verbose_name="Stylist", null=True)
     
+    timestamp = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
     #date_today = models.DateField(auto_now_add=True)
     #insproductused = models.ForeignKey(insProduct, on_delete=models.SET_NULL, blank=False, null=True)
     #quantity = models.IntegerField(default=0, null=True, blank=True)
@@ -106,8 +107,26 @@ class jobOrderform(models.Model):
 class clientFeedback(models.Model):
     feedbackInfo = models.OneToOneField(jobOrderform, verbose_name="jobOrderform", on_delete=models.PROTECT)
     review = models.CharField(max_length=100, verbose_name="Review", null=True)
+    adminReply = models.TextField(max_length=300, verbose_name="Admin Reply", null=True)
     isPositive = models.BooleanField(null=True)
     isNegative = models.BooleanField(null=True)
 
     def __str__(self):
         return '%s' %(self.feedbackInfo)
+
+
+class serviceHistory(models.Model):
+    # finalStylist =  models.CharField(null=True, max_length=200, verbose_name="Stylist")
+    # customerName = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, max_length=200, verbose_name="Customer Name")
+    # #serviceName =  models.ForeignKey(Services, on_delete=models.SET_NULL, null=True, max_length=200, verbose_name="Service Name")
+    # serviceName =  models.CharField(null=True, max_length=200, verbose_name="Service Name")
+    # serviceType = models.CharField(null=True, max_length=200, verbose_name="Service Type")
+    # # objects = models.Manager() #For All Records  
+    # # active_objects = IsActiveManager() #For Active Records Only
+
+    # dateDone = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
+    appointmentInfo = models.OneToOneField(Appointment, verbose_name="Appointment", on_delete=models.PROTECT, null=True)
+    servicePrices = models.JSONField(default=dict, blank=True, null=True)
+    totalPrice = models.DecimalField(default=0, max_digits=9, decimal_places=2, verbose_name="Total", null=True)
+    finalStylist = models.CharField(max_length=30, verbose_name="Stylist", null=True)
+    timestamp = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)

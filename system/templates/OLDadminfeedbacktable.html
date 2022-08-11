@@ -1,0 +1,113 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+<div class="main">
+    <br><br><br>
+    <div class="tables">
+        <!-- FEEDBACK TABLE -->
+        <p class="tbl-title">Ratings & Reviews</p>
+        
+        <div class="admin-accounts-tbl">
+            <table width="100%" class="sortable">
+                <thead class="customer-review-thead">
+                    <th width="10%">Customer Name</th>
+                    <th width="10%">Date & Time</th>
+                    <th width="20%">Service Availed</th>
+                    <th width="5%">Stylist</th>
+                    <th width="10%">Rating</th>
+                    <th width="20%">Review</th>
+                    <th width ="30%">Reply</th>
+                    <th width="10%">Option</th>
+                </thead>
+                <tbody>
+                    {% for row in form %}
+                    {% if row.appointmentInfo.appointmentStatus == 'Successful' %}
+                        <tr>
+                            <td class="customer-name">{{ row.appointmentInfo.customer.customer.first_name }} {{ row.appointmentInfo.customer.customer.last_name }}</td>
+                            <td class="customer-name">{{ row.appointmentInfo.apptDate|date:'F d, Y' }}<br>{{ row.appointmentInfo.appt_timeStart|time:'h:i A' }}</td> <!--Date & Time-->
+                            <td class="customer-services">{% for key in row.appointmentInfo.services %}{{ key }}{% if not forloop.last %},<br> {% endif %}{% endfor %}</td> <!--Service Availed-->
+                            <td class="customer-name">{{ row.finalStylist }}</td> <!--Stylist/s-->
+                            <td class="customer-name"> <!--Rating-->
+                                {% if row.id in fb_list %}
+                                    {% for row1 in fb %}
+                                        {% if row1.feedbackInfo.id ==  row.id and row1.isPositive == 1 %}
+                                            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true">
+                                        {% elif row1.feedbackInfo.id ==  row.id and row1.isNegative == 1 %}
+                                            <i class="fa fa-thumbs-down fa-lg" aria-hidden="true">
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+                            </td>
+                            
+                            <td><!--Review-->
+                                <p id="customer-review">
+                                    {% if row.id in fb_list %}
+                                        {% for row1 in fb %}
+                                            {% if row1.feedbackInfo.id == row.id %}
+                                                {% if row1.review %}
+                                                    {{ row1.review }}
+                                                {% else %}
+                                                    <b>Not yet rated</b>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <b>Not review yet</b>
+                                    {% endif %}
+                                </p>
+                            </td> 
+                            <td class="admin-reply">
+                                <p id="admin-reply">
+                                {% if row.id in fb_list %}
+                                    {% for row1 in fb %}
+                                        {% if row1.feedbackInfo.id == row.id %}
+                                            {% if row1.adminReply %}
+                                                {{ row1.adminReply }}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+                                </p>
+                            </td>
+
+                            <td>
+                                {% if fb %}
+                                    {% if row.id in fb_list %} <!--if feedback object exists-->
+                                        <div class="button-container">
+                                        <div>
+                                            <form method="POST">
+                                            {% csrf_token %}
+                                                {% for row1 in fb %}
+                                                    {% if row1.feedbackInfo.id == row.id %}
+                                                        {% if row1.isNegative == True or row1.isPositive == True %}
+                                                            <input type="hidden" value="{{ row1.id }}" name="reply">
+                                                            <input class="buttons5" type="submit" value="Reply" name="button" id="reply">
+                                                        {% else %}
+                                                            Not yet rated
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </form>
+                                        </div>
+                                    {% else %}
+                                        Not yet rated
+                                    {% endif %}
+                                {% endif %}
+                            </td>  <!--Option-->
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+    </div>
+</div>
+{% endblock content %}

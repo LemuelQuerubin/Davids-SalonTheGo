@@ -11,7 +11,7 @@ class CustomUser (AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     profile_pic= models.ImageField(upload_to='profile_pic', default="default-prof.jpg", null=True, blank=True)
-    
+
 class Gendertype (models.Model):
     id = models.AutoField(primary_key=True)
     gendertype = models.CharField(max_length=20)
@@ -27,14 +27,14 @@ class Stafftype (models.Model):
     def __str__(self):
         return self.stafftype
 
-class Customertype (models.Model):
+class Customertype (models.Model): # CHANGE TO CUSTOMER CLASS; # CUSTOMER TYPE IS WALKIN OR ONLINE
     id = models.AutoField(primary_key=True)
     customertype = models.CharField(max_length=20)
 
     def __str__(self):
         return self.customertype
 
-    
+
 class Admin (models.Model):
     admin= models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True)
 

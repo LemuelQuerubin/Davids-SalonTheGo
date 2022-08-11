@@ -1,6 +1,6 @@
     /* GO BACK BUTTON */
     .go-back-indiv-prod {
-        width: 570px;
+        width: 970px;
         margin: 0 auto 20px;
     }
     .go-back-indiv-prod a{
@@ -19,7 +19,7 @@
     /*************** INDIVIDUAL PRODUCT INFORMATION PAGE ***************/
     /* CONTAINER */
     .prod-info {
-        max-width: 500px;
+        max-width: 900px;
         width: 100%;
         margin: 0 auto;
         padding: 40px 40px;
@@ -74,12 +74,16 @@
     }
     /* BUTTONS */
     .stock-btns {
-        float: right;
+        float: left;
+    }
+    #btn-right {
+        float: right!important;
+        margin-bottom: 10px!important;
     }
     .use-stock-btn,
     .restock-btn {
-        padding: 7px 10px;
-        border-radius: 10px;
+        padding: 6px 15px;
+        border-radius: 5px;
         cursor: pointer;
         text-decoration: none;
         color: #2e2e2e;

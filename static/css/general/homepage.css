@@ -86,7 +86,7 @@
  
         /* First Part */
         .home {
-        background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("/images/home5.png");
+        background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("{% static '/images/home5.png' %}");
         background-repeat: no-repeat;
         background-size: 100% 100%;  
         }
@@ -324,7 +324,7 @@
     }
 
     #reviews{
-        margin-top: 50px;
+        margin-top: 10%;
         text-align:center;
     }
 

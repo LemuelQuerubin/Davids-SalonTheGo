@@ -8,18 +8,33 @@ import json
 import datetime
 from datetime import datetime
 from django.contrib import messages
+from django.db.models import Sum, F, FloatField
 
 from .models import * 
-from .forms import otcProductForm, insProductForm, IssueForm, ReceiveForm
-from django.contrib.auth.decorators import login_required
+from .forms import *
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
+
+from django.template.loader import get_template
+from django.db.models import Count
+from xhtml2pdf import pisa
 
 
 # Create your views here.
 
 #def home(request):
 	#return render(request, 'base/home.html')
+
+def admin_test(user):
+	return user.is_staff and user.is_admin
+
+def customer_test(user):
+	return user.is_customer
+
+def go_back(request):
+	
+	return render(request, 'access.html')
 
 # OTC PRODUCTS ------------------------------------------------------
 def shop(request):
@@ -54,6 +69,7 @@ def shop(request):
 
 def shopIndivProduct(request, pk):
 	product = otcProduct.active_objects.get(id=pk)
+	reviews = CustomerReview.objects.filter(product=product)
 
 	#BROWSE OTHER PRODUCTS
 	browse = otcProduct.active_objects.filter(
@@ -61,15 +77,21 @@ def shopIndivProduct(request, pk):
 		Q(ProdType_Name=product.ProdType_Name)
 	).order_by('?').exclude(id=pk)
 
-	context = {'product': product, 'browse': browse}
+	#PAGE NAVIGATION
+	paginator = Paginator(reviews, 5)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	context = {'product': product, 'browse': browse, 'reviews': reviews, 'page_prod': page_prod}
 	return render(request, 'base/otc-products/client/shop_indiv_product.html', context)
 
-
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
 def otcProducts(request):
 	current_datetime = datetime.now()
 	q = request.GET.get('q') if request.GET.get('q') != None else ''
 	products = otcProduct.objects.all()
+	
 	
 	search = otcProduct.objects.filter(
 		Q(id__icontains=q) |
@@ -94,6 +116,7 @@ def otcProducts(request):
 
 #DEDUCT FROM STOCK
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
 def deduct_items(request, pk):
 	product = otcProduct.objects.get(id=pk)
 	form = IssueForm(request.POST or None, instance=product)
@@ -125,6 +148,7 @@ def deduct_items(request, pk):
 
 #RESTOCK 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
 def add_items(request, pk):
 	product = otcProduct.objects.get(id=pk)
 	form = ReceiveForm(request.POST or None, instance=product)
@@ -156,8 +180,10 @@ def add_items(request, pk):
 		
 #HISTORY
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/history/go_back")
 def otc_history(request):
 	history = otcStockHistory.objects.all().order_by('-last_updated')
+	#history = otcStockHistory.objects.filter(Prod_Name = 'Insight Rebalancing Shampoo').order_by('-last_updated')
 
 	#PAGE NAVIGATION
 	paginator = Paginator(history, 10)
@@ -168,13 +194,27 @@ def otc_history(request):
 	return render(request, "base/otc-products/admin/otc-history.html",context)
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
 def otc_indivProduct(request, pk):
 	product = otcProduct.objects.get(id=pk)
+	history = otcStockHistory.objects.filter(Prod_Name=product).order_by('-last_updated')
 
-	context = {'product': product}
+	context = {'product': product, 'history': history}
 	return render(request, 'base/otc-products/admin/indiv_product.html', context)
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
+def otc_indivProductHistory(request, pk):
+	product = otcProduct.objects.get(id=pk)
+	history = otcStockHistory.objects.filter(Prod_Name=product).order_by('-last_updated')
+
+	context = {'product': product, 'history': history}
+	return render(request, 'base/otc-products/admin/indiv_product_history.html', context)
+
+
+@login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def otc_createProduct(request):
 	form = otcProductForm()
 	if request.method == 'POST':
@@ -188,6 +228,8 @@ def otc_createProduct(request):
 
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def otc_updateProduct(request, pk):
 	product = otcProduct.objects.get(id=pk)
 	form = otcProductForm(instance=product)
@@ -212,6 +254,8 @@ def otc_updateProduct(request, pk):
 
 # INSALON PRODUCTS ------------------------------------------------------
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/ins/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def insProducts(request):
 	current_datetime = datetime.now()
 	q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -234,6 +278,8 @@ def insProducts(request):
 
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/ins/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def ins_indivProduct(request, pk):
 	product = insProduct.objects.get(id=pk)
 
@@ -241,6 +287,8 @@ def ins_indivProduct(request, pk):
 	return render(request, 'base/ins-products/indiv_product.html', context)
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/ins/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def ins_createProduct(request):
 	form = insProductForm()
 	if request.method == 'POST':
@@ -254,6 +302,8 @@ def ins_createProduct(request):
 
 
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/ins/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def ins_updateProduct(request, pk):
 	product = insProduct.objects.get(id=pk)
 	form = insProductForm(instance=product)
@@ -271,6 +321,8 @@ def ins_updateProduct(request, pk):
 
 #CART RENDER VIEW
 @login_required(login_url="/login")
+@user_passes_test(customer_test, login_url="/shop/cart/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def cart(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -287,6 +339,8 @@ def cart(request):
 
 #CHECKOUT RENDER VIEW
 @login_required(login_url="/login")
+@user_passes_test(customer_test, login_url="/shop/checkout/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def checkout(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -303,22 +357,77 @@ def checkout(request):
 
 #PURCHASES RENDER VIEW
 @login_required(login_url="/login")
+@user_passes_test(customer_test, login_url="/shop/my-purchases/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def my_purchases(request):
+	current_datetime = datetime.now()
 	customer = request.user.customer
 	items = OrderItem.objects.filter(order__customer=customer, order__complete=True)
-	orders = OrderPickUp.objects.filter(order__customer=customer, order__complete=True).order_by('-order__date_ordered')
 	
+	if request.method == 'POST':
+		if request.POST['button'] == 'Cancel':
+			cancel_pickup = request.POST.get('cancel')
+			Order.objects.filter(pk=cancel_pickup).update(pickupstat_id='Cancelled')
+		elif request.POST['button'] == 'Receive Payment':
+			transac_successful = request.POST.get('transaction-successful')
+			Order.objects.filter(pk=transac_successful).update(pickupstat_id='Transaction Successful')
+			return HttpResponseRedirect(reverse('sales-invoice', args=[str(transac_successful)]))
+
+	#SEARCH
+	q = request.GET.get('q') if request.GET.get('q') != None else ''
+	orders = OrderPickUp.objects.filter(order__complete=True, order__customer=customer).order_by('-order__date_ordered')
+	filter = OrderPickUp.objects.filter(
+		Q(order__transaction_id__icontains=q) |
+		Q(order__pickupstat_id__icontains=q) 
+	)
 
 	#PAGE NAVIGATION
-	paginator = Paginator(orders, 5)
+	paginator = Paginator(filter, 5)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	context = {'items':items, 'orders':orders, 'page_prod': page_prod}
-	return render(request, 'base/otc-products/my-purchases.html', context)
+	context = {'items':items, 'orders':orders, 'page_prod': page_prod, 'current_datetime':current_datetime, 'filter': filter}
+	return render(request, 'base/otc-products/client/my-purchases.html', context)
+
+#REVIEW
+def review(request, pk):
+	order = Order.objects.get(id=pk)
+	form = ReviewForm(instance=order)
+
+	customer = request.user.customer
+	items = OrderItem.objects.filter(order=order, order__customer=customer).order_by('-id')
+	review = CustomerReview.objects.filter(orderpickup__order=order).order_by('-last_updated')
+
+	
+	item = OrderItem.objects.filter(order=order, order__customer=customer)
+	product = otcProduct.objects.get(orderitem__in=item)
+	orderpickup = OrderPickUp.objects.get(order=order,order__customer=customer, order__complete=True)
+	
+	if request.method == 'POST':
+		form = ReviewForm(request.POST)
+		if form.is_valid():
+			instance = form.save(commit=False)
+					
+			review = CustomerReview.objects.create(
+			customer = customer,	
+			product = product,
+			orderpickup = orderpickup,
+			review = instance.review,
+			is_like = instance.is_like,
+			is_dislike = instance.is_dislike,
+			last_updated = instance.last_updated
+			)
+			review.save()
+
+			return redirect('my-purchases')
+
+	context = {'form': form, 'items': items, 'review': review, 'product': product}
+	return render(request, 'base/otc-products/client/review.html', context)
 
 #UPDATE ITEM RENDER VIEW
 @login_required(login_url="/login")
+# @user_passes_test(admin_test, login_url="/shop/otc/products/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def updateItem(request):
 	## parse since it is a string value
 	data = json.loads(request.body)
@@ -380,6 +489,8 @@ def processOrder(request):
 
 #ADMIN VIEW: PENDING ORDERS
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/pending-reservations/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def pending_orders(request):
 	items = OrderItem.objects.all()
 
@@ -408,8 +519,9 @@ def pending_orders(request):
 	return render(request, 'base/otc-products/admin/pending-reservations.html', context)
 
 #ADMIN VIEW: ORDER ITEMS OF INDIVIDUAL CUSTOMERS
-
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/pending-reservations/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def order_items(request, pk):
 	order = Order.objects.get(id=pk)
 	orderitems = OrderItem.objects.filter(order=order).order_by('-id')
@@ -419,7 +531,43 @@ def order_items(request, pk):
 
 #ADMIN VIEW: APPROVAL OF ORDERS
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/approved-reservations/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def approved_orders(request):
+	current_datetime = datetime.now()
+	items = OrderItem.objects.all()
+
+	if request.method == 'POST':
+		if request.POST['button'] == 'Cancel':
+			cancel_pickup = request.POST.get('cancel')
+			Order.objects.filter(pk=cancel_pickup).update(pickupstat_id='Cancelled')
+		elif request.POST['button'] == 'Receive Payment':
+			transac_successful = request.POST.get('transaction-successful')
+			Order.objects.filter(pk=transac_successful).update(pickupstat_id='Transaction Successful')
+			return HttpResponseRedirect(reverse('sales-invoice', args=[str(transac_successful)]))
+			
+
+	#SEARCH -- MIGHT CHANGE LATER
+	q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Approved')
+	orders = OrderPickUp.objects.filter(
+		Q(order__transaction_id__icontains=q) |
+		Q(pickup__icontains=q) 
+	)
+
+	#PAGE NAVIGATION
+	paginator = Paginator(reservations, 5)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime,  }
+	return render(request, 'base/otc-products/admin/approved-reservations.html', context)
+
+#ADMIN VIEW: COMPLETED ORDERS
+@login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/completed-reservations/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
+def completed_orders(request):
 	current_datetime = datetime.now()
 	items = OrderItem.objects.all()
 
@@ -449,11 +597,40 @@ def approved_orders(request):
 	page_prod = paginator.get_page(page_number)
 
 	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime,  }
-	return render(request, 'base/otc-products/admin/approved-reservations.html', context)
+	return render(request, 'base/otc-products/admin/completed-reservations.html', context)
 
-#SALES INVOICE RENDER VIEW
+def all_orders(request):
+	current_datetime = datetime.now()
+	items = OrderItem.objects.all()
+	
+	#COUNT
+	transaction_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	approve_count = Order.objects.filter(pickupstat_id='Approved').count()
+	pending_count = Order.objects.filter(pickupstat_id='Pending').count()
+	cancelled_count = Order.objects.filter(pickupstat_id='Cancelled').count()
+	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
 
+	#SEARCH
+	q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True).order_by('-date_added')
+	orders = OrderPickUp.objects.filter(
+		Q(order__transaction_id__icontains=q) |
+		Q(pickup__icontains=q) 
+	)
+
+	#PAGE NAVIGATION
+	paginator = Paginator(reservations, 5)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count }
+	return render(request, 'base/otc-products/admin/all-reservations.html', context)
+
+
+#ADMIN VIEW: SALES INVOICE RENDER VIEW
 @login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/completed-reservations/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def salesinvoice(request, pk):
 	items = OrderItem.objects.all()
 	invoice = OrderPickUp.objects.get(order__id=pk)
@@ -466,9 +643,8 @@ def salesinvoice(request, pk):
 	#       sa table na may product stock, kunin din yung quantity
 	#       nakauha mo na both diba, dun mo na minus yung quantity at stock
 	#       tsaka siya ise-save 
-	#       
+	
 			itemquanti = OrderItem.objects.filter(order=invoice.order.id)
-			#products = otcProduct.objects.all()
 
 			for p in itemquanti:
 				prod = otcProduct.objects.get(id=p.product.id)
@@ -487,3 +663,273 @@ def salesinvoice(request, pk):
 	#        
 	context = {'invoice': invoice, 'items': items}
 	return render(request, 'base/otc-products/admin/sales-invoice.html', context)
+
+#----------------------------------------------------ADMIN VIEW: PRODUCT RESERVATION SALES
+@login_required(login_url="/login")
+@user_passes_test(admin_test, login_url="/shop/product-sales-reports/go_back")
+# @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
+def prod_reservation_sales(request):
+
+	current_datetime = datetime.now()
+	items = OrderItem.objects.all()
+	reservations = OrderPickUp.objects.all()
+
+	#DATE FROM TO RANGE FILTER
+	if request.method == 'POST':
+		if request.POST['button'] == "Search":
+			fromdate=request.POST.get('fromdate')
+			request.session['fromdate'] = fromdate
+			todate = request.POST.get('todate')
+			request.session['todate'] = todate
+			reservations = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('-pickup')
+
+	#COUNT
+	orders = Order.objects.filter(pickupstat_id='Transaction Successful').first()
+	sales_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	approve_count = Order.objects.filter(pickupstat_id='Approved').count()
+	pending_count = Order.objects.filter(pickupstat_id='Pending').count()
+	cancelled_count = Order.objects.filter(pickupstat_id='Cancelled').count()
+	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+
+	total_sales = OrderPickUp.objects.filter(order__pickupstat_id='Transaction Successful').values('order').aggregate(
+        total=Sum(
+            F("order__orderitem__quantity") * F("order__orderitem__product__Prod_Price"),
+            output_field=FloatField()
+        )
+    )
+	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful').order_by('-pickup')
+
+	#PAGE NAVIGATION
+	paginator = Paginator(reservations, 5)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	context = {'total_sales': total_sales, 'orders': orders, 'items': items, 'reservations': reservations, 'page_prod': page_prod, 'current_datetime':current_datetime, 'sales_count': sales_count, 'approve_count': approve_count, 'pending_count': pending_count, 'complete_count': complete_count, 'cancelled_count': cancelled_count}
+	return render(request, 'base/otc-products/admin/product-sales-reports.html', context)
+
+# PRODUCT RESERVATION SALES REPORT ---------------------------------------------
+def pdf_report_create_product_sales(request):	
+	items = OrderItem.objects.all()
+	current_datetime = datetime.now()
+	reservations = OrderPickUp.objects.all()
+	
+	if "fromdate" in request.session.keys():
+		fromdate = request.session['fromdate']
+		del request.session['fromdate']
+	else:
+		fromdate = "2000-01-01"
+	
+	if "todate" in request.session.keys():
+		todate = request.session['todate']
+		del request.session['todate']
+	else:
+		todate = "2050-01-01"
+
+
+	#COUNT
+	sales_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	stat_id = ['Pending', 'Approved','Cancelled', 'Transaction Successful', 'Confirmed']
+	
+	# FOR GETTING DISTINCT CUSTOMERS
+	oi = OrderItem.objects.all().distinct()
+	oi1 = []
+	for row in oi:
+		oi1.append(row.order_id)
+	cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+
+	# SELECT COUNT(DISTINCT customer_id) AS TotalCust FROM base_orderitem INNER JOIN base_order ON base_orderitem.order_id = base_order.id;
+	
+	# FOR GETTING TOTAL PRODUCTS SOLD
+	products_sold = 0
+	for row in items:
+		products_sold = products_sold + int(row.quantity)
+
+	# FOR GETTING TOTAL EARNINGS
+	total_sales = OrderPickUp.objects.filter(order__pickupstat_id='Transaction Successful').values('order').aggregate(
+        total=Sum(
+            F("order__orderitem__quantity") * F("order__orderitem__product__Prod_Price"),
+            output_field=FloatField()
+        )
+    )
+
+	#SEARCH -- MIGHT CHANGE LATER
+	q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful').order_by('-pickup')
+	orders = OrderPickUp.objects.filter(
+		Q(order__transaction_id__icontains=q) |
+		Q(pickup__icontains=q) 
+	)
+
+	paginator = Paginator(orders, 500)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	template_path = 'base/otc-products/admin/product-sales-reports-pdf.html' 
+	context = {'orders': orders, 'items': items, 'reservations': reservations,'page_prod': page_prod, 'sales_count': sales_count, 'current_datetime':current_datetime, 'products_sold':products_sold, 'stat_id':stat_id, 'cust_count':cust_count, 'total_sales':total_sales}
+    # Create a Django response object, and specify content_type as pdf 
+	response = HttpResponse(content_type='application/pdf') 
+	response['Content-Disposition'] =  'filename="product-sales-report.pdf"'
+    # find the template and render it.
+
+	template = get_template(template_path)  
+	html = template.render(context)
+
+    # create a pdf  
+	pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+	if pisa_status.err:
+     
+	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	
+	return response
+
+def all_orders_report(request):
+	items = OrderItem.objects.all()
+	current_datetime = datetime.now()
+	
+	# FOR GETTING DISTINCT CUSTOMERS
+	oi = OrderItem.objects.all().distinct()
+	oi1 = []
+	for row in oi:
+		oi1.append(row.order_id)
+	cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+
+	#COUNT
+	transaction_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	approve_count = Order.objects.filter(pickupstat_id='Approved').count()
+	pending_count = Order.objects.filter(pickupstat_id='Pending').count()
+	cancelled_count = Order.objects.filter(pickupstat_id='Cancelled').count()
+	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	reservation_count = approve_count + pending_count + cancelled_count + complete_count
+
+	#SEARCH
+	q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True).order_by('-date_added')
+	orders = OrderPickUp.objects.filter(
+		Q(order__transaction_id__icontains=q) |
+		Q(pickup__icontains=q) 
+	)
+
+	#PAGE NAVIGATION
+	paginator = Paginator(reservations, 500)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	template_path = 'base/otc-products/admin/all-reservations-pdf.html' 
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'cust_count':cust_count, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count, 'reservation_count':reservation_count, 'current_datetime':current_datetime }
+    # Create a Django response object, and specify content_type as pdf 
+	response = HttpResponse(content_type='application/pdf') 
+	response['Content-Disposition'] =  'filename="all-orders-report.pdf"'
+    # find the template and render it.
+
+	template = get_template(template_path)  
+	html = template.render(context)
+
+    # create a pdf  
+	pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+	if pisa_status.err:
+       
+	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	
+	return response
+
+def otcProductlogreport(request):
+	history = otcStockHistory.objects.all().order_by('-last_updated')
+
+	#PAGE NAVIGATION
+	paginator = Paginator(history, 1000)
+	page_number = request.GET.get('page')
+	page_prod = paginator.get_page(page_number)
+
+	
+	template_path = 'base/otc-products/admin/products-history-pdf.html' 
+	context = {'history': history, 'page_prod': page_prod}
+    # Create a Django response object, and specify content_type as pdf 
+	response = HttpResponse(content_type='application/pdf') 
+	response['Content-Disposition'] =  'filename="product-log-report.pdf"'
+    # find the template and render it.
+
+	template = get_template(template_path)  
+	html = template.render(context)
+
+    # create a pdf  
+	pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+	if pisa_status.err:
+       
+	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	
+	return response
+
+def otc_indivProductHistoryreport(request, pk):
+	product = otcProduct.objects.get(id=pk)
+	history = otcStockHistory.objects.filter(Prod_Name=product).order_by('-last_updated')
+
+	template_path =  'base/otc-products/admin/indiv-products-history-pdf.html' 
+	context = {'product': product, 'history': history}
+    # Create a Django response object, and specify content_type as pdf 
+	response = HttpResponse(content_type='application/pdf') 
+	response['Content-Disposition'] =  'filename="indiv-product-log-report.pdf"'
+    # find the template and render it.
+
+	template = get_template(template_path)  
+	html = template.render(context)
+
+    # create a pdf  
+	pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+	if pisa_status.err:
+       
+	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	
+	return response
+
+def salesinvoicereport(request, pk):
+	items = OrderItem.objects.all()
+	invoice = OrderPickUp.objects.get(order__id=pk)
+	
+	if request.method =='POST':
+		if request.POST['button'] == 'Confirm':
+	     
+			itemquanti = OrderItem.objects.filter(order=invoice.order.id)
+
+			for p in itemquanti:
+				prod = otcProduct.objects.get(id=p.product.id)
+				proddiff = prod.Prod_stockQty - p.quantity  
+				prod.Prod_stockQty = proddiff
+				prod.save()
+
+				restock_history = otcStockHistory(
+				Prod_Name = prod.Prod_Name,
+				Prod_stockQty = prod.Prod_stockQty,
+				deduct_stock = p.quantity,
+				last_updated = prod.last_updated
+				)
+				restock_history.save()
+
+
+	template_path = 'base/otc-products/admin/sales-invoice-pdf.html'
+	context = {'invoice': invoice, 'items': items}
+    # Create a Django response object, and specify content_type as pdf 
+	response = HttpResponse(content_type='application/pdf') 
+	response['Content-Disposition'] =  'filename="salew-invoice.pdf"'
+    # find the template and render it.
+
+	template = get_template(template_path)  
+	html = template.render(context)
+
+    # create a pdf  
+	pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+	if pisa_status.err:
+       
+	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	
+	return response
+

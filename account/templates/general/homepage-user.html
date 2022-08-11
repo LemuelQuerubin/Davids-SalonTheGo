@@ -206,16 +206,22 @@
             outline: none;
         }
 
+        .active {
+        background-color: #F8F9FA;
+        color: #001D6E;
+        }
+
         .sidenav a:hover, .dropdown-btn:hover {
             color: white;
             background-color: #000e33;
             text-decoration: none;
             font-weight: bold;
+            transition: 400ms;
         }
         
         .dropdown-container {
             display: none;
-            background-color: #001D6E;
+            background-color: #000e33;
             padding-left: 8px;
             padding-bottom: 10px;
         }
@@ -330,24 +336,42 @@
         {% endif %}
 
        
-        {% if not user.is_authenticated  %} 
-            <a href="#">
-                <img
-                class="d-inline-block align-top px-1"
-                src="/images/cart.png"
-                width="50" />
-            </a>
-        {% elif user.is_customer %}  
+        
+        {% if user.is_customer %}
             <a href="{% url 'cart' %}">
                 <img
                 class="d-inline-block align-top px-1"
                 src="/images/cart.png"
                 width="50" />
             </a>
-        {% else %}  
-            
         {% endif %}
-        
+       
+        <!-- {% if user.is_admin %} -->
+        <!-- NOTIFICATION BELL -->
+        <!-- <a href="#">
+            <i class="fas fa-bell" style="
+            font-size: 35px;
+            color: black;
+            ">
+            </i> <span style="
+            position: absolute;
+            border-radius: 50%;
+            font-size: 13px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            margin-top: -38px;
+            margin-left: -5px;
+            color: white;
+            font-weight: bold;
+            background-color: red;
+            ">
+                5
+            </span>
+            
+        </a> -->
+        <!-- {% endif %} -->
             
         <!-- LOGGED IN PROFILE ICON -->
         <div class="nav-item dropdown">
@@ -356,7 +380,7 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false" style="text-decoration: none;">
-                <img src="/images/account.png" width="40" height="40">
+                <img src="{% static '/images/account.png' %}" width="40" height="40">
             </a>
             {% if user.is_customer %}
             <ul class="dropdown-menu">
@@ -456,10 +480,11 @@
                 </button>
                     <div class="dropdown-container">
                         <a href="/admin">Profile</a>
-                        <a href="/admin/accounts">Staff Accounts</a>
+                        <a href="/admin/accounts">Admin Accounts</a>
+                        <a href="/admin/staffaccounts">Staff Accounts</a>
                         <a href="/admin/customeraccounts/">Customer Accounts</a>
                         <!--<li><a href="#">Change Password</a></li>-->
-                    </div>                
+                    </div>
                 
                 <!-- APPOINTMENTS DROPDOWN -->
                 <button class="dropdown-btn"><li><i class="fa-solid fa-calendar-check" style="margin-right:20px;"></i>Appointments</li>
@@ -471,7 +496,7 @@
                         <a href="/appointments/appointmentsApproved">Approved Appointments</a>
                         <a href="/appointments/appointmentsOngoing">Ongoing Appointments</a>
                         <a href="/appointments/alljobOrderforms">Produce Job Order Forms</a>
-                        <a href="/appointments/appointmentsDone">Done Appointments</a>
+                        <a href="/appointments/appointmentsDone">Completed Appointments</a>
                     </div>
 
                 <!-- PRODUCT RESERVATION DROPDOWN -->
@@ -480,6 +505,7 @@
                     <div class="dropdown-container">
                         <a href="/shop/pending-reservations/">Pending Reservations</a>
                         <a href="/shop/approved-reservations/">Approved Reservations</a>
+                        <a href="/shop/completed-reservations/">Completed Reservations</a> <!-- NEW VIEW-->
                         <!--<li><a href="#">All Reports</a></li> X-->
                     </div>
 
@@ -492,9 +518,26 @@
                         <!--<li><a href="#">All Reports</a></li> X-->
                     </div>
 
+                <!-- REPORTS DROPDOWN -->
+                <button class="dropdown-btn"><li><i class="fa-solid fa-file-text" style="margin-right:20px;"></i>Reports and History</li>
+                </button>
+                    <div class="dropdown-container">
+                        {% comment %} <a href="{% url 'alljobOrderforms' %}">Job Order Forms</a>
+                        <a href="#">Sales Invoices</a> {% endcomment %}
+                        <a href="{% url 'allservices' %}">Service Sales Report</a>
+                        <a href="{% url 'product-sales-reports' %}">Product Sales Report</a>
+                        <a href="{% url 'allschedules' %}">Scheduling Report</a>
+                        <a href="{% url 'jobOrderformtbl' %}">Job Order Forms Report</a>
+                        <a href="{% url 'all-reservations' %}">Reservation Report</a>
+                    </div>
+
                 <!-- RATINGS AND REVIEWS -->
-                
-                <a href="/appointments/feedbackTable"><i class="fa-solid fa-star" style="margin-right:20px;"></i>Ratings & Reviews</a>
+                <button class="dropdown-btn"><li><i class="fa-solid fa-star" style="margin-right:20px;"></i>Ratings & Reviews</li>
+                </button>
+                    <div class="dropdown-container">
+                        <a href="{% url 'adminfeedbackTable' %}">Service Ratings</a>
+                        <a href="#">Product Ratings</a>
+                    </div>
 
                 {% else %}
                 <div class="firstname-container">

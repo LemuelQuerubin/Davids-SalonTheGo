@@ -1,0 +1,158 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/ratingsandreviews.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+<div class="main">
+   
+        <!-- FEEDBACK TABLE -->
+        <div class="prodtable-container">
+            <div class="labels-container">
+                <!-- TITLE -->
+                <div class="labels1">
+                    <h2>Services Ratings & Reviews</h2>
+                </div>
+                <div class="labels2">
+                    <ul>    
+                        <!-- <li class="top-labels">Filter</li> -->
+                        <li class="top-labels">
+                        <div class="search">
+                            <form method="GET" action="#">
+                                <input type="text" name="q" placeholder="Search...">
+                            </form>
+                        </div>            
+                        </li>
+                        {% comment %} <li class="top-labels"><a href="#" class="export-btn">Export Table</a></li> {% endcomment %}
+                    </ul>
+                </div>
+            </div>
+            <table class="products-table sortable">
+                <thead class="products-thead">
+                    <tr>
+                        <th width="10%" scope="col">Name</th>
+                        <th width="10%" scope="col">Date & Time</th>
+                        <th width="20%" scope="col">Service Availed</th>
+                        <th width="5%" scope="col">Stylist</th>
+                        <th width="10%" scope="col">Rating</th>
+                        <th width="20%" scope="col">Review</th>
+                        <th width ="30%" scope="col">Reply</th>
+                        <th width="10%" scope="col">Option</th>
+                    </tr>
+                </thead>
+                <tbody class="products-tbody">
+                    {% for row in form %}
+                    {% if row.appointmentInfo.appointmentStatus == 'Successful' %}
+                        <tr>
+                            <td>{{ row.appointmentInfo.customer.customer.first_name }} {{ row.appointmentInfo.customer.customer.last_name }}</td>
+                            <td>{{ row.appointmentInfo.apptDate|date:'F d, Y' }}<br>{{ row.appointmentInfo.appt_timeStart|time:'h:i A' }}</td> <!--Date & Time-->
+                            <td class="customer-services">{% for key in row.appointmentInfo.services %}{{ key }}{% if not forloop.last %},<br> {% endif %}{% endfor %}</td> <!--Service Availed-->
+                            <td>{{ row.finalStylist }}</td> <!--Stylist/s-->
+                            <td> <!--Rating-->
+                                {% if row.id in fb_list %}
+                                    {% for row1 in fb %}
+                                        {% if row1.feedbackInfo.id ==  row.id and row1.isPositive == 1 %}
+                                            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true">
+                                        {% elif row1.feedbackInfo.id ==  row.id and row1.isNegative == 1 %}
+                                            <i class="fa fa-thumbs-down fa-lg" aria-hidden="true">
+                                        {% elif row1.feedbackInfo.id ==  row.id and row1.isNegative == NULL and row1.isPositive == NULL %}
+                                            <i class="fas fa-ban"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+                            </td>
+                            
+                            <td><!--Review-->
+                                
+                                    {% if row.id in fb_list %}
+                                        {% for row1 in fb %}
+                                            {% if row1.feedbackInfo.id == row.id %}
+                                                {% if row1.review %}
+                                                    {{ row1.review }}
+                                                {% else %}
+                                                    <b>Not yet rated</b>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <b>Not review yet</b>
+                                    {% endif %}
+                                
+                            </td> 
+                            <td class="admin-reply">
+                                {% if row.id in fb_list %}
+                                    {% for row1 in fb %}
+                                        {% if row1.feedbackInfo.id == row.id %}
+                                            {% if row1.adminReply %}
+                                                {{ row1.adminReply }}
+                                            {% else %}
+                                                <i class="fas fa-ban"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if fb %}
+                                    {% if row.id in fb_list %} <!--if feedback object exists-->
+                                        <div class="button-container">
+                                        <div>
+                                            <form method="POST">
+                                            {% csrf_token %}
+                                                {% for row1 in fb %}
+                                                    {% if row1.feedbackInfo.id == row.id %}
+                                                        {% if row1.isNegative == True or row1.isPositive == True %}
+                                                            <input type="hidden" value="{{ row1.id }}" name="reply">
+                                                            <input class="reply-btn" type="submit" value="Reply" name="button" id="reply">
+                                                        {% else %}
+                                                            Not yet rated
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </form>
+                                        </div>
+                                    {% else %}
+                                        Not yet rated
+                                    {% endif %}
+                                {% endif %}
+                            </td>  <!--Option-->
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<!-- BACK TO TOP BUTTON -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<!-- BACK TO TOP SCRIPT -->
+<script>
+    //Get the button
+    var mybutton = document.getElementById("myBtn");
+    
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+    }
+    
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    }
+</script>
+{% endblock content %}

@@ -49,7 +49,7 @@
                                 <div class="two-cols">
 									<div class="stylist-container">
 										<br>
-										<label for="stylist1" class="name-text1">Primary Stylist</label>
+										<label for="stylist1" class="name-text1">Primary Stylist <font color="red">*</font></label>
 										<select class="form-select1" name="stylist1" aria-label="Default select example" id="s1" required>
                                             <option selected disabled hidden>Select Stylist</option>
                                             {% for stylist in stylists %}
@@ -67,7 +67,7 @@
 
 									<div class="stylist-container">
 										<br>
-										<label for="stylist2" class="name-text1">Secondary Stylist</label>
+										<label for="stylist2" class="name-text1">Secondary Stylist <font color="red">*</font></label>
 										<select class="form-select1" name="stylist2" aria-label="Default select example" required>
 											<option selected disabled hidden>Select Stylist</option>
                                             {% for stylist in stylists %}
@@ -89,14 +89,14 @@
 
                                  
                                 <div class="date-container">
-                                    <h5>Date</h5>
+                                    <h5>Date <font color="red">*</font></h5>
                                     <!--input type="text" class="form-control" id="typeText" name="apptDate" aria-describedby="companyNameHelp" required-->
                                     <input type="date" class="date-form" id="typeDate" name="apptDate" aria-describedby="companyNameHelp" required>
                                 </div>
 
                                 <br><br>
                                 <div class="time-container">            
-                                    <h5>Time</h5>
+                                    <h5>Time <font color="red">*</font></h5>
                                     <!--input type="time" class="form-control" name="appt_timeStart" min="10:00" max="21:00" aria-describedby="companyNameHelp" required-->
                                     {% comment %} <input type="text" class="time-form" id="timepicker" name="appt_timeStart" aria-describedby="companyNameHelp" required readonly style="background-color: white!important;"> {% endcomment %}
                                     <select name="appt_timeStart" style="border-radius: 10px; border: 1px solid #CCCCCC; width: 32%; height: 5vh;" id="timeStart" required>

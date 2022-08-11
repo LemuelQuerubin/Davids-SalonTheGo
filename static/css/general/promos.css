@@ -58,7 +58,7 @@ header {
 
 /*Banner picture*/
 .home {
-    background-image: url("/static/images/contact-1.png");
+    background-image: url("/static/images/contact-1.jpg");
     height: 620px;
     background-repeat: no-repeat;
     background-size: cover;

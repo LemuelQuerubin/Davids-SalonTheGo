@@ -33,6 +33,13 @@ class ProductType(models.Model):
     def __str__(self):
         return self.ProdType_Name
 
+#PRODUCT MEASUREMENT (mL, oz, etc.)
+class MeasurementType(models.Model):
+    Measurement_Type = models.CharField(max_length=200, verbose_name="Product Measurement", unique=True)
+
+    def __str__(self):
+        return self.Measurement_Type
+
 #In-Salon Products
 class insProduct(models.Model):
     Prod_Name = models.CharField(max_length=200, verbose_name="Product Name")
@@ -61,6 +68,7 @@ class insProduct(models.Model):
     def __str__(self):
         return self.Prod_Name
 
+
 #Over-the-Counter Products
 class otcProduct(models.Model):
     Prod_Name = models.CharField(max_length=200, verbose_name="Product Name")
@@ -70,6 +78,8 @@ class otcProduct(models.Model):
     Prod_stockQty = models.IntegerField(verbose_name="Stock Quantity")
     Prod_Price = models.DecimalField(decimal_places=2, max_digits=6, verbose_name="Price")
     Prod_Image = models.ImageField(default="placeholder-image.png", upload_to="product_images", null=True, verbose_name="Product Image")
+    Measurement_Num = models.IntegerField(blank=False, null=True, verbose_name="Measurement Number")
+    Measurement_Type = models.ForeignKey(MeasurementType, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Measurement Type")
     is_active = models.BooleanField(default=True, verbose_name="Status")
     objects = models.Manager() #For All Records  
     active_objects = IsActiveManager() #For Active Records Only
@@ -209,4 +219,18 @@ class SalesInvoice(models.Model):
     product_pickupID = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=False, null=True)
     amount_total = models.DecimalField(decimal_places=2, max_digits=6, verbose_name="Total Price")
 
+class CustomerReview(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(otcProduct, on_delete=models.SET_NULL, null=True)
+    orderpickup = models.ForeignKey(OrderPickUp, on_delete=models.SET_NULL, null=True)
+    review = models.TextField(max_length=280, verbose_name="Review", null=True)
+    admin_reply = models.TextField(max_length=300, verbose_name="Admin Reply", blank=True, null=True)
+    is_like = models.BooleanField(verbose_name="Like", null=True)
+    is_dislike = models.BooleanField(verbose_name="Dislike", null=True)
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
+    # class Meta:
+    #     unique_together = ('customer', 'product')
+
+    def __str__(self):
+        return str(self.id)

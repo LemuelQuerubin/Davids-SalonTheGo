@@ -99,7 +99,17 @@ select#id_ProdType_Name {
 select#id_Cat_Name {
     width: 363px;
 }
-
+/* MEASUREMENT */
+.measurement-indiv-container {
+    display: inline-flex;
+}
+#id_Measurement_Num,
+#id_Measurement_Type {
+    width: 169px;
+}
+#id_Measurement_Num {
+    margin-right: 10px;
+}
 /* DESCRIPTION TEXT AREA */
 .form-style textarea {
     font-family: 'Montserrat', sans-serif;

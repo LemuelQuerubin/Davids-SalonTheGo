@@ -1,0 +1,95 @@
+{% load static %}
+<html>
+<head>
+    <title>OTC PRODUCTS LOG REPORT</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <style>       
+        table{
+            border: 1px solid black;
+        }
+
+        th{
+            font-weight: 700;
+            font-size: 13px;
+            height: 45px;   
+            background-color:  #092147;
+            padding-top: 5px;
+            color: white;
+        }
+
+        td{
+            text-align: center;   
+            height: 65px;   
+            font-size: 12px; 
+            padding-top: 5px;
+        }
+                            
+        h1{
+            font-size: 20px;
+        }
+
+        .order{
+            font-size:12px;
+        }
+
+        #orders{
+            width: 15%;
+        }
+       
+    </style>
+
+<div class="main"> 
+    <br>
+        <center><h1>{{product.Prod_Name}} LOG REPORT</h1></center>
+        <table class="products-table">
+            <!-- TABLE HEAD -->
+            <thead class="history-thead">
+                <tr>
+                    <th>#</th>
+                    <th>Deduct Quantity</th>
+                    <th>Restock Quantity</th>
+                    <th>Total Stock</th>
+                    <th>Expiry Date</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+
+            <!-- TABLE BODY -->
+            <tbody class="history-tbody">
+                {% for row in history %}
+                <tr>
+                    <!-- COUNTER -->
+                    <td>{{forloop.counter}}</td>
+                    <!-- DEDUCT QUANTITY -->
+                    {% if row.deduct_stock == 0 %}
+                        <td>{{row.deduct_stock}}</td>
+                    {% else %}
+                        <td>-{{row.deduct_stock}}</td>
+                    {% endif %}
+                    <!-- ADD QUANTITY -->
+                    {% if row.add_stock == 0 %}
+                        <td>{{row.add_stock}}</td>
+                    {% else %}
+                        <td>+{{row.add_stock}}</td>
+                    {% endif %}
+                    <!-- TOTAL STOCK -->
+                    {% if row.Prod_stockQty == 0 %}
+                        <td>Out of Stock.</td>
+                    {% else %}
+                        <td>{{row.Prod_stockQty}}</td>
+                    {% endif %}
+                    <!-- EXPIRY DATE -->
+                    <td>{{row.expiry_date}}</td>
+                    <!-- LAST UPDATED -->
+                    <td>{{row.last_updated}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+

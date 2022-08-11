@@ -19,13 +19,13 @@
 
     <div class="login-form-container">
        
-        <center><img src="/images/logo-3.png"></center>
+        <center><img src="{% static '/images/logo-3.png' %}"></center>
         <center><h1>Account Login</h1></center>
         <center><p>If you already a member you can login with<br>your username and password.</p></center>
         
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissable fade show" role="alert">
-                <strong style="color:red">Message:  </strong> {{ message }}
+                <p><strong style="color:red">Message:  </strong> {{ message }}</p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -45,6 +45,10 @@
                 <a class="form-forgot-label" href="#">
                     Forgot Your Password?
                 </a>
+                
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{request.GET.next}}" />
+                {% endif %}
 
                 <button class="btns" type="submit">LOGIN</button>
                 <br><br>

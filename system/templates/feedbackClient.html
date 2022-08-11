@@ -103,7 +103,7 @@
                 </div>
            
                 <div class="review-form">
-                    <textarea id="textarea" name="comment" id="usercomment" rows="4" cols="50" placeholder="Review.." style="resize:none;">{{feed.review }}</textarea>
+                    <textarea id="textarea" name="comment" id="usercomment" rows="4" cols="50" placeholder="Review.." style="resize:none;" maxlength="150">{{feed.review }}</textarea>
                 </div>
             </div>
 
@@ -127,6 +127,3 @@
 </div>
 
 {% include 'general/footer.html' %}
-
-{% endblock content %}
-

@@ -16,7 +16,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <!--FOOTER AND NAVBAR CSS-->
-    <link rel="stylesheet" href="nav-footer.css">
+    <!-- eto pinalitan q para sa cart -jennahbenina august 10, 2022 1:07am -->
+    <link href="nav-footer.css">
     
     <!--JAVASCRIPT -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -75,12 +76,14 @@
         
         <!-- CART ICON -->
             <!--IF MOVED TO FOLDER, CHANGE TO (folder name/logo-#.png)-->
+          {% if user.is_customer %}
             <a href="{% url 'cart' %}">
                 <img
                 class="d-inline-block align-top px-1"
                 src="/images/cart.png"
                 width="50" />
             </a>
+          {% endif %}
             <!-- CART TOTAL
             <p id="cart-total">0</p>
             -->

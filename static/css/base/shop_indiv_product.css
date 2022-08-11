@@ -1,7 +1,7 @@
 /***** BREADCRUMB LINKS *****/
     /* CONTAINER */
     .shop-links-container {
-        margin-bottom: 40px;
+        margin-bottom: 40px;    
     }
     /* LINKS */
     .shop-links {
@@ -193,8 +193,88 @@
         background-color: transparent;
     }
 
-    
+    /***** MORE DETAILS SECTION *****/
+    .more-details-section {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .shop-sub-titles {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 50px;
+        background-color: #c4ddffb9;
+        color: #212121;
+        padding: 5px 40px;
+        margin-bottom: 20px;
+    }
+        #review-title {
+            margin-bottom: 0 !important;
+        }
+        .prod-indiv-details {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #212121;
+            margin-right: 10px;
+        }
+    /* PRODUCT DETAILS */
+    .prod-details {
+        float: left;
+        width: 29%;
+        padding: 30px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        background-color: white;
+    }
+        .prod-indiv-details {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #212121;
+            margin-right: 10px;
+        }
+    /* REVIEWS */
+    .reviews-container {
+        float: right;
+        width: 69%;
+        padding: 30px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        background-color: white;
+    }
+        #review-name {
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    /* IF NO REVIEWS */
+    #no-reviews {
+        padding-bottom: 41px;
+    }
+
     /***** BROWSE OTHER PRODUCTS *****/
+    .browse-container {
+        margin-top: 10px;
+    }
+    
+    /* TABLE BODY */
+    table.review-table {
+        width: 100%;
+    }
+    tbody.reviews-body tr { 
+        padding: 15px 0;
+        display: inline-block;
+        width: 100%;
+        border-bottom:  1px solid #b3b3b3;   
+    }
+        tbody.reviews-body tr:last-child {
+            border: none;
+        }
+    tbody.reviews-body td {
+        width: 470px;
+        display: inline-block;
+        word-wrap: break-word;
+    }
     /* BROWSE LABEL */
     .browse-other-prod {
         margin-bottom: 40px;

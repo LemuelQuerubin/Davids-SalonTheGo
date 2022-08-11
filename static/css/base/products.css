@@ -62,16 +62,17 @@
     font-size: 18px;
     border: none;
     outline: none;
-    background-color: #C4DDFF;
+    background-color: var(--navy);
     color: white;
     cursor: pointer;
     padding: 20px;
     border-radius: 50%;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(80, 80, 91, 0.2) 0px 7px 29px 0px;
 }
   
 #myBtn:hover {
-    background-color: #555;
+    color: var(--navy);
+    background-color: var(--blue);
 }
     /***** TABLE CONTAINER *****/
     .prodtable-container {
@@ -95,6 +96,19 @@
         border-radius: 20px;
     }
 
+    /***** TABLE CONTAINER 2 - ALL SERVICES *****/
+    .prodtable-container2 {
+        max-width: 1130px;
+        margin-left: 200px;
+        margin-right: 200px;
+        width: 100%;
+        padding: 40px 30px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        /* box-shadow: rgba(0, 0, 0, 0.212) 1px 2px 3px; */
+        background-color: white;
+        border-radius: 20px;
+    }
+
     /***** PRODUCT TITLE|FILTER|SEARCH|EXPORT *****/
     ul {
         list-style-type: none;
@@ -104,6 +118,10 @@
         display: inline-block;
     }
 
+    .labels0 {
+        float: top;
+    }
+
     .labels1 {
         float: left;
     }
@@ -111,6 +129,71 @@
     .labels2 {
         text-align: right;
         float: right;
+    }
+
+    
+    /* SALES COUNTER CONTAINER */
+    .sales-container-1 {
+        display: flex;
+    }
+    .sales-container {
+        flex: 1;
+        text-align: center;
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        border-radius: 20px;
+        padding: 35px 20px;
+        margin: 50px 15px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    /* TITLE */
+    .sales-title {
+        font-weight: 600;
+        font-size: 17px;
+        color: #001D6E;
+    }
+    /* NUMBER */
+    .sales-counter {
+        font-weight: 900;
+        font-size: 55px;
+        color: #001D6E;
+    }
+
+    .date-export-container {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .date-export-child-date {
+        flex: 6;
+    }
+    .date-export-child-export {
+        flex: 1;
+        float: right;
+        padding-left: 200px;
+    }
+
+    .filter-date-input {
+        margin-left: 10px;
+        width: 180px;
+        height: 18px;
+        padding: 15px;
+        border-radius: 5px;
+        border: solid 1px #ccc;
+        margin-right: 5px;
+    }
+
+    .filter-search {    
+        font-weight: 500;
+        font-size: 14px;
+        background-color: #C4DDFF;
+        padding: 6px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        border: none;
     }
 
     /* SEARCH BAR */

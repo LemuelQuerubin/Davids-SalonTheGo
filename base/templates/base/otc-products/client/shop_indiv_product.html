@@ -12,7 +12,7 @@
 
         <!-- GO BACK LINK -->
         <div class="go-back">
-            <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-arrow-left"></i> Go back</a>
+            <a href="{% url 'shop' %}"><i class="fa-solid fa-arrow-left"></i>Go back to shop</a>
         </div>
 
         <!-- IMG AND DETAILS CONTAINER -->
@@ -57,7 +57,59 @@
             </div>
         </div>
 
+        <!-- MORE DETAILS SECTION -->
+        <div class="more-details-section">
+            <!-- PRODUCT DETAILS -->
+            <div class="prod-details">
+                <label class="shop-sub-titles">Product Details</label>
+                {% if product.Measurement_Num != NULL %}
+                <label class="prod-indiv-details">Measurement:</label> {{product.Measurement_Num}} {{product.Measurement_Type}}<br>
+                {% endif %}
+                <label class="prod-indiv-details">Category:</label> {{product.Cat_Name}}<br>
+                <label class="prod-indiv-details">Product Type:</label> {{product.ProdType_Name}}
+            </div>
+            <!-- REVIEWS -->
+            <div class="reviews-container">
+                <label class="shop-sub-titles" id="review-title">Reviews</label><br>
+                    <!-- SHOW REVIEWS -->
+                    <table class="review-table">
+                        <tbody class="reviews-body">
+                            {% for review in page_prod %}
+                            <tr>
+                                <!-- REVIEW -->
+                                <td><label id="review-name">{{ review.customer }}</label><br>
+                                    <label id="review-text">{{ review.review }}</label>
+                                </td>
+                                <!-- IF EMPTY -->
+                                {% empty %}
+                                <td id="no-reviews"><label>No reviews yet.</label></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>    
+                    </table>
 
+                    <!-- PAGE NAVIGATION -->
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_prod.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                            {% endif %}
+                            
+                            <!-- PAGE INDICATOR -->
+                            <span class="current">
+                                Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                            </span>
+                    
+                            {% if page_prod.has_next %}
+                                <a href="?page={{ page_prod.next_page_number }}">next</a>
+                                <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+            </div>
+        </div>
+        
         <!-- BROWSE OTHER PRODUCTS -->
         <div class="browse-other-prod">
             <span>Browse Other Products</span>

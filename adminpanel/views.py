@@ -8,28 +8,37 @@ from account.forms import *
 from datetime import datetime
 #FOR LOGIN REQUIRED
 from django.contrib.auth.decorators import login_required
-
+from account.decorators import *
 
 
 # Create your views here.
 @login_required(login_url="/login")
+#@role_required(allowed_roles=["is_admin"])
 def adminpage(request):
     current_datetime = datetime.now()
 
     return render(request, 'admin/admin.html', {'current_datetime':current_datetime})
 
+
 @login_required(login_url="/login")
 def accounts(request):
     current_datetime = datetime.now()
     admins = CustomUser.objects.filter(is_admin=1) 
-    staffs = CustomUser.objects.filter(is_staff=1, is_admin=0, is_active=1)
-    #staffs = CustomUser.objects.filter(is_staff=1, is_admin=0)
     context = {
         'admins': admins,
-        'staffs':staffs,
         'current_datetime':current_datetime
     }
     return render(request, 'admin/accounts.html', context)
+
+@login_required(login_url="/login")
+def staffaccounts(request):
+    current_datetime = datetime.now()
+    staffs = CustomUser.objects.filter(is_staff=1, is_admin=0, is_active=1)
+    context = {
+        'staffs':staffs,
+        'current_datetime':current_datetime
+    }
+    return render(request, 'admin/staff_accounts.html', context)
 
 @login_required(login_url="/login")
 def customeraccounts(request):

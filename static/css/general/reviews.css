@@ -1,0 +1,160 @@
+/* REVIEWS HEADING */
+.reviews-heading {
+    font-family: Montserrat;
+    font-size: 40px;
+    background-image: url("/static/images/customerreviews.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    
+}
+
+.reviews-heading p{
+    margin-left: 40px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+#text1 {
+    font-size: 50px;
+    font-weight: 900;
+}
+
+#text1, #text2 {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom:0;
+}
+
+/* STYLIST NAME */
+#stylistName{
+    font-family: Montserrat;
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+/* REVIEW CONTAINER */
+.review-container {
+    /* border: 1px solid green; */
+    
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 330px;
+    grid-gap: 1.5rem;
+    grid-auto-flow: row;
+    justify-content: center;
+    
+}
+
+.review-box {
+    width: 350px;
+    /* border: 1px solid blue; */
+    background: #b9d6fd;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all .1s ease-in-out; 
+    /* border: solid 1px red; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    
+}
+/* Profile picture name and date container */
+.review-pfpnamedate {
+    display: flex;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    /* border: 1px solid red; */
+    
+}
+
+/* namedaterating container */
+.namedaterating {
+    margin-left: 4%;
+}
+
+
+/* Profile Picture */
+.review-pfp {
+    vertical-align: middle;
+}
+.review-pfp img {
+    /* border: 1px solid red; */
+    border-radius: 100%;
+    width: 70px;
+    margin-top: 5px;
+}
+
+/* First Name */
+.review-firstname {
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.review-firstname p{
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    text-align: left;
+    font-weight: bold;
+}
+  
+
+/* Date */
+.review-date p{
+    margin-top: 0px;
+    text-transform: uppercase;
+    text-align: left;
+    font-size: smaller;
+    color: rgb(45, 45, 45);
+}
+
+/* Rating */
+.review-rating p{
+    text-align: left;
+    margin-bottom: 0px;
+}
+
+
+/* Review Text */
+.review-text {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* View More */
+.view-more {
+    /* border: 1px solid red; */
+    margin-top: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+}
+.view-more a{
+    color: #2977dd;
+    font-size: 25px;
+    font-weight: 200;
+    text-decoration: none;
+    
+}
+
+.view-more a:hover{
+    font-size: 25px;
+    font-weight: 400;
+    text-decoration: none;
+
+}
+

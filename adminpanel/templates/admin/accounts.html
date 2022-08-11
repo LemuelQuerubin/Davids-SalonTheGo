@@ -4,7 +4,8 @@
 {% block content %}
 <!-- ACCOUNTS -->
 <!-- /adminpanel/templates/accounts.html -->
-<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/admin/accountsV2.css' %}">
 <script src="https://kit.fontawesome.com/978ddb0a33.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/sorttable.js' %}"></script>
 
@@ -20,92 +21,53 @@
             <br>
         {% endfor %}
         <!-- ADMIN TABLE -->
-        <div class="title-button">
-            <p class="tbl-title">Admin Table</p>
-            <a href="/admin/createadmin"><button class="addButton">+ Add Admin</button></a>
-        </div>
+        <div class="prodtable-container">
+            <div class="labels-container">
+                <!-- TITLE -->
+                <div class="labels1">
+                    <h2>Admin Table</h2>
+                </div>
+                <div class="labels2">
+                    <ul>    
+                        <!-- <li class="top-labels">Filter</li> -->
+                        <li class="top-labels">
+                            
+                        <div class="search">
+                            <form method="GET" action="#">
+                                <input type="text" name="q" placeholder="Search...">
+                            </form>
+                        </div>            
+                        </li>
+                        {% comment %} <li class="top-labels"><a href="#" class="export-btn">Export Table</a></li> {% endcomment %}
+                        <li class="top-labels"><a href="/admin/createadmin"><button class="addButton">+ Add Admin</button></a></li>
+                    </ul>
+                </div>
+            </div>
         
-        <div class="admin-accounts-tbl">
-            <table width="100%" class="sortable">
-                <thead>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Username</th>
-                    <th>Staff Role</th>
-                    <th>Gender</th>
-                    <th>Contact Number</th>
+            <table class="products-table sortable">
+                <thead class="products-thead">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Staff Role</th>
+                        <th>Gender</th>
+                        <th>Contact Number</th>
+                    </tr>
                 </thead>
-                <tbody>
+                <tbody class="products-tbody">
                     {% for row in admins %}
-                    <tr>
-                        <td>{{row.first_name}}</td> 
-                        <td>{{row.last_name}}</td>
-                        <td>{{row.email}}</td>
-                        <td>{{row.username}}</td>
-                        <td>{{row.admin.stafftype.stafftype}}</td>
-                        <td>{{row.admin.gendertype.gendertype}}</td>
-                        <td>{{row.admin.contact_number}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <!-- STAFF TABLE -->
-        <div class="title-button">
-            <p class="tbl-title">Staff Table</p>
-            <a href="/admin/createstaff"><button class="addButton">+ Add Staff</button></a>
-        </div>
-        
-        <div class="staff-accounts-tbl">
-            <table width="100%" class="sortable">
-                <thead>
-                    <th>Status</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email<br></th>
-                    <th>Username</th>
-                    <th>Staff Role</th>
-                    <th>Gender</th>
-                    <th>Contact Number</th>
-                    <th>Option</th>
-                </thead>
-                <tbody>
-                    {% for row in staffs %}
-                    <tr>
-                        <div class="td-height">
-                            <td>
-                                {% if row.is_active == 1 %}
-                                    <i class="fa-solid fa-user-check" style="color:#77C66E; font-size: 25px;"></i>
-                                {% elif row.is_active == 0 %}
-                                    <i class="fa-solid fa-user-xmark" style="color:#DC143C; font-size: 25px;"></i>
-                                {% endif %}
-                                
-                            </td> 
+                        <tr>
                             <td>{{row.first_name}}</td> 
-                            <td>{{row.last_name}}</td> 
-                            <td>{{row.email}}</td> 
-                            <td>{{row.username}}</td> 
-                            <td>{{row.staff.stafftype.stafftype}}</td> 
-                            <td>{{row.staff.gendertype.gendertype}}</td> 
-                            <td>{{row.staff.contact_number}}</td>
-                            {% comment %} <td><a href ="editstaffinfo/{{row.staff.staff_id}}">Edit</a></td>
-                             {% endcomment %}
-                             <td>
-                                <form method="post">
-                                    {% csrf_token %} 
-                                    <a href ="{% url 'editstaffinfo' row.id %}"><i class="fa-solid fa-user-pen"  style="font-size: 20px"></i></a></td>
-                                </form> 
-                                
-                                {% comment %} <form method="POST">
-                                    {% csrf_token %}
-                                        <input type="hidden" value="{{ appointment.id }}" name="jof">
-                                        <input class="buttons5" type="submit" value="Proceed in Job Order Form" name="button" id="jof">
-                                </form> {% endcomment %}
-                        </div> 
-                    </tr>
-                    {%endfor%}
+                            <td>{{row.last_name}}</td>
+                            <td>{{row.email}}</td>
+                            <td>{{row.username}}</td>
+                            <td>{{row.admin.stafftype.stafftype}}</td>
+                            <td>{{row.admin.gendertype.gendertype}}</td>
+                            <td>{{row.admin.contact_number}}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -125,6 +87,33 @@
 				</nav>
 			</div>
             -->
-    </div>
 </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <!-- BACK TO TOP SCRIPT -->
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+
 {% endblock content %}

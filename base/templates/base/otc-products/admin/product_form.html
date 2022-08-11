@@ -29,6 +29,16 @@
                 <label for="{{ form.Cat_Name.id_for_label }}">Category:</label>
                 {{ form.Cat_Name }}
             </div>
+            <!-- MEASUREMENT -->
+            <label for="{{ form.Measurement_Num.id_for_label }}">Measurement:</label>
+            <div class="measurement-indiv-container">
+                {{ form.Measurement_Num.errors }}
+                {{ form.Measurement_Num }}
+
+                {{ form.Measurement_Type.errors }}
+                {{ form.Measurement_Type }}
+            </div>
+            
             <!-- DESCRIPTION -->
             <div class="forms-indiv-container">
                 {{ form.Prod_Desc.errors }}

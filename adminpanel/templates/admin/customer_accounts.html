@@ -4,57 +4,90 @@
 {% block content %}
     <!-- CUSTOMER_ACCOUNTS -->
     <!-- /adminpanel/templates/customer_accounts.html -->
-<link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}">
 <script src="{% static 'js/sorttable.js' %}"></script>
-
-<div class="main">
-    <div class="tables">
-        <!-- CUSTOMER TABLE -->
-        <p class="tbl-title">Customers Table</p>
-        
-        <div class="admin-accounts-tbl">
-            <table width="100%" class="sortable">
-                <thead>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Username</th>
-                    <th>Gender</th>
-                    <th>Contact Number</th>
-                    <th>Last Login</th>
-                </thead>
-                <tbody>
-                    {% for row in customers %}
-                    <tr>
-                        <td>{{row.first_name}}</td> 
-                        <td>{{row.last_name}}</td>
-                        <td>{{row.email}}</td>
-                        <td>{{row.username}}</td>
-                        <td>{{row.customer.gendertype.gendertype}}</td>
-                        <td>{{row.customer.contact_number}}</td>
-                        <td>{{row.last_login|date:"F d, Y"}}</td>   
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="main"> 
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+        <div class="main-wrapper">
+            <div class="container">
+                <div class="prodtable-container1">
+                    <div class="labels-container">     
+                            <!-- TITLE -->
+                            <div class="labels1">
+                                <h2>Customer Table</h2>
+                            </div>
+                            <div class="labels2">
+                                <ul>    
+                                    <!-- <li class="top-labels">Filter</li> -->
+                                    <li class="top-labels">
+                                    <div class="search">
+                                        <form method="GET" action="{% url 'product-sales-reports' %}">
+                                            <!--'customer_accounts'"-->
+                                            <input type="text" name="q" placeholder="Search...">
+                                        </form>
+                                    </div>            
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                    <table class="products-table">
+                        <thead class="products-thead">
+                            <tr>
+                                <!-- TABLE HEADER -->
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Contact Number</th>
+                                <th scope="col">Last Login</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody class="products-tbody">
+                            {% for row in customers %}
+                                <tr>
+                                    <td>{{row.first_name}}</td> 
+                                    <td>{{row.last_name}}</td>
+                                    <td>{{row.email}}</td>
+                                    <td>{{row.username}}</td>
+                                    <td>{{row.customer.gendertype.gendertype}}</td>
+                                    <td>{{row.customer.contact_number}}</td>
+                                    <td>{{row.last_login|date:"F d, Y"}}</td>   
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    
+                <!-- PAGE NAVIGATION -->
+            </div>
         </div>
-
-        
-            <!-- Start Pagination 
-			<div class='pagination-container' >
-				<nav>
-				  <ul class="pagination">
-                    <li data-page="prev" >
-                        <span> < <span class="sr-only">(current)</span></span>
-                    </li>
-                    <!- Here the JS Function Will Add the Rows 
-                    <li data-page="next" id="prev">
-                        <span> > <span class="sr-only">(current)</span></span>
-                    </li>
-	    		  </ul>
-				</nav>
-			</div>
-            -->
     </div>
-</div>
-{% endblock content %}
+    
+    <!-- BACK TO TOP BUTTON -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <!-- BACK TO TOP SCRIPT -->
+        <script>
+            //Get the button
+            var mybutton = document.getElementById("myBtn");
+            
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+            
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+            }
+            
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            }
+        </script>
+    {% endblock content %}

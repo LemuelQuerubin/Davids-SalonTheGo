@@ -26,11 +26,70 @@
      <!--JAVASCRIPT -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
      <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-  
+
+    <style>
+        /* TRANSFER TO HOMEPAGE CSS SOON */
+        .pricelist-box {
+        background-color: #E1EEFF;
+        flex: 1;
+        overflow: hidden;
+        transition: .5s;
+        margin: 0 1.5%;
+        box-shadow: 0 4px 12px rgba(0,0,0,10%);
+        line-height: 0;
+        }
+
+        /* PRICE LIST PICTURE */
+        .pricelist-box > img {
+        width: 100%;
+        height: calc(40% - 10vh);
+        object-fit: cover; 
+        transition: .5s;
+        }
+
+        /* PRICE LIST SPAN */
+        .pricelist-box > span {
+        font-size: 3.8vh;
+        font-weight: bold;
+        display: block;
+        text-align: center;
+        height: 10vh;
+        line-height: 2.6;
+        }
+
+        hr.pricelist-hr {
+            border: 1px solid #363636;
+            width: 90%;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .pricelist-container {
+            display: flex;
+            width: 100%;
+            padding: 4% 2%;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+
+        .pricelist-table {
+            margin:5px 0;
+            min-width: 400px;
+            text-align: center;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .pricelist-thead {
+            height: 120px;
+        }
+    </style>
 </head>
 
 <body>    
     <!-----------------------------------  FIRST PART ----------------------------------->
+
     <div id="home" class="home">
         <header>                
             <!------------------------------- NAVBAR ------------------------------------------->
@@ -40,7 +99,7 @@
                         <!--LOGO-->
                         <img
                         class="d-inline-block align-top"
-                        src="images/logo-3.png"
+                        src="{% static '/images/logo-3.png' %}"
                         width="150" />
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -69,22 +128,14 @@
                 </ul>
 
                 <!-- CART ICON -->
-                {% if user.is_customer %}
-                <a href="{% url 'cart' %}" class="cart-invert">
+                
+                <a href="/shop/cart/" class="cart-invert">
                     <img
                     class="d-inline-block align-top px-1"
-                    src="/images/cart.png"
+                    src="{% static '/images/cart.png' %}"
                     width="50" />
                 </a>
-
-                {% else %}
-                <a href="/login" class="cart-invert">
-                    <img
-                    class="d-inline-block align-top px-1"
-                    src="/images/cart.png"
-                    width="50" />
-                </a>
-                {% endif %}
+               
                 <!-- CART TOTAL
                 <p id="cart-total">0</p>
                 -->
@@ -98,7 +149,7 @@
         
                 {% if user.is_authenticated %}   
                
-                <a href="/customer"><img src="/images/account.png" width="40" height="40"></a>
+                <a href="/customer"><img src="{% static '/images/account.png' %}" width="40" height="40"></a>
                     
                 {% else %}
                 <div class="nav_button">
@@ -120,17 +171,342 @@
         <br><br>
 
             <!------------------------------- BUTTON ------------------------------------------->
-        {% if user.is_customer %}
+        
         <button type="button" id="shopbtn" class="shopbtn"> <a href="/appointments"> BOOK NOW </a> </button>
-        {% else %}
-        <button type="button" id="shopbtn" class="shopbtn"> <a href="/login"> BOOK NOW </a> </button>
-        {% endif %}
+        
     </div>
 
     <br><br><br>
     <!---------------------------------  END OF FIRST PART --------------------------------->
     
     <!---------------------------------  SECOND PART --------------------------------------->
+    <!-- PRICES LIST -->
+    <div id="title" class="title">
+        <h2 class="head"><span>DAVID'S SALON PRICE LIST</span></h2>
+        <div class="pricelist-container">
+            <!-- HAIR & MAKE-UP -->
+            <div class="pricelist-box">
+              <img src="{% static 'images/price-hair-make.jpg'%}">
+              <span>HAIR & MAKE-UP</span>
+              <hr class="pricelist-hr">
+              <table class="pricelist-table">
+                  <thead class="pricelist-thead">
+                      <tr>
+                          <th>
+                              &nbsp;
+                          </th>
+                          <th>
+                              &nbsp;
+                          </th>
+                          <th>
+                              Price
+                          </th>
+                          <th>
+                              Approximate Time
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody class="pricelist-thead">
+                      <!-- ROW 1 -->
+                      <tr>
+                          <td>
+                              &nbsp;
+                          </td>
+                          <td>
+                              Shampoo and Blowdry
+                          </td>
+                          <td>
+                              P 300.00
+                          </td>
+                          <td>
+                              45 minutes
+                          </td>
+                      </tr>
+                      <!-- ROW 2 -->
+                      <tr>
+                          <td>
+                              &nbsp;
+                          </td>
+                          <td>
+                              Setting/Ironning
+                          </td>
+                          <td>
+                              P 600.00
+                          </td>
+                          <td>
+                              45 minutes
+                          </td>
+                      </tr>
+                      <!-- ROW 3 -->
+                      <tr>
+                          <td>
+                              &nbsp;
+                          </td>
+                          <td>
+                              Hair and Make-up
+                          </td>
+                          <td>
+                              P 1,500.00
+                          </td>
+                          <td>
+                              2 hours
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+            </div>
+            <!-- TREATMENT -->
+            <div class="pricelist-box">
+              <img src="{% static 'images/price-treatment.jpg'%}">
+              <span>TREATMENT</span>
+              <hr class="pricelist-hr">
+                <table class="pricelist-table">
+                    <thead class="pricelist-thead">
+                        <tr>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Approximate Time
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="pricelist-thead">
+                        <!-- ROW 1 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Regular Hot Oil
+                            </td>
+                            <td>
+                                P 980.00
+                            </td>
+                            <td>
+                                1 hour
+                            </td>
+                        </tr>
+                        <!-- ROW 2 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Hair Spa
+                            </td>
+                            <td>
+                                P 1,400.00
+                            </td>
+                            <td>
+                                1 hour
+                            </td>
+                        </tr>
+                        <!-- ROW 3 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Intense Treatment
+                            </td>
+                            <td>
+                                P 1,680.00
+                            </td>
+                            <td>
+                                2 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 4 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Keratin
+                            </td>
+                            <td>
+                                P 4,500.00
+                            </td>
+                            <td>
+                                2 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 5 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Brazillian
+                            </td>
+                            <td>
+                                P 4,500.00
+                            </td>
+                            <td>
+                                3 hours
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pricelist-container" style="display: flex; width: 100%; padding: 0% 2% 10% 2%; box-sizing: border-box; height: 100vh;">
+            <!-- COLOR -->
+            <div class="pricelist-box">
+                <img src="{% static 'images/price-dye.jpg'%}">
+                <span>COLOR</span>
+                <hr class="pricelist-hr">
+                <table class="pricelist-table">
+                    <thead class="pricelist-thead">
+                        <tr>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Approximate Time
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="pricelist-thead">
+                        <!-- ROW 1 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Tint
+                            </td>
+                            <td>
+                                P 1,750.00
+                            </td>
+                            <td>
+                                2 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 2 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Cellophane
+                            </td>
+                            <td>
+                                P 1,960.00
+                            </td>
+                            <td>
+                                2 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 3 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Highlights (foil)
+                            </td>
+                            <td>
+                                P 2,240.00
+                            </td>
+                            <td>
+                                2 hours
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+  
+            </div>
+            <!-- FORM -->
+            <div class="pricelist-box">
+                <img src="{% static 'images/price-form.jpg'%}">
+                <span>FORM</span>
+                <hr class="pricelist-hr">
+                <table class="pricelist-table">
+                    <thead class="pricelist-thead">
+                        <tr>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Approximate Time
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="pricelist-thead">
+                        <!-- ROW 1 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Perm
+                            </td>
+                            <td>
+                                P 2,100.00
+                            </td>
+                            <td>
+                                3 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 2 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Hair Relax
+                            </td>
+                            <td>
+                                P 3,360.00
+                            </td>
+                            <td>
+                                3 hours
+                            </td>
+                        </tr>
+                        <!-- ROW 3 -->
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                Hair Rebond
+                            </td>
+                            <td>
+                                P 4,500.00
+                            </td>
+                            <td>
+                                3 hours
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    
     <!-- BESTSELLERS -->
     <div id="title" class="title">
         <h2 class="head"><span>FEATURED PRODUCTS</span></h2>
@@ -162,13 +538,11 @@
                 <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
                 <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
                 <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
-                <td class="add-btn"> <a href="#" id="add-buttons"> <button type="button" id="add-button" class="add-button"> Add to Cart </button> </a></td>
             </tr>
         </table>
     </div>
     <br><br>
     <!-- END OF BESTSELLERS -->
-
     <!-- END OF SECOND PART -->
 
     <!-- THIRD PART-->
@@ -181,6 +555,40 @@
         <p id="thirdhead" class="thirdhead"><b>WHAT INSPIRED US TO <br> MAKE SALONTHEGO?</b></p> <br>
         <button type="button" id="shopbtn" class="shopbtn"> <a href="#"> Learn About Us Here </a> </button>
     </div>
+
+    
+    <!-- VISIT SM CITY GRAND CENTRAL -->
+
+    <div class="float-container" style="margin-bottom: 20px;">
+
+        <div class="float-child" style="width: 50%; float: left; padding: 20px;">
+          <div class="green"><img src="{% static 'images/salon-salon.jpg'%}" width="780px"></div>
+        </div>
+        
+        <div class="float-child" style="width: 50%; float: left; margin-bottom: 10%; padding: 20px;">
+          <div class="blue">
+            <h1>Visit SM City Grand Central</h1>
+            <br>
+            <h4> <b> Address </b> </h4>
+            <br>
+            <h4>Rizal Ave Ext, East Grace Park,
+            <br>
+            Caloocan, Metro Manila
+            </h4>
+            <br><br>
+
+            <h4> <b> Contact </b> </h4>
+            <br>
+            <h4>(+63) 905 931 6531</h4>
+            <br><br>
+
+            <h4> <b> Hours </b> </h4>
+            <br>
+            <h4>Mon-Sun &nbsp;&nbsp; 10:00 AM - 9:00 PM</h4>
+          </div>
+        </div>
+        
+    </div>
     <!-- END OF THIRD PART -->
 
     <br><br>
@@ -189,12 +597,12 @@
     <div id="review-table" class="review-table">
         <table id="rev-table" class="rev-table">
             <tr>
-                <td> <img src="/images/rev1.jpg"></td>
-                <td> <img src="/images/salon1.jpg"></td>
+                <td> <img src="{% static '/images/rev1.jpg' %}"></td>
+                <td> <img src="{% static '/images/salon1.jpg' %}"></td>
             </tr>
             <tr>
-                <td> <img src="/images/rev2.jfif"></td>
-                <td> <img src="/images/rev3.jpg"></td>
+                <td> <img src="{% static '/images/rev2.jfif' %}"></td>
+                <td> <img src="{% static '/images/rev3.jpg' %}"></td>
             </tr>
         </table>
     </div>
@@ -202,6 +610,7 @@
     <div id="reviews" >
         <p id="lasthead" ><b>REVIEWS FROM <br>OUR CUSTOMERS</b></p>
         <p id="last-text" > feedbacks that help <br> us keep going</p>
+        <button type="button" id="shopbtn" class="shopbtn" style="margin-left: 15px;"> <a href="/reviews"> See Reviews </a> </button>
     </div>
 
     <!-- END OF REVIEWS -->

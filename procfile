@@ -1,0 +1,1 @@
+web: gunicorn salonthego.wsgi --log-file -

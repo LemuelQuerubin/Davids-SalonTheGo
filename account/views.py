@@ -20,12 +20,23 @@ from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 from django.contrib.auth.decorators import login_required
 
+from account.decorators import * 
+
+# TO ACCESS REVIEWS
+from system.models import *
 
 
 
 # GENERAL PAGES
 def homepage(request):
     user = request.user
+    if user.is_staff and user.is_admin:
+        return redirect('/admin')
+
+    if user.is_staff and not user.is_admin:
+        return redirect('/staff')
+
+   
     return render(request, 'general/homepage-login.html')
 
 def products(request):
@@ -37,7 +48,11 @@ def promos(request):
 def aboutus(request):
     return render(request, 'general/aboutus.html')
 
+def reviews(request):
+    return render(request, 'general/reviews.html')
 
+def indivreviews(request):
+    return render(request, 'general/indivreviews.html')
 
 # AUTHENTICATION PAGES
 def loginpage(request):
@@ -48,22 +63,34 @@ def loginpage(request):
 
         #AUTHENTICATE THE USER/CHECK IF THE INOUT MATCH ON THE RECORD IN THE DATABASE
         user = authenticate(username=username, password=password)
-        if user is not None and user.is_customer:
-            login(request, user)    
-            return redirect('/')
+      
+        if user is not None and user.is_customer:          
+            login(request, user)  
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
+            else:  
+                return redirect('/')
   
         elif user is not None and user.is_staff and not user.is_admin :
             login(request, user) 
-            return redirect('/staff')
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
+            else:  
+                return redirect('/staff')
 
         elif user is not None and user.is_staff and user.is_admin:
-            login(request, user)    
-            return redirect('/admin')
+            login(request, user) 
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
+            else:  
+                return redirect('/admin')
             
         
         else:
             messages.error(request,"bad credentials")
             return redirect('/login')
+
+        
     
     return render(request, 'authentication/login.html')
 
@@ -91,15 +118,34 @@ def registerpage(request):
         #IF USERNAME LENGTH IS GREATER THAN 10
         if len(username)>10:
             messages.error(request, "Username must be under 10 characters")
+            return redirect('/register')
             
         #IF PASSWORD DIDNT MATCH
         if password != pass2:
             messages.error(request, "Passwords didn't match")
+            return redirect('/register')
         
         #USERNAME MUST CONSIST NUMBER AND LETTER
         if not username.isalnum():
             messages.error(request, "Username must be alpha-numeric")
             return redirect('/register')
+
+        if password.isnumeric():
+            messages.error(request, "Password must not be pure numeric")
+            return redirect('/register')
+        
+        if password == fname or password == lname or password == username:
+            messages.error(request, "Password must not the same on the name")
+            return redirect('/register')
+        
+        if len(password) not in  range (8, 15):
+            messages.error(request, "Password must have 8-15 characters")
+            return redirect('/register')
+        
+
+        
+
+
         
         
         #TRANSFERRING TO THE BACKEND/DATABASE
@@ -174,3 +220,4 @@ def activate(request, uidb64, token):
         return redirect('/')
     else:
         return render(request, 'authentication/activation_failed.html')
+

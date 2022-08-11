@@ -1,0 +1,46 @@
+{% extends 'main_products.html' %}
+{% block content %}
+
+<div class="main-wrapper">
+    <!-- GO BACK LINK -->
+    <div class="go-back">
+        <a href="{{request.META.HTTP_REFERER}}"><i class="fa-solid fa-circle-arrow-left"></i>Go back</a>
+    </div>
+
+    <div class="form-style">
+        <h2>Review</h2>
+        <tr>
+            <!-- TABLE BODY -->
+            {% for item in items %}
+            <td data-label="Order">
+                {% if item.product.Prod_Image %}<img src="{{item.product.Prod_Image.url}}" class="prod-img" />{% endif %}
+                {{ item.product }}
+            </td>     
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                <!-- RATING -->
+                <div class="forms-indiv-container">
+                        {{ form.is_like.errors }}
+                        <label for="{{ form.is_like.id_for_label }}">Like:</label>
+                        {{ form.is_like }}
+
+                        {{ form.is_dislike.errors }}
+                        <label for="{{ form.is_dislike.id_for_label }}">Dislike:</label>
+                        {{ form.is_dislike }}
+                </div>
+                <!-- PRODUCT NAME -->
+                <div class="forms-indiv-container">
+                    {{ form.review.errors }}
+                    <label for="{{ form.review.id_for_label }}">Review:</label>
+                    {{ form.review }}
+                </div>
+
+                <input type="submit" value="Submit" onclick="return confirm('Are you sure?');"> 
+            </form>
+            {% endfor %}
+        </tr> 
+    </div>
+</div>    
+
+
+{% endblock content %}

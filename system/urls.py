@@ -28,17 +28,31 @@ urlpatterns = [
     path('admincalendar/', views.admincalendar, name='admincalendar'),
     path('admincalendardayview/', views.admincalendardayview, name='admincalendardayview'),
     path('appointmentsDone/', views.appointmentsDone, name='appointmentsDone'),
+    path('allschedules/', views.adminallschedules, name='allschedules'),
     
 
+    # SERVICES
+    path('allservices/', views.allservices, name='allservices'),
+    path('servicehistory/', views.servicehistory, name='servicehistory'),
+    
+    path('go_back/', views.go_back, name='go_back'),
 
     # TRANSACTION SUCCESSFUL
     path('transactionSuccessful/', views.transactionSuccessful, name='transactionSuccessful'),
     
     # FEEDBACK
     path('feedbackClient/', views.feedbackClient, name='feedbackClient'),
-    path('feedbackEditClient/', views.feedbackEditClient, name='feedbackEditClient'),
+    path('feedbackClientView/', views.feedbackClientView, name='feedbackClientView'),
     path('feedbackTable/', views.feedbackTable, name='feedbackTable'),
+    path('feedbackreplyAdmin/', views.feedbackreplyAdmin, name='feedbackreplyAdmin'),
+    path('adminfeedbackTable/', views.adminfeedbackTable, name='adminfeedbackTable'),
 
+    # PDF/ REPORT GENERATION
+    path('createpdf-servicesales/', views.pdf_report_create_service_sales, name='createpdf'),
+    path('jobOrderformtbl/', views.jobOrderformtbl, name='jobOrderformtbl'),
+    path('createpdf-joftable/', views.jobOrderformtblreport, name='jobOrderformtblreports'),
+    path('createpdf-allschedule/', views.adminallschedulesreport, name='adminallschedulesreport'),
+    path('createpdf-jof/', views.jobOrderFormreport, name='joborderformreport'),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \

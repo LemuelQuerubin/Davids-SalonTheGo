@@ -1,0 +1,106 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+<div class ="main">
+
+    <head>
+        <title>Ratings and Review</title>
+        <link rel="icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="{% static '/css/appts1.css' %}">
+
+        <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/c3481268b6.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div class="content-container">
+            <h5 class="go-back"><a href="{% url 'adminfeedbackTable' %}"><span class="fa fa-arrow-circle-left mr-3"></span>Go Back to Ratings & Review</a></h5>
+            
+            <div class="form-container shadow-box-contain fbc-left">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="header-container"><b><i class="fas fa-comments"></i> CUSTOMER RATING AND REVIEW</b></div>
+
+                    <div class="job-order-container">
+                        <div class="job-order-label">
+                            <h6>DATE:</h6>
+                            <p>{{ fb.feedbackInfo.appointmentInfo.apptDate|date:'F d, Y' }}</p>
+                        </div>
+                        <div class="job-order-label">  
+                            <h6>TIME:</h6>
+                            <p>{{ fb.feedbackInfo.appointmentInfo.appt_timeStart|time:'h:i A' }}</p>
+                        </div> 
+                    </div>
+
+                    <div class="job-order-container">       
+                        <div class="job-order-label">
+                            <h6>NAME:</h6>
+                            <p>{{ fb.feedbackInfo.appointmentInfo.customer.customer.first_name }} {{ fb.feedbackInfo.appointmentInfo.customer.customer.last_name }}</p>
+                        </div>
+                        <div class="job-order-label">
+                            <h6>RATING:</h6>
+                            {% if fb.isPositive == 1 %}
+                                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                            {% elif fb.isNegative == 1 %}
+                                <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="job-order-container">
+                        <div class="job-order-label">
+                            <h6>SERVICE/S:</h6>
+                            <p>
+                                {% for key in fb.feedbackInfo.servicePrices.keys %}
+                                    {{ key }}
+                                    {% if not forloop.last %}
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="job-order-label">  
+                            <h6>STYLIST:</h6>
+                            <p>{{ fb.feedbackInfo.finalStylist }}</p>
+                        </div> 
+                    </div>
+
+                    <div class="review-container">
+                        <div class="review-label">
+                            <h6>REVIEW</h6>
+                        </div>
+                        <div class="review-form">
+                            <p>{{ fb.review }}</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="reply-container">
+                        <div class="reply-label">
+                            <br><br><br>
+                            <textarea id="textarea" name="reply" rows="4" cols="50" placeholder="Add reply.. (300 characters only)" onKeyPress="if(this.value.length==300) return false;" style="resize:none;">{% if fb.adminReply %}{{ fb.adminReply }}{% endif %}</textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input class="buttons7" type="submit" name="button" {% if fb.adminReply %}value="Update Reply"{% else %}value="Add Reply"{% endif %}/>
+                        </form>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src="{% static '/js/appts.js' %}"></script>
+    </body>
+
+</div>
+
+{% endblock content %}

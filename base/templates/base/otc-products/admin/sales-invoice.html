@@ -1,6 +1,7 @@
 {% extends "general/homepage-user.html" %}
 
 {% block content %}
+{% load static %}
 <div class="main-wrapper">
     <div class="container">
         <!-- GO BACK LINK -->
@@ -11,9 +12,9 @@
         <div class="sales-invoice-container">
             <div class="sales-invoice-title"><label class="sales-inv-title-label"><i class="fa fa-file-text-o"></i> SALES INVOICE FORM</label></div>
             <div class="invoice-date-name-container">
-   
-                <div>DATE: <label class="sales-invoice-info">{{ invoice.order.date_ordered }}</label></div>
-                <div id="sales-invoice-name">NAME: <label class="sales-invoice-info"> {{ invoice.customer.customer.first_name }}</label></div>
+                <div>TRANSACTION ID: <label class="sales-invoice-info">{{ invoice.order.transaction_id }}</label></div>
+                <div id="sales-invoice-date">DATE: <label class="sales-invoice-info">{{ invoice.order.date_ordered }}</label></div>
+                <div>NAME: <label class="sales-invoice-info"> {{ invoice.customer.customer.first_name }}</label></div>
                 {{ invoice.product_pickupID_id.customer_id.first_name }}
             </div>
                  
@@ -55,12 +56,15 @@
                     </tr>
                 </tbody>
             </table>
+            <a href="{% url 'createpdf-sales-invoice' invoice.order.id %}">EXPORT PDF</a>
+            
             <div class="clear-btn">
                 <form method="POST">
                     {% csrf_token %}
                     <input class="confirm-btn" value="Confirm" type="submit" confirm="Confirm" name="button">
                 </form>
             </div>
+
         </div>
         
 

@@ -1,0 +1,187 @@
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* SALES COUNTER CONTAINER */
+    .sales-container-1 {
+        display: flex;
+    }
+    .sales-container {
+        flex: 1;
+        text-align: center;
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        border-radius: 20px;
+        padding: 35px 20px;
+        margin: 50px 15px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    /* TITLE */
+    .sales-title {
+        font-weight: 600;
+        font-size: 17px;
+        color: #001D6E;
+    }
+    /* NUMBER */
+    .sales-counter {
+        font-weight: 900;
+        font-size: 55px;
+        color: #001D6E;
+    }
+</style>
+
+<div class="main"> 
+<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <div class="main-wrapper">
+        <div class="container">
+            <!-- START OF COUNTER -->
+            <div class="sales-container-1">    
+                <div class="sales-container">
+                    <label class="sales-title">Pending Appointments</label><br>
+                    <label class="sales-counter">{{pending_count}}</label>
+                </div>
+                <div class="sales-container">
+                    <label class="sales-title">Approved Appointments</label><br>
+                    <label class="sales-counter">{{approve_count}}</label>
+                </div>
+                <div class="sales-container">
+                    <label class="sales-title">Completed Appointments</label><br>
+                    <label class="sales-counter">{{complete_count}}</label>
+                </div>
+                <div class="sales-container">
+                    <label class="sales-title">Cancelled Appointments</label><br>
+                    <label class="sales-counter">{{cancelled_count}}</label>
+                </div>
+            </div>
+            <!-- END OF COUNTER -->
+            <div class="prodtable-container1">
+                <div class="labels-container">
+                    <form method="POST">
+                        <!-- TITLE -->
+                        <div class="labels0">
+                            <h2>All Appointment Schedules</h2>
+                        </div>
+                        <!-- NEW DIV -->
+                        <div class="date-export-container" style="padding-top: 25px;">
+
+                            <div class="date-export-child-date">
+                                {% csrf_token %}
+                                From: <input type="date" class="filter-date-input" name="fromdate" required/>
+                                &nbsp; To: <input type="date" class="filter-date-input" name="todate" required/>
+                                    <input type ="submit" class="filter-search" name="button" value="Search"/>
+                            </div>
+                            <div class="date-export-child-export">
+                                <a href="/appointments/createpdf-allschedule" class="export-btn">Export Table</a>
+                            </div>
+                            
+                        </div>
+                        <!-- END OF NEW DIV -->
+                    </form>
+                </div>
+                <table class="products-table">
+                    <thead class="products-thead">
+                        <tr>
+                            <!-- TABLE HEADER -->
+                            <th scope="col">Date</th>
+                            <th scope="col">Time Start</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">First Stylist</th>
+                            <th scope="col">Second Stylist</th>
+                            <th scope="col">Stylist</th>
+                            <th scope="col">Services</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="products-tbody">
+                        {% for appointment in page_prod %}
+                            {% comment %} {% if orderpickup.order.complete == True %} {% endcomment %}
+                            <tr>
+                                <!-- TABLE BODY -->
+                                <td>{{appointment.apptDate|date:'F d, Y'}}</td>
+                                <td>{{appointment.appt_timeStart|time:'h:i A'}}</td>
+                                <td>{{appointment.apptType}}</td>
+                                <td>{{appointment.appointmentStatus}}</td>
+                                <td data-label="Customer">
+                                    {% if appointment.apptType == 'Online' %}
+                                        <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} </p>
+                                    {% else %}
+                                        <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                                    {% endif %}
+                                </td>
+                                <td>{{appointment.firstStylist}}</td>
+                                <td>{{appointment.secondStylist}}</td>
+                                <td>
+                                    {% if appointment.appointmentStatus == 'Successful'%}
+                                        {{ appointment.joborderform.finalStylist}}
+                                    {% else %}
+                                        <i class="fas fa-ban"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <ul style="list-style-type:disc; margin-left:20px; text-align:left">
+                                    {% for key in appointment.services %}
+                                        <li>{{ key }}{% if not forloop.last %}</li>{% endif %}
+                                    {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGE NAVIGATION -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_prod.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_prod.previous_page_number }}">previous</a>
+                    {% endif %}
+                    
+                    <!-- PAGE INDICATOR -->
+                    <span class="current">
+                        Page {{ page_prod.number }} of {{ page_prod.paginator.num_pages }}
+                    </span>
+            
+                    {% if page_prod.has_next %}
+                        <a href="?page={{ page_prod.next_page_number }}">next</a>
+                        <a href="?page={{ page_prod.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BACK TO TOP BUTTON -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<!-- BACK TO TOP SCRIPT -->
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+{% endblock content %}

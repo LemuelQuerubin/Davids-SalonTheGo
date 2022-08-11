@@ -1,0 +1,123 @@
+
+{% extends "general/homepage-user.html" %} 
+{% load static %}
+
+{% block content %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/admin/accounts.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/admin/accountsV2.css' %}">
+<script src="{% static 'js/sorttable.js' %}"></script>
+
+    <div class="main"> 
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+            <div class="main-wrapper">
+                <div class="container">
+                    <!-- START OF COUNTER -->
+                    <div class="sales-container-1">    
+                        <div class="sales-container">
+                            <label class="sales-title">Job Order Forms</label><br>
+                            <label class="sales-counter">{{form_count}}</label>
+                        </div>
+                        <div class="sales-container">
+                            <label class="sales-title">Total Sales</label><br>
+                            <label class="sales-counter">₱{{total_price.total|floatformat:2}}</label>
+                        </div>
+                    </div>
+                    <!-- END OF COUNTER -->
+                    <div class="prodtable-container">
+                        <!-- DATE RANGE -->
+                        <form method="POST">
+                        <!-- END OF DATE RANGE -->
+                        <div class="labels-container">
+                            <form method="POST">
+                                <!-- TITLE -->
+                                <div class="labels0">
+                                    <h2>Job Order Forms Report</h2><br>
+                                </div>
+                                <!-- NEW DIV -->
+                                <div class="date-export-container">
+                                    <div class="date-export-child-date">
+                                        {% csrf_token %}
+                                        From: <input type="date" class="filter-date-input" name="fromdate" required/>
+                                        &nbsp; To: <input type="date" class="filter-date-input" name="todate" required/>
+                                            <input type ="submit" class="filter-search" name="button" value="Search"/>
+                                    </div>
+                                    <div class="date-export-child-export">
+                                        <a href="/appointments/createpdf-joftable" class="export-btn">Export Table</a>
+                                    </div>
+                                    
+                                </div>
+                                <!-- END OF NEW DIV -->
+                            </form>
+                        </div>
+                        <table class="products-table">
+                            <thead class="products-thead">
+                                <tr>
+                                    <!-- TABLE HEADER -->
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Service/s</th>
+                                    <th scope="col">Stylist</th>
+                                    <th scope="col">Total Amount</th>
+                                </tr>
+                            </thead>
+        
+                            <tbody class="products-tbody">
+                                {% for appointment in appointments %}
+                                    {% if appointment.appointmentStatus == 'Successful' %}
+                                    <tr>
+                                        <td>{{appointment.apptDate|date:'F d, Y'}}</td>
+                                        <td>{{ appointment.appt_timeStart|time:'h:i A'}}</td>
+                                        <td>
+                                        {% if appointment.apptType == 'Online' %}
+                                            <p>{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} </p>
+                                        {% else %}
+                                            <p>{{ appointment.customer_fname }} {{ appointment.customer_lname }} </p>
+                                        {% endif %}</td>
+                                        <td>
+                                        {% for key in appointment.joborderform.servicePrices.keys %}
+                                            {{ key }}
+                                            {% if not forloop.last %}
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}    </td>
+                                        <td>{{ appointment.joborderform.finalStylist }}</td>
+                                        <td>Php {{appointment.joborderform.totalPrice }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BACK TO TOP BUTTON -->
+        <button onclick="topFunction()" id="myBtn" title="Go to top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <!-- BACK TO TOP SCRIPT -->
+            <script>
+                //Get the button
+                var mybutton = document.getElementById("myBtn");
+                
+                // When the user scrolls down 20px from the top of the document, show the button
+                window.onscroll = function() {scrollFunction()};
+                
+                function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+                }
+                
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                }
+            </script>
+{% endblock content %}

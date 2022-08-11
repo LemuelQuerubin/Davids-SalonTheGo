@@ -1,0 +1,66 @@
+{% load static %}
+<html>
+<head>
+    <title>SERVICE SALES REPORT</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <style>       
+        table{
+            border: 1px solid black;
+        }
+
+        th{
+            font-weight: 700;
+            font-size: 13px;
+            height: 45px;   
+            background-color:  #092147;
+            padding-top: 5px;
+            color: white;
+        }
+
+        td{
+            text-align: center;   
+            height: 35px;   
+            font-size: 12px; 
+            padding-top: 5px;
+        }
+
+        h1{
+            font-size: 20px;
+        }
+
+    </style>
+    
+    <div class ="main">
+        <u><b>DATE:</b> {{ current_datetime|date:'F m, Y | l' }}</i></u><br>
+        <u><b>TIME:</b> {{ current_datetime|time:'f:s A' }}</i></u><br>
+        
+        <br>
+        <center>
+            <h1>INDIVIDUAL SERVICE SALES REPORT</h1>
+            DATE START: <i>insert date range here</i>
+            DATE END: <i>insert date range here</i> 
+        </center>
+        <table>
+            <thead>
+                <th>Service Name</th>
+                <th>Service Count</th>
+                <th>Service Price (Min.)</th>
+                <th>Total Service Sales</th>
+            </thead>
+            <tbody>
+                {% for row in services %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>Php {{ row.2 }}</td>
+                    <td>Php {{ row.3 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

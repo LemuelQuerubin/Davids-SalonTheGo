@@ -84,7 +84,7 @@
                     
                     <!-- ADD TO CART -->
                     <div class="shop-cart-btn">
-                        <button data-product={{product.id}} data-action="add" class="btn btn-primary add-btn add-btn update-cart"> Add to Cart </button>
+                        <button onclick="addToCart()" data-product={{product.id}} data-action="add" class="btn btn-primary add-btn add-btn update-cart"> Add to Cart </button>
                     </div>
                 </div>
 
@@ -118,5 +118,12 @@
         </div>
     </div>
 </div>
+
+<!-- ADD TO CART -->
+<script>
+    function addToCart() {
+      alert("Successfully added to cart!");
+    }
+</script>
 
 {% endblock content %}

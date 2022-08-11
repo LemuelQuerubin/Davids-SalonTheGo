@@ -22,7 +22,7 @@ admin.site.register(otcProduct, otcProductAdmin)
 
 admin.site.register(ProductType)
 admin.site.register(Category)
-
+admin.site.register(MeasurementType)
 # SHOP 
 # admin.site.register(Customer)
 admin.site.register(Order)
@@ -30,4 +30,5 @@ admin.site.register(OrderItem)
 
 admin.site.register(OrderPickUp)
 admin.site.register(SalesInvoice)
+admin.site.register(CustomerReview)
 #admin.site.register(ShippingAddress)

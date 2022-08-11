@@ -201,8 +201,9 @@
 
 /***** PAGE NAVIGATION *****/
 .pagination {
+    display: inline-block!important;
     width: 100%;
-    margin: 45px auto;
+    margin: 45px auto 0;
     text-align: center!important;
 }
 .pagination a {
