@@ -1,3 +1,5 @@
+<title> SalOnTheGo | Ratings and Reviews </title>
+
 {% extends "general/homepage-user.html" %} 
 {% load static %}
 
@@ -71,7 +73,7 @@
                                         {% for row1 in fb %}
                                             {% if row1.feedbackInfo.id == row.id %}
                                                 {% if row1.review %}
-                                                    {{ row1.review }}
+                                                    
                                                 {% else %}
                                                     <b>Not yet rated</b>
                                                 {% endif %}

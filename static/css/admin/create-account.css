@@ -121,6 +121,28 @@
  }
 
  .button1{
+   background-color: #001D6E;
+   color: white;
+   width: 25%;
+   border: 0;
+   height: 6vh;
+   border-radius: 10px;
+   font-family: Montserrat;
+   font-size: 15px;
+   font-weight: 700;
+   margin-top: 80px;
+   margin-right: 20px;
+   margin-left: 450px;
+}
+
+
+.button1:hover{
+   background-color: white;
+   color: #001D6E;
+   border: 1px solid #001D6E;
+}
+
+ .button1-pass{
     background-color: #001D6E;
     color: white;
     width: 25%;
@@ -131,12 +153,12 @@
     font-size: 15px;
     font-weight: 700;
     margin-top: 80px;
-    margin-right: 20px;
-    margin-left: 450px;
+    margin-right: 54px;
+    margin-left: 460px;
  }
 
 
- .button1:hover{
+ .button1-pass:hover{
     background-color: white;
     color: #001D6E;
     border: 1px solid #001D6E;

@@ -23,14 +23,25 @@
         td{
             text-align: center;   
             height: 75px;   
-            font-size: 12px; 
+            font-size: 14px; 
             padding-top: 5px;
+            text-decoration:none;
+        }
+        p{
+            font-size: 13px;
         }
 
         h1{
             font-size: 20px;
+            color: #001D6E;
+            margin-bottom: -120x;
         }
 
+        h2{
+            font-size: 14px;
+            border-bottom: -1px;
+        }
+    
         .order{
             font-size:12px;
         }
@@ -43,16 +54,72 @@
     </style>
     
     <div class ="main">
-<!-- SALES INVOICE FORM -->
-<div class="sales-invoice-container">
-    <div class="sales-invoice-title"><label class="sales-inv-title-label"><i class="fa fa-file-text-o"></i> SALES INVOICE FORM</label></div>
-    <div class="invoice-date-name-container">
-        <div>TRANSACTION ID: <label class="sales-invoice-info">{{ invoice.order.transaction_id }}</label></div>
-        <div id="sales-invoice-date">DATE: <label class="sales-invoice-info">{{ invoice.order.date_ordered }}</label></div>
-        <div>NAME: <label class="sales-invoice-info"> {{ invoice.customer.customer.first_name }}</label></div>
-        {{ invoice.product_pickupID_id.customer_id.first_name }}
+        <!-- COPY FOR LETTERHEAD -->
+        <div class="main">    
+            <table style="border: 1px solid #092147;background-color: #092147; color: white;">
+                <thead>
+                    <tr>
+                        <!-- DATE, TIME, HEADER WITH ADDRESS -->
+                        <td style="
+                        font-size: 20px;
+                        height: 40px;">                
+                            DAVID'S SALON SM GRAND CENTRAL BRANCH
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="
+                        font-size: 12px;
+                        height: 70px;">
+                            5th Level SM City Grand Central, Rizal Avenue Extension <br> East Grace Park, Caloocan, 1403 Metro Manila <br>Cel. (+63) 905 931 6531 / (+63) 995 664 2394
+                        </td>
+                        <!-- END OF DATE, TIME, HEADER WITH ADDRESS -->
+                    </tr>
+                </thead>
+            </table>
+            <br>
+            <!-- REPORT HEADER -->
+            <center><h1>SALES INVOICE RECEIPT<hr></h1></center>
+        
+        <!-- END OF COPY FOR LETTERHEAD -->
+            <table style="border: 1px transparent; font-size: 14px;">
+                <tbody>
+                    <tr>
+                        <!-- STYLIST, ETC -->
+                        <td style="text-align: left; 
+                        height: 200px;">
+                            <b>NAME:</b>&nbsp;&nbsp;
+                            {{ invoice.customer.customer.first_name }}
+                            <br>
+                            <b>PICKUP DATE:</b>&nbsp;&nbsp;{{ invoice.order.date_ordered }}
+                            <br>
+                            <!-- PAYMENT RECEIVED BY -->
+                            <b>RECEIVED BY:</b>
+                            {% for users in user %}
+                                {{ users.first_name }}
+                                {{ users.last_name }}
+                                ({{ users.admin.stafftype }})
+                            {% endfor %}
+                            <br>
+                            <b>TRANSACTION ID:</b>&nbsp;&nbsp; {{ invoice.order.transaction_id }}
+                            
+                        </td>
+                        <!-- DATE AND TIME GENERATED -->
+                        <td style="text-align: left; 
+                        height: 200px;
+                        width: 200px;">
+                            <b>DATE:</b>&nbsp;&nbsp;{{ current_datetime|date:'F m, Y' }}
+                            <br>
+                            <b>TIME:</b>&nbsp;&nbsp;{{ current_datetime|time:'f:s A' }}
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <br>
+
     </div>
-            
+    
     <table class="invoice-table">
         <!-- TABLE HEADER -->
         <thead>
@@ -91,6 +158,7 @@
             </tr>
         </tbody>
     </table>
+    <br>
 </div>
 </body>
 </html>

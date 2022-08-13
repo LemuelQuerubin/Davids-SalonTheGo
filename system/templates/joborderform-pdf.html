@@ -4,28 +4,31 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
     *{
         margin: 0;
         padding: 0;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .main{
         width: 70%;
-        height: 100vh;
-        margin: auto;
     }
     
     p{
-        font-size: 15px;
+        font-size: 13px;
     }
 
     h1{
         font-size: 20px;
         color: #001D6E;
+        margin-bottom: -120x;
     }
 
     h2{
-        font-size: 13px;
+        font-size: 14px;
+        border-bottom: -1px;
     }
  
     th{
@@ -38,7 +41,7 @@
 
     td{
         text-align: center;   
-        height: 30px;   
+        height: 75px;   
         font-size: 15px; 
         padding-top: 5px;
         text-decoration:none;
@@ -51,50 +54,79 @@
 <body>
 
     <div class="main">
-        <u><b>DATE:</b> {{ current_datetime|date:'F m, Y | l' }}</i></u><br>
-        <u><b>TIME:</b> {{ current_datetime|time:'f:s A' }}</i></u><br> 
-        <center><h1>SalOnTheGo Receipt</h1></center>
-        <center><h2>David's Salon SM Grand Central Branch</h2></center>
-        <hr>
-        <br><br>
-        <!-- DATE AND TIME -->
-        <center>
-        <p>
-            <b>DATE:  </b>{{ order.appointmentInfo.apptDate|date:'F' }} {{ order.appointmentInfo.apptDate|date:'d' }}, {{ order.appointmentInfo.apptDate|date:'Y' }}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b>TIME:  </b> {{ order.appointmentInfo.appt_timeStart|time:'h:i A' }}
-        </p></center>
+        <!-- COPY FOR LETTERHEAD -->
+        <div class="main">    
+            <table style="border: 1px solid #092147;background-color: #092147; color: white;">
+                <thead>
+                    <tr>
+                        <!-- DATE, TIME, HEADER WITH ADDRESS -->
+                        <td style="
+                        font-size: 20px;
+                        height: 40px;">                
+                            DAVID'S SALON SM GRAND CENTRAL BRANCH
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="
+                        font-size: 12px;
+                        height: 70px;">
+                            5th Level SM City Grand Central, Rizal Avenue Extension <br> East Grace Park, Caloocan, 1403 Metro Manila <br>Cel. (+63) 905 931 6531 / (+63) 995 664 2394
+                        </td>
+                        <!-- END OF DATE, TIME, HEADER WITH ADDRESS -->
+                    </tr>
+                </thead>
+            </table>
+            <br>
+            <!-- REPORT HEADER -->
+            <center><h1>JOB ORDER FORM RECEIPT<hr></h1></center>
         
-        <!-- NAME AND STYLIST -->
-        <center>
-        <p>
-            <!-- NAME -->
-            <b>NAME: </b>
-            {% if order.appointmentInfo.apptType == 'Online' %}
-                {{ order.appointmentInfo.customer.customer.first_name }} {{ order.appointmentInfo.customer.customer.last_name }} 
-            {% else %}
-                {{ order.appointmentInfo.customer_fname }} {{ order.appointmentInfo.customer_lname }}
-            {% endif %}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
-            <!-- STYLIST -->
-            <b>STYLIST: </b>
-            {{ order.finalStylist }}
-        </p>
-        </center>
-
+        <!-- END OF COPY FOR LETTERHEAD -->
+            <table style="border: 1px transparent; font-size: 14px;">
+                <tbody>
+                    <tr>
+                        <!-- STYLIST, ETC -->
+                        <td style="text-align: left; 
+                        height: 200px;">
+                            <b>NAME:</b>&nbsp;&nbsp;
+                            {% if order.appointmentInfo.apptType == 'Online' %}
+                                {{ order.appointmentInfo.customer.customer.first_name }} {{ order.appointmentInfo.customer.customer.last_name }} 
+                            {% else %}
+                                {{ order.appointmentInfo.customer_fname }} {{ order.appointmentInfo.customer_lname }}
+                            {% endif %}
+                            <br>
+                            <b>STYLIST:</b>&nbsp;&nbsp;{{ order.finalStylist }}
+                            <br>
+                            <!-- PAYMENT RECEIVED BY -->
+                            <b>RECEIVED BY:</b>
+                            {% for users in user %}
+                                {{ users.first_name }}
+                                {{ users.last_name }}
+                                ({{ users.admin.stafftype }})
+                            {% endfor %}
+                        </td>
+                        <!-- DATE AND TIME GENERATED -->
+                        <td style="text-align: left; 
+                        height: 200px;
+                        width: 200px;">
+                            <b>DATE:</b>&nbsp;&nbsp;{{ current_datetime|date:'F m, Y' }}
+                            <br>
+                            <b>TIME:</b>&nbsp;&nbsp;{{ current_datetime|time:'f:s A' }}
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         <br>
 
     </div>
     
-    <table>
-        <thead class="products-thead">
-            <tr>
+    <table style="border: 1px solid gray;">
+        <thead style="border: 1px solid #092147; color: white;">
+            <tr style="background-color: #092147;">
                 <!-- TABLE HEADER -->
-                <th>&nbsp;</th>
                 <th>SERVICE/S</th>
                 <th>PRICE</th>
-                <th>&nbsp;</th> <!--ala nagbago-->
             </tr>
         </thead>
 
@@ -102,8 +134,7 @@
             <tr>
                 <!-- TABLE BODY -->
                 <!-- SERVICES -->
-                <td ></td>
-                <td>
+                <td style="height: 200px;">
                     {% for key in order.servicePrices.keys %}
                     {{ key }}
                         {% if not forloop.last %}
@@ -112,7 +143,7 @@
                     {% endfor %}
                 </td>
                 <!-- SERVICES PRICE -->
-                <td class="invoice-price-td">
+                <td style="height: 200px;">
                     {% load humanize %}
                     {% for value in order.servicePrices.values %}
                         Php {{ value|floatformat:2|intcomma }}
@@ -121,17 +152,14 @@
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td></td>
             </tr>
             <tr>
-                <td ></td>
                 <td>
                     <b>TOTAL AMOUNT DUE:</b>
                 </td>
                 <td>
                     <b>Php {{ order.totalPrice|intcomma }}</b>
                 </td>
-                <td ></td>
             </tr>
         </tbody>
     </table>

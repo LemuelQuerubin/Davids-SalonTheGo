@@ -54,6 +54,7 @@ urlpatterns = [
     path('createpdf-allschedule/', views.adminallschedulesreport, name='adminallschedulesreport'),
     path('createpdf-jof/', views.jobOrderFormreport, name='joborderformreport'),
 
+    
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
 + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

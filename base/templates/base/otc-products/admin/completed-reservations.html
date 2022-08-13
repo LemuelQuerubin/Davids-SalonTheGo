@@ -1,3 +1,5 @@
+<title>  SalOnTheGo | Completed Reservations</title>
+
 {% extends "general/homepage-user.html" %} 
 {% load static %}
 
@@ -42,7 +44,7 @@
                     </thead>
 
                     <tbody class="products-tbody">
-                        {% for orderpickup in orders %}
+                        {% for orderpickup in page_prod %}
                             {% if orderpickup.order.complete == True %}
                             {% if orderpickup.order.pickupstat_id == 'Transaction Successful' %}
                             <tr>

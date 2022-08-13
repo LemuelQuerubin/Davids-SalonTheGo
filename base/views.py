@@ -6,10 +6,11 @@ from django.urls import reverse
 
 import json
 import datetime
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib import messages
 from django.db.models import Sum, F, FloatField
 
+from system.models import *
 from .models import * 
 from .forms import *
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -91,7 +92,25 @@ def otcProducts(request):
 	current_datetime = datetime.now()
 	q = request.GET.get('q') if request.GET.get('q') != None else ''
 	products = otcProduct.objects.all()
+
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
+
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
 	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
 	
 	search = otcProduct.objects.filter(
 		Q(id__icontains=q) |
@@ -99,19 +118,16 @@ def otcProducts(request):
 		Q(ProdType_Name__ProdType_Name__icontains=q) |
 		Q(Cat_Name__Cat_Name__icontains=q) 
 	).order_by('-date_created')
-	
-	#form = StatusForm()
-	#if request.method == 'POST':
-	#    form = StatusForm(request.POST)
-	#    if form.is_valid():
-	#        form.save()
 
 	#PAGE NAVIGATION
 	paginator = Paginator(search, 10)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	context = {'products': products, 'search': search, 'page_prod': page_prod,'current_datetime':current_datetime,  }
+	context = {'products': products, 'search': search, 'page_prod': page_prod,
+				'current_datetime':current_datetime, 'expiring': expiring, 'notif_count': notif_count,
+				'low_stock': low_stock, 'pending_appts': pending_appts, 'pending_count': pending_count,
+				}
 	return render(request, 'base/otc-products/admin/products.html', context)
 
 #DEDUCT FROM STOCK
@@ -183,8 +199,7 @@ def add_items(request, pk):
 @user_passes_test(admin_test, login_url="/shop/otc/history/go_back")
 def otc_history(request):
 	history = otcStockHistory.objects.all().order_by('-last_updated')
-	#history = otcStockHistory.objects.filter(Prod_Name = 'Insight Rebalancing Shampoo').order_by('-last_updated')
-
+	
 	#PAGE NAVIGATION
 	paginator = Paginator(history, 10)
 	page_number = request.GET.get('page')
@@ -379,7 +394,7 @@ def my_purchases(request):
 	filter = OrderPickUp.objects.filter(
 		Q(order__transaction_id__icontains=q) |
 		Q(order__pickupstat_id__icontains=q) 
-	)
+	).order_by('-order__date_ordered')
 
 	#PAGE NAVIGATION
 	paginator = Paginator(filter, 5)
@@ -492,6 +507,7 @@ def processOrder(request):
 @user_passes_test(admin_test, login_url="/shop/pending-reservations/go_back")
 # @user_passes_test(admin_test, login_url="/shop/otc/create-product/go_back")
 def pending_orders(request):
+	current_datetime = datetime.now() 
 	items = OrderItem.objects.all()
 
 	if request.method == 'POST':
@@ -515,7 +531,26 @@ def pending_orders(request):
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	context = {'orders': orders, 'items': items, 'page_prod': page_prod}
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
+
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime': current_datetime, 'pending_appts': pending_appts, 'pending_count': pending_count, 'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock}
 	return render(request, 'base/otc-products/admin/pending-reservations.html', context)
 
 #ADMIN VIEW: ORDER ITEMS OF INDIVIDUAL CUSTOMERS
@@ -560,7 +595,26 @@ def approved_orders(request):
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime,  }
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
+
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime, 'pending_appts': pending_appts, 'pending_count': pending_count, 'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock }
 	return render(request, 'base/otc-products/admin/approved-reservations.html', context)
 
 #ADMIN VIEW: COMPLETED ORDERS
@@ -581,28 +635,45 @@ def completed_orders(request):
 			return HttpResponseRedirect(reverse('sales-invoice', args=[str(transac_successful)]))
 			
 
-	#SEARCH -- MIGHT CHANGE LATER
+	#SEARCH
 	q = request.GET.get('q') if request.GET.get('q') != None else ''
 	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Approved')
 	orders = OrderPickUp.objects.filter(
 		Q(order__transaction_id__icontains=q) |
 		Q(pickup__icontains=q) 
-	)
-
-	#Q(order__customer__name_icontains=q) |
+	).order_by('-pickup')
 
 	#PAGE NAVIGATION
-	paginator = Paginator(reservations, 5)
+	paginator = Paginator(orders, 5)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime,  }
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
+
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+
+	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime, 'pending_appts': pending_appts, 'pending_count': pending_count, 'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock }
 	return render(request, 'base/otc-products/admin/completed-reservations.html', context)
 
 def all_orders(request):
 	current_datetime = datetime.now()
 	items = OrderItem.objects.all()
-	
+	reservations = OrderPickUp.objects.all()
 	#COUNT
 	transaction_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
 	approve_count = Order.objects.filter(pickupstat_id='Approved').count()
@@ -611,19 +682,49 @@ def all_orders(request):
 	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
 
 	#SEARCH
-	q = request.GET.get('q') if request.GET.get('q') != None else ''
-	reservations = OrderPickUp.objects.filter(order__complete=True).order_by('-date_added')
-	orders = OrderPickUp.objects.filter(
-		Q(order__transaction_id__icontains=q) |
-		Q(pickup__icontains=q) 
-	)
+	#q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True).order_by('pickup')
+	# orders = OrderPickUp.objects.filter(
+	# 	Q(order__transaction_id__icontains=q) |
+	# 	Q(pickup__icontains=q) 
+	# )
 
+	#DATE FROM TO RANGE FILTER
+	if request.method == 'POST':
+		if request.POST['button'] == "Search":
+			fromdate=request.POST.get('fromdate')
+			request.session['fromdate'] = fromdate
+			todate = request.POST.get('todate')
+			request.session['todate'] = todate
+			reservations = OrderPickUp.objects.filter(pickup__gte=fromdate, pickup__lte=todate).order_by('pickup')
+	
 	#PAGE NAVIGATION
-	paginator = Paginator(reservations, 5)
+	paginator = Paginator(reservations,10)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
+	
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
 
-	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count }
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+	
+	context = { 'items': items, 'page_prod': page_prod, 'current_datetime':current_datetime, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count, 'pending_appts': pending_appts, 'pending_count': pending_count, 'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock }
+	# 'orders': orders, 
+	
 	return render(request, 'base/otc-products/admin/all-reservations.html', context)
 
 
@@ -660,8 +761,27 @@ def salesinvoice(request, pk):
 				)
 				restock_history.save()
 			return redirect('approved-reservations')
-	#        
-	context = {'invoice': invoice, 'items': items}
+
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
+
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+
+	context = {'invoice': invoice, 'items': items, 'pending_appts': pending_appts, 'pending_count': pending_count, 'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock}
 	return render(request, 'base/otc-products/admin/sales-invoice.html', context)
 
 #----------------------------------------------------ADMIN VIEW: PRODUCT RESERVATION SALES
@@ -674,15 +794,6 @@ def prod_reservation_sales(request):
 	items = OrderItem.objects.all()
 	reservations = OrderPickUp.objects.all()
 
-	#DATE FROM TO RANGE FILTER
-	if request.method == 'POST':
-		if request.POST['button'] == "Search":
-			fromdate=request.POST.get('fromdate')
-			request.session['fromdate'] = fromdate
-			todate = request.POST.get('todate')
-			request.session['todate'] = todate
-			reservations = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('-pickup')
-
 	#COUNT
 	orders = Order.objects.filter(pickupstat_id='Transaction Successful').first()
 	sales_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
@@ -691,6 +802,7 @@ def prod_reservation_sales(request):
 	cancelled_count = Order.objects.filter(pickupstat_id='Cancelled').count()
 	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
 
+	
 	total_sales = OrderPickUp.objects.filter(order__pickupstat_id='Transaction Successful').values('order').aggregate(
         total=Sum(
             F("order__orderitem__quantity") * F("order__orderitem__product__Prod_Price"),
@@ -699,12 +811,46 @@ def prod_reservation_sales(request):
     )
 	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful').order_by('-pickup')
 
+	#DATE FROM TO RANGE FILTER
+	if request.method == 'POST':
+		if request.POST['button'] == "Search":
+			fromdate=request.POST.get('fromdate')
+			request.session['fromdate'] = fromdate
+			todate = request.POST.get('todate')
+			request.session['todate'] = todate
+			reservations = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__complete=True, order__pickupstat_id='Transaction Successful').order_by('-pickup')
+
 	#PAGE NAVIGATION
-	paginator = Paginator(reservations, 5)
+	paginator = Paginator(reservations, 10)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
+	
+	#PENDING NOTIF
+	pending_appts = Appointment.objects.filter(appointmentStatus='Pending')
+	pending_count = Appointment.objects.filter(appointmentStatus='Pending').count()
 
-	context = {'total_sales': total_sales, 'orders': orders, 'items': items, 'reservations': reservations, 'page_prod': page_prod, 'current_datetime':current_datetime, 'sales_count': sales_count, 'approve_count': approve_count, 'pending_count': pending_count, 'complete_count': complete_count, 'cancelled_count': cancelled_count}
+	#LOW STOCK NOTIF
+	low_stock = otcProduct.objects.filter(Prod_stockQty__lte=10)
+
+	#PRODUCTS EXPIRING LESS THAN 6 MONTHS NOTIF
+	six_months = timezone.now().date() + timedelta(days=180)
+	expiring = otcStockHistory.objects.filter(expiry_date__lte=six_months)
+	expiring = otcProduct.objects.filter(expiry_date__lte=six_months)
+	
+	#NOTIF COUNT
+	count1 = otcStockHistory.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count2 = otcProduct.objects.filter(expiry_date__lte=six_months).distinct().count()
+	count3 = otcProduct.objects.filter(Prod_stockQty__lte=10).count()
+
+	notif_count = count1 + count2 + count3
+
+	context = {'total_sales': total_sales,
+				'orders': orders, 'items': items, 'reservations': reservations,
+				'page_prod': page_prod, 'current_datetime':current_datetime,
+				'sales_count': sales_count, 'approve_count': approve_count,
+				'pending_count': pending_count, 'complete_count': complete_count,
+				'cancelled_count': cancelled_count, 'pending_appts': pending_appts, 'pending_count': pending_count,
+				'expiring': expiring, 'notif_count': notif_count, 'low_stock': low_stock}
 	return render(request, 'base/otc-products/admin/product-sales-reports.html', context)
 
 # PRODUCT RESERVATION SALES REPORT ---------------------------------------------
@@ -712,6 +858,9 @@ def pdf_report_create_product_sales(request):
 	items = OrderItem.objects.all()
 	current_datetime = datetime.now()
 	reservations = OrderPickUp.objects.all()
+
+	id = request.user.id
+	user = CustomUser.objects.filter(pk=id)
 	
 	if "fromdate" in request.session.keys():
 		fromdate = request.session['fromdate']
@@ -725,6 +874,9 @@ def pdf_report_create_product_sales(request):
 	else:
 		todate = "2050-01-01"
 
+	# GET EARLIEST AND LATEST DATE 
+	earlydate = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('pickup').first()
+	latedate = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('pickup').last()
 
 	#COUNT
 	sales_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
@@ -735,17 +887,19 @@ def pdf_report_create_product_sales(request):
 	oi1 = []
 	for row in oi:
 		oi1.append(row.order_id)
-	cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+	#cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+	cust_count = OrderPickUp.objects.filter(order__pk__in=oi1, pickup__gte=fromdate,pickup__lte=todate).values('customer').distinct().count()
 
 	# SELECT COUNT(DISTINCT customer_id) AS TotalCust FROM base_orderitem INNER JOIN base_order ON base_orderitem.order_id = base_order.id;
 	
 	# FOR GETTING TOTAL PRODUCTS SOLD
+	# items_in_filtered = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful', pickup__gte=fromdate,pickup__lte=todate)
 	products_sold = 0
 	for row in items:
 		products_sold = products_sold + int(row.quantity)
 
 	# FOR GETTING TOTAL EARNINGS
-	total_sales = OrderPickUp.objects.filter(order__pickupstat_id='Transaction Successful').values('order').aggregate(
+	total_sales = OrderPickUp.objects.filter(order__pickupstat_id='Transaction Successful', pickup__gte=fromdate,pickup__lte=todate).values('order').aggregate(
         total=Sum(
             F("order__orderitem__quantity") * F("order__orderitem__product__Prod_Price"),
             output_field=FloatField()
@@ -753,24 +907,26 @@ def pdf_report_create_product_sales(request):
     )
 
 	#SEARCH -- MIGHT CHANGE LATER
-	q = request.GET.get('q') if request.GET.get('q') != None else ''
-	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful').order_by('-pickup')
-	orders = OrderPickUp.objects.filter(
-		Q(order__transaction_id__icontains=q) |
-		Q(pickup__icontains=q) 
-	)
+	# q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True, order__pickupstat_id='Transaction Successful', pickup__gte=fromdate,pickup__lte=todate).order_by('pickup')
+	# orders = OrderPickUp.objects.filter(
+	# 	Q(order__transaction_id__icontains=q) |
+	# 	Q(pickup__icontains=q) 
+	# )
 
-	paginator = Paginator(orders, 500)
+	# PAGE NAVIGATION
+	paginator = Paginator(reservations, 500)
 	page_number = request.GET.get('page')
 	page_prod = paginator.get_page(page_number)
 
-	template_path = 'base/otc-products/admin/product-sales-reports-pdf.html' 
-	context = {'orders': orders, 'items': items, 'reservations': reservations,'page_prod': page_prod, 'sales_count': sales_count, 'current_datetime':current_datetime, 'products_sold':products_sold, 'stat_id':stat_id, 'cust_count':cust_count, 'total_sales':total_sales}
+	template_path = 'base/otc-products/admin/product-sales-reports-pdf.html'
+	#'orders': orders, 
+	context = {'user':user,  'items': items, 'reservations': reservations,'page_prod': page_prod, 'sales_count': sales_count, 'current_datetime':current_datetime, 'products_sold':products_sold, 'stat_id':stat_id, 'cust_count':cust_count, 'total_sales':total_sales, 'earlydate':earlydate, 'latedate':latedate}
     # Create a Django response object, and specify content_type as pdf 
 	response = HttpResponse(content_type='application/pdf') 
 	response['Content-Disposition'] =  'filename="product-sales-report.pdf"'
-    # find the template and render it.
-
+    
+	# Find the template and render it.
 	template = get_template(template_path)  
 	html = template.render(context)
 
@@ -784,32 +940,59 @@ def pdf_report_create_product_sales(request):
 	
 	return response
 
+
+# ALL PRODUCT RESERVATIONS SCHEDULE
 def all_orders_report(request):
 	items = OrderItem.objects.all()
 	current_datetime = datetime.now()
+
+	id = request.user.id
+	user = CustomUser.objects.filter(pk=id)
 	
+	# PICKED DATES
+	if "fromdate" in request.session.keys():
+		fromdate = request.session['fromdate']
+		del request.session['fromdate']
+	else:
+		fromdate = "2000-01-01"
+	
+	if "todate" in request.session.keys():
+		todate = request.session['todate']
+		del request.session['todate']
+	else:
+		todate = "2050-01-01"
+	
+	# GET EARLIEST AND LATEST DATE 
+	earlydate = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('pickup').first()
+	latedate = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate).order_by('pickup').last()
+
 	# FOR GETTING DISTINCT CUSTOMERS
 	oi = OrderItem.objects.all().distinct()
 	oi1 = []
 	for row in oi:
 		oi1.append(row.order_id)
-	cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+	#cust_count = Order.objects.filter(pk__in=oi1).values('customer').distinct().count()
+	cust_count = OrderPickUp.objects.filter(order__pk__in=oi1, pickup__gte=fromdate,pickup__lte=todate).values('customer').distinct().count()
 
 	#COUNT
-	transaction_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
-	approve_count = Order.objects.filter(pickupstat_id='Approved').count()
-	pending_count = Order.objects.filter(pickupstat_id='Pending').count()
-	cancelled_count = Order.objects.filter(pickupstat_id='Cancelled').count()
-	complete_count = Order.objects.filter(pickupstat_id='Transaction Successful').count()
+	transaction_count = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__pickupstat_id='Transaction Successful').count()
+	#transaction_count = transcount.filyr
+	approve_count = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__pickupstat_id='Approved').count()
+
+	#Asset.objects.filter( project__name__contains="Foo" )
+
+	pending_count = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__pickupstat_id='Pending').count()
+	cancelled_count = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__pickupstat_id='Cancelled').count()
+	complete_count = OrderPickUp.objects.filter(pickup__gte=fromdate,pickup__lte=todate, order__pickupstat_id='Transaction Successful').count()
 	reservation_count = approve_count + pending_count + cancelled_count + complete_count
 
 	#SEARCH
-	q = request.GET.get('q') if request.GET.get('q') != None else ''
-	reservations = OrderPickUp.objects.filter(order__complete=True).order_by('-date_added')
-	orders = OrderPickUp.objects.filter(
-		Q(order__transaction_id__icontains=q) |
-		Q(pickup__icontains=q) 
-	)
+	# q = request.GET.get('q') if request.GET.get('q') != None else ''
+	reservations = OrderPickUp.objects.filter(order__complete=True, pickup__gte=fromdate,pickup__lte=todate).order_by('pickup')
+	# orders = OrderPickUp.objects.filter(
+	# 	Q(order__transaction_id__icontains=q) |
+	# 	Q(pickup__icontains=q) 
+	# )
 
 	#PAGE NAVIGATION
 	paginator = Paginator(reservations, 500)
@@ -817,7 +1000,9 @@ def all_orders_report(request):
 	page_prod = paginator.get_page(page_number)
 
 	template_path = 'base/otc-products/admin/all-reservations-pdf.html' 
-	context = {'orders': orders, 'items': items, 'page_prod': page_prod, 'cust_count':cust_count, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count, 'reservation_count':reservation_count, 'current_datetime':current_datetime }
+	context = {'user':user, 'items': items, 'page_prod': page_prod, 'cust_count':cust_count, 'transaction_count': transaction_count, 'approve_count': approve_count, 'pending_count': pending_count, 'cancelled_count': cancelled_count, 'complete_count': complete_count, 'reservation_count':reservation_count, 'current_datetime':current_datetime, 'todate':todate, 'fromdate':fromdate, 'earlydate':earlydate, 'latedate':latedate }
+
+	# 'orders': orders,
     # Create a Django response object, and specify content_type as pdf 
 	response = HttpResponse(content_type='application/pdf') 
 	response['Content-Disposition'] =  'filename="all-orders-report.pdf"'
@@ -838,6 +1023,10 @@ def all_orders_report(request):
 
 def otcProductlogreport(request):
 	history = otcStockHistory.objects.all().order_by('-last_updated')
+	current_datetime = datetime.now()
+	id = request.user.id
+	user = CustomUser.objects.filter(pk=id)
+
 
 	#PAGE NAVIGATION
 	paginator = Paginator(history, 1000)
@@ -846,7 +1035,7 @@ def otcProductlogreport(request):
 
 	
 	template_path = 'base/otc-products/admin/products-history-pdf.html' 
-	context = {'history': history, 'page_prod': page_prod}
+	context = {'user':user, 'history': history, 'page_prod': page_prod, 'current_datetime':current_datetime}
     # Create a Django response object, and specify content_type as pdf 
 	response = HttpResponse(content_type='application/pdf') 
 	response['Content-Disposition'] =  'filename="product-log-report.pdf"'
@@ -866,11 +1055,14 @@ def otcProductlogreport(request):
 	return response
 
 def otc_indivProductHistoryreport(request, pk):
+	current_datetime = datetime.now()
 	product = otcProduct.objects.get(id=pk)
 	history = otcStockHistory.objects.filter(Prod_Name=product).order_by('-last_updated')
+	id = request.user.id
+	user = CustomUser.objects.filter(pk=id)
 
 	template_path =  'base/otc-products/admin/indiv-products-history-pdf.html' 
-	context = {'product': product, 'history': history}
+	context = {'product': product, 'history': history, 'user':user, 'current_datetime':current_datetime,}
     # Create a Django response object, and specify content_type as pdf 
 	response = HttpResponse(content_type='application/pdf') 
 	response['Content-Disposition'] =  'filename="indiv-product-log-report.pdf"'
@@ -892,6 +1084,9 @@ def otc_indivProductHistoryreport(request, pk):
 def salesinvoicereport(request, pk):
 	items = OrderItem.objects.all()
 	invoice = OrderPickUp.objects.get(order__id=pk)
+	current_datetime = datetime.now()
+	id = request.user.id
+	user = CustomUser.objects.filter(pk=id)
 	
 	if request.method =='POST':
 		if request.POST['button'] == 'Confirm':
@@ -914,7 +1109,7 @@ def salesinvoicereport(request, pk):
 
 
 	template_path = 'base/otc-products/admin/sales-invoice-pdf.html'
-	context = {'invoice': invoice, 'items': items}
+	context = {'user':user, 'invoice': invoice, 'items': items, 'current_datetime':current_datetime}
     # Create a Django response object, and specify content_type as pdf 
 	response = HttpResponse(content_type='application/pdf') 
 	response['Content-Disposition'] =  'filename="salew-invoice.pdf"'
@@ -932,4 +1127,3 @@ def salesinvoicereport(request, pk):
 	   return HttpResponse('We had some errors <pre>' + html + '</pre>')
 	
 	return response
-

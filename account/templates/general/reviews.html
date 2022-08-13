@@ -1,3 +1,6 @@
+<title> SalOnTheGo | Reviews </title>
+
+
 {% load static %}
 {% include 'general/navbar-user.html' %}
         
@@ -25,265 +28,57 @@
         <!-- STYLIST 1 -->
         <div>
             <br><br>
-            <div class="stylist-heading">
+            {% comment %} <div class="stylist-heading">
                 <p id="stylistName" class="stylistName"><b>MR. OSCAR MARTINEZ</b></p>
-            </div>
+            </div> {% endcomment %}
             <div class="review-container">
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
+                {% for row in form %}
+                    {% if row.appointmentInfo.appointmentStatus == 'Successful' %}
+                    
+                        <div class="review-box">
+                            <div class = "review-pfpnamedate">
+                                <div class="review-pfp">
+                                    <img src="{% static 'images/default-prof.jpg' %}">
                                 </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
+                                    <div class="namedaterating">
+                                        <div class = "review-firstname">
+                                            <p>{{ row.appointmentInfo.customer.customer.first_name }}</p>
+                                        </div>
+                                        <div class = "review-date">
+                                            <p>{{ row.appointmentInfo.apptDate|date:'F d, Y' }}</p>
+                                        </div>
+                                        <div class = "review-rating">
+                                            <p>RATING:
+                                            {% if row.id in fb_list %}
+                                                {% for row1 in fb %}
+                                                    {% if row1.feedbackInfo.id ==  row.id and row1.isPositive == 1 %} 
+                                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                                                    {% elif row1.feedbackInfo.id ==  row.id and row1.isNegative == 1 %} 
+                                                        <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                                
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
+                                <div class = "review-text">
+                                    {% if row.id in fb_list %}
+                                        {% for row1 in fb %}
+                                            {% if row1.feedbackInfo.id == row.id %}
+                                                <p>{{ row1.review }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
                         </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
                     </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            <div class="view-more">
-                <a href="{% url 'indivreviews' %}">View More <i class="fa-solid fa-caret-right"></i></a>
-            </div>
-        </div>
-        <!-- STYLIST 2 -->
-        <div>
-            <br><br><br><br>
-            <p id="stylistName" class="stylistName"><b>MR. MIKE SANTOS</b></p>
-            <div class="review-container">
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="view-more">
-                <a href="{% url 'indivreviews' %}">View More <i class="fa-solid fa-caret-right"></i></a>
-            </div>
-        </div>
-        <!-- STYLIST 3 -->
-        <div>
-            <br><br><br><br>
-            <p id="stylistName" class="stylistName"><b>MS. STEPH PANGILINAN</b></p>
-            <div class="review-container">
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                <div class="review-box">
-                    <div class = "review-pfpnamedate">
-                        <div class="review-pfp">
-                            <img src="{% static 'images/default-prof.jpg' %}">
-                        </div>
-                            <div class="namedaterating">
-                                <div class = "review-firstname">
-                                    <p>sample sample sample</p>
-                                </div>
-                                <div class = "review-date">
-                                    <p>September 10, 2022</p>
-                                </div>
-                                <div class = "review-rating">
-                                    <p>RATING: 
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                        {% comment %} <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {% endcomment %}
-                                    </p>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class = "review-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus dia</p>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="view-more">
-                <a href="{% url 'indivreviews' %}">View More <i class="fa-solid fa-caret-right"></i></a>
-            </div>
-        </div>
-
-    <br><br><br><br>
-    <br><br><br><br>
+        </div>  
     </body>
 </html>
 

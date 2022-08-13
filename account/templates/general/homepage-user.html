@@ -211,6 +211,21 @@
         color: #001D6E;
         }
 
+        .notification-bell {
+            position: absolute;
+            border-radius: 50%;
+            font-size: 13px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            margin-top: -38px;
+            margin-left: -5px;
+            color: white;
+            font-weight: bold;
+            background-color: red;
+        }
+
         .sidenav a:hover, .dropdown-btn:hover {
             color: white;
             background-color: #000e33;
@@ -242,6 +257,140 @@
             width: 100%;
         }
         }
+
+        /* NOTIFS */
+
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          
+          /* SCROLL */
+          .popuptext {
+            max-height: 300px;
+            width: 230px;
+            overflow:scroll;
+            font-weight: 400!important;
+            font-size: 15px!important;
+          }
+                /* scrollbar width */
+                .popuptext::-webkit-scrollbar {
+                    width: 12px;
+                }
+                /* scrollbar track */
+                .popuptext::-webkit-scrollbar-track {
+                    -webkit-border-radius: 10px;
+                    border-radius: 10px;
+                }
+                /* scrollbar color */
+                .popuptext::-webkit-scrollbar-thumb {
+                    -webkit-border-radius: 10px;
+                    border-radius: 10px;
+                    background: #c0d9fa;
+                }
+          /* The actual popup */
+          .popup .popuptext {
+            visibility: hidden;
+            background-color: white;
+            color: black;
+            text-align: center;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            left: -50%;
+            margin-left: -160px;
+            margin-top: 80%;
+            padding: 10px;
+            border: 1px solid #d6d6d6;
+          }
+          
+          /* Popup arrow */
+          .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: 85%;
+            transform: rotate(180deg);
+            margin-left: -10px;
+            display: none;
+          }
+          
+          /* Toggle this class - hide and show the popup */
+          .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+          }
+          
+          /* Add animation (fade in the popup) */
+          @-webkit-keyframes fadeIn {
+            from {opacity: 0;} 
+            to {opacity: 1;}
+          }
+          
+          @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity:1 ;}
+          }
+    
+          .count{
+            z-index: 3;
+            color: #fff;
+            background-color: rgba(255, 0, 0, 0.738);
+            font-weight: bolder;
+            margin-top: -0.7vw;
+            position: absolute;
+            margin-left: -0.9vw;
+            padding: 3px 8px;
+            border-radius: 50%;
+            font-size: 1vw;
+          }
+    
+          .bell{
+            width: 1.8vw;
+            background-color: #F8E2CF;
+            border-radius: 30%;
+            padding: 0.5vw;
+            margin-left: 1vw;
+            filter: brightness(90%);
+            position: relative;
+            }
+    
+          .bell:hover{
+            filter: brightness(130%);
+          }
+    
+          .popuptext a{
+            text-decoration: none;
+            color: black;
+            font-size: 1vw;
+            padding: 1vw;
+            line-height: 3vw;
+          }
+    
+          .popuptext a:not(:first-child){
+            border-top:1px solid rgba(0,0,0,0.2);
+            counter-increment: netLogCounter;
+          }
+    
+          .popuptext a:hover{
+            background: #D87272;
+            color:#fff;
+          }
+
+          /* BORDER */
+          .notif-border{
+            padding: 10px;
+            border-bottom: 1px solid #c4c4c4;
+          }
+                label:last-child{
+                    border: none!important;
+                }
     </style>
     
 </head>
@@ -335,8 +484,6 @@
           </ul>
         {% endif %}
 
-       
-        
         {% if user.is_customer %}
             <a href="{% url 'cart' %}">
                 <img
@@ -346,32 +493,69 @@
             </a>
         {% endif %}
        
-        <!-- {% if user.is_admin %} -->
-        <!-- NOTIFICATION BELL -->
-        <!-- <a href="#">
+        {% if user.is_admin %}
+            <!-- NOTIFICATION BELL -->
+            <div class="popup" onclick="myFunction()">
             <i class="fas fa-bell" style="
-            font-size: 35px;
-            color: black;
-            ">
-            </i> <span style="
-            position: absolute;
-            border-radius: 50%;
-            font-size: 13px;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            margin-top: -38px;
-            margin-left: -5px;
-            color: white;
-            font-weight: bold;
-            background-color: red;
-            ">
-                5
-            </span>
+                font-size: 35px;
+                color: black;
+                margin-right: 20px;
+                ">
+                </i>
+                <span class="notification-bell">
+                    {{notif_count}} 
+                </span> 
+                <span class="popuptext" id="myPopup">
+                    <!-- LOW STOCK -->
+                    {% for product in low_stock %}
+                        <label class="notif-border">{{product.Prod_Name}} has {{product.Prod_stockQty}} remaining stock!</label>
+                    {% endfor %}        
+                    <!-- EXPIRING IN LESS THAN OR EQUAL TO 6 MONTHS -->
+                    {% for product in expiring %}
+                        <label class="notif-border">{{product.Prod_stockQty}} {{product.Prod_Name}} will be expiring soon on {{product.expiry_date}}.</label>
+                    {% endfor %}
+                </span>
+            </div>
             
-        </a> -->
-        <!-- {% endif %} -->
+            <script>
+            // When the user clicks on div, open the popup
+            function myFunction() {
+                var popup = document.getElementById("myPopup");
+                popup.classList.toggle("show");
+            }
+            </script>
+
+            <div class="popup" onclick="myFunction2()">
+                <i class="fas fa-envelope" style="
+                    font-size: 35px;
+                    color: black;
+                    margin-right: 20px;
+                    ">
+                    </i>
+                    <span class="notification-bell">
+                        {{pending_count}}
+                    </span> 
+                    <span class="popuptext" id="myPopup2">
+                        <!-- PENDING APPOINTMENTS -->
+                        {% for appointment in pending_appts %}
+                            {% if appointment.apptType == 'Online' %}
+                                <label class="notif-border">{{ appointment.customer.customer.first_name }} {{ appointment.customer.customer.last_name }} booked an appointment.</label>
+                            {% else %}
+                                <label class="notif-border">{{ appointment.customer_fname }} {{ appointment.customer_lname }} booked an appointment.</label>
+                            {% endif %}
+                            {% empty %}
+                                <label>No notifications.</label>
+                        {% endfor %}
+                    </span>
+                </div>
+
+                <script>
+                    function myFunction2() {
+                        var popup2 = document.getElementById("myPopup2");
+                        popup2.classList.toggle("show");
+                    }
+                </script>
+        {% endif %}
             
         <!-- LOGGED IN PROFILE ICON -->
         <div class="nav-item dropdown">

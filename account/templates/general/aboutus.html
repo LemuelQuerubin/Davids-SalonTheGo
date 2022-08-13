@@ -1,5 +1,4 @@
 {% load static %}
-{% include 'general/navbar-user.html' %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -8,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> SalOnTheGo | About Us </title>
+        <title> SalOnTheGo | About Us</title>
         <!-- CSS LINK -->
         <link rel="stylesheet" href="{% static 'css/general/about.css' %}">
         <!-- FONTAWESOME LINK -->
@@ -16,6 +15,8 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
+
+    {% include 'general/navbar-user.html' %}
 
     <body>
         <!------------------------------- ABOUT US CONTENT ------------------------------->

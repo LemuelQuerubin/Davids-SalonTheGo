@@ -1,3 +1,5 @@
+<title>  SalOnTheGo | Sales Invoice </title>
+
 {% extends "general/homepage-user.html" %}
 
 {% block content %}
@@ -56,9 +58,28 @@
                     </tr>
                 </tbody>
             </table>
-            <a href="{% url 'createpdf-sales-invoice' invoice.order.id %}">EXPORT PDF</a>
+            
+        <!-- <div class="button-half">
+            <a href="{% url 'jobOrderform' %}/appointments/createpdf-jof"> <button style="
+                height: 6vh;
+                width: 90%;
+                color: white;
+                border: 1px solid #001D6E;
+                background-color: #001D6E;
+                font-family: Montserrat;
+                font-size: 17px;
+                border-radius: 10px;
+                font-weight: 700;">
+                Print Receipt &nbsp;<i class="fa-solid fa-print"></i></button></a>
+        </div> -->
+
+            
             
             <div class="clear-btn">
+                <a href="{% url 'createpdf-sales-invoice' invoice.order.id %}"><button class="print-sales-btn"
+                    style="margin-left: 10px;">
+                    Print Receipt &nbsp;<i class="fa-solid fa-print"></i>
+                </button></a>
                 <form method="POST">
                     {% csrf_token %}
                     <input class="confirm-btn" value="Confirm" type="submit" confirm="Confirm" name="button">

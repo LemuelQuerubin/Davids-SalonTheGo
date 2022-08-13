@@ -98,9 +98,9 @@
 
     /***** TABLE CONTAINER 2 - ALL SERVICES *****/
     .prodtable-container2 {
-        max-width: 1130px;
-        margin-left: 200px;
-        margin-right: 200px;
+        max-width: 1000px;
+        margin-left: 150px;
+        margin-right: 150px;
         width: 100%;
         padding: 40px 30px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;

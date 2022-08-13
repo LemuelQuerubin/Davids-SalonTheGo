@@ -19,11 +19,14 @@ from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 from django.contrib.auth.decorators import login_required
-
+import datetime
+from datetime import datetime
 from account.decorators import * 
 
 # TO ACCESS REVIEWS
 from system.models import *
+from base.models import *
+
 
 
 
@@ -49,7 +52,19 @@ def aboutus(request):
     return render(request, 'general/aboutus.html')
 
 def reviews(request):
-    return render(request, 'general/reviews.html')
+    current_datetime = datetime.now()
+    form = jobOrderform.objects.filter(appointmentInfo__apptType="Online").filter(appointmentInfo__appointmentStatus="Successful").order_by('-appointmentInfo__apptDate', '-appointmentInfo__appt_timeStart')
+    fb = clientFeedback.objects.all()
+    fb_list= []
+    for row in fb:
+        fb_list.append(row.feedbackInfo_id)
+    context = {
+		'current_datetime':current_datetime,
+		'form': form,
+		'fb':fb,
+		'fb_list':fb_list
+	}
+    return render(request, 'general/reviews.html', context)
 
 def indivreviews(request):
     return render(request, 'general/indivreviews.html')
@@ -87,7 +102,7 @@ def loginpage(request):
             
         
         else:
-            messages.error(request,"bad credentials")
+            messages.error(request,"Incorrect Email or Password")
             return redirect('/login')
 
         

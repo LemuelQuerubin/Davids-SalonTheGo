@@ -20,6 +20,8 @@ class otcProductAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
 admin.site.register(otcProduct, otcProductAdmin)
 
+admin.site.register(otcStockHistory)
+
 admin.site.register(ProductType)
 admin.site.register(Category)
 admin.site.register(MeasurementType)

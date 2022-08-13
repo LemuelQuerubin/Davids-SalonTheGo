@@ -92,3 +92,24 @@
                 overflow: auto;
                 clear: both;
             }
+
+        /* CONFIRM BUTTON */
+        .print-sales-btn {
+            float: right;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border: 1px solid #001D6E;;
+            border-radius: 10px;
+            color: #001D6E;
+            background-color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+            .print-sales:hover {
+                background-color: #586896;;
+            }
+            .print-sales-btn {
+                overflow: auto;
+                clear: both;
+            }
